@@ -1,8 +1,8 @@
-import {Box, Button, Card, CardActions, CardContent, Container, Grid, Paper, Typography} from "@mui/material";
+import {Box, Container, Grid, Typography} from "@mui/material";
 import {DashboardProps} from "@/types";
 import TrafoCard from "@/Components/Trafo/TrafoCard";
 
-export default function DashboardV2({ auth, trafos } : DashboardProps ) {
+export default function DashboardV2({ trafos } : DashboardProps ) {
     return (
         <Container maxWidth="md">
             <Box sx={{ my: 4 }}>

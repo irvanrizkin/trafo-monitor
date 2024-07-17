@@ -1,4 +1,5 @@
 import {Card, CardContent, Typography, CardActions, Button} from "@mui/material";
+import { Trafo } from "@/types";
 
 export default function TrafoCard({ trafo }: { trafo: Trafo }) {
     return (
