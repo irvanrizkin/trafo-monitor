@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardV2Controller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TrafoV2Controller;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,6 +20,8 @@ Route::get('/', function () {
 Route::prefix('v2')->group(function () {
     Route::get('/dashboard', [DashboardV2Controller::class, 'index'])
         ->name('v2.dashboard');
+    Route::get('/trafo/{id}', [TrafoV2Controller::class, 'show'])
+        ->name('v2.trafo.show');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])

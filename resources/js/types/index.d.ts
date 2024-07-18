@@ -21,3 +21,14 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
 export type DashboardProps = PageProps & {
     trafos: Trafo[];
 };
+
+export type TrafoDetailProps = PageProps & {
+    trafo: Trafo;
+};
+
+export type Props<T extends Record<string, unknown> = Record<string, unknown>> = T;
+
+export type ParameterInfoCardProps = Props & {
+    title: string;
+    description: string;
+};
