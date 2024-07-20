@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardV2Controller;
+use App\Http\Controllers\ParameterV2Controller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrafoV2Controller;
 use Illuminate\Foundation\Application;
@@ -20,8 +21,22 @@ Route::get('/', function () {
 Route::prefix('v2')->group(function () {
     Route::get('/dashboard', [DashboardV2Controller::class, 'index'])
         ->name('v2.dashboard');
-    Route::get('/trafo/{id}', [TrafoV2Controller::class, 'show'])
-        ->name('v2.trafo.show');
+
+    Route::prefix('trafo')->group(function () {
+        Route::get('/{id}', [TrafoV2Controller::class, 'show'])
+            ->name('v2.trafo.show');
+
+        Route::prefix('{id}')->group(function () {
+            Route::get('/temperature', [ParameterV2Controller::class, 'showTemperature'])
+                ->name('v2.trafo.temperature');
+            Route::get('/pressure', [ParameterV2Controller::class, 'showPressure'])
+                ->name('v2.trafo.pressure');
+            Route::get('/voltage', [ParameterV2Controller::class, 'showVoltage'])
+                ->name('v2.trafo.voltage');
+            Route::get('/current', [ParameterV2Controller::class, 'showCurrent'])
+                ->name('v2.trafo.current');
+        });
+    });
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])

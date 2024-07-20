@@ -12,6 +12,11 @@ export interface Trafo {
     updated_at: string;
 }
 
+export interface Metric {
+    created_at: string;
+    value: number;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
@@ -26,9 +31,24 @@ export type TrafoDetailProps = PageProps & {
     trafo: Trafo;
 };
 
+export type MetricProps = PageProps & {
+    trafo: Trafo;
+    metrics: Metric[];
+    min: number;
+    count: number;
+    max: number;
+    property: string;
+};
+
 export type Props<T extends Record<string, unknown> = Record<string, unknown>> = T;
 
 export type ParameterInfoCardProps = Props & {
     title: string;
     description: string;
 };
+
+export type ParameterCardGroupProps = Props & {
+    min: number;
+    count: number;
+    max: number;
+}
