@@ -1,20 +1,56 @@
-import {Box, Container, Grid, Typography} from "@mui/material";
-import {TrafoDetailProps} from "@/types";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import { TrafoDetailProps } from "@/types";
 import ParameterInfoCard from "@/Components/Detail/ParameterInfoCard";
+import GoogleMapReact from "google-map-react";
+
+// const AnyReactComponent = ({text}: {text:string}) => <div>{text}</div>
+
+const Marker = props => {
+    return <div className="SuperAwesomePin"></div>
+}
 
 export default function Detail({ trafo }: TrafoDetailProps) {
+
+    const defaultProps = {
+        center: {
+            lat: 10.99835602,
+            lng: 77.01502627,
+        },
+        zoom: 11,
+    }
+
     return (
         <Container maxWidth="lg">
             <Box sx={{ my: 4 }}>
                 <Grid container spacing={2} px={2}>
                     <Grid item xs={12} md={6}>
-                        <Box
+                        {/* <Box
                             sx={{
                                 width: '100%',
                             }}
                             component="img"
                             src="https://placehold.co/600x400/png"
-                        />
+                        /> */}
+                        <Box
+                            sx={{
+                                width: '600px',
+                                height: '400px'
+                            }}
+                            component='map'
+                        >
+                            <GoogleMapReact
+                                bootstrapURLKeys={{ key: import.meta.env.MAP_API_KEY }}
+                                defaultCenter={defaultProps.center}
+                                defaultZoom={defaultProps.zoom}
+                            >
+                                {/* <AnyReactComponent
+                                    lat={59.955413}
+                                    lng={30.337844}
+                                    text="My Marker"
+                                /> */}
+                                <Marker lat={defaultProps.center.lat} lng={defaultProps.center.lng}/>
+                            </GoogleMapReact>
+                        </Box>
                         <Typography variant="h4" sx={{ my: 2 }}>
                             <b>{trafo.name}</b>
                         </Typography>
