@@ -33,7 +33,6 @@
         "@emotion/styled": "^11.11.5",
         "@fontsource/roboto": "^5.0.13",
         "@mui/icons-material": "^5.16.4",
-        "@mui/material": "^5.16.4",
-        "google-map-react": "^2.2.1"
+        "@mui/material": "^5.16.4"
     }
 }
