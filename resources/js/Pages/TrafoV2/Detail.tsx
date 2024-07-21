@@ -1,15 +1,27 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { TrafoDetailProps } from "@/types";
+import { GpsDetailProps, TrafoDetailProps } from "@/types";
 import ParameterInfoCard from "@/Components/Detail/ParameterInfoCard";
+import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import GoogleMapReact from "google-map-react";
-
+// import GoogleMap from "google-maps-react-markers";
 // const AnyReactComponent = ({text}: {text:string}) => <div>{text}</div>
 
-const Marker = props => {
-    return <div className="SuperAwesomePin"></div>
-}
+export default function Detail({ trafo }: TrafoDetailProps, { gps }: GpsDetailProps) {
 
-export default function Detail({ trafo }: TrafoDetailProps) {
+
+    console.log(trafo.id);
+
+    const renderMarker = (map: any, maps: any) => {
+        const marker = new maps.Marker({
+            position: {
+                lat: 10.99835602,
+                lng: 77.01502627,
+            },
+            map,
+            title: 'test marker'
+        });
+        return marker;
+    }
 
     const defaultProps = {
         center: {
@@ -34,21 +46,18 @@ export default function Detail({ trafo }: TrafoDetailProps) {
                         <Box
                             sx={{
                                 width: '600px',
-                                height: '400px'
+                                height: '400px',
                             }}
-                            component='map'
+                            component="map"
                         >
                             <GoogleMapReact
                                 bootstrapURLKeys={{ key: import.meta.env.MAP_API_KEY }}
                                 defaultCenter={defaultProps.center}
                                 defaultZoom={defaultProps.zoom}
+                                yesIWantToUseGoogleMapApiInternals
+                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
                             >
-                                {/* <AnyReactComponent
-                                    lat={59.955413}
-                                    lng={30.337844}
-                                    text="My Marker"
-                                /> */}
-                                <Marker lat={defaultProps.center.lat} lng={defaultProps.center.lng}/>
+
                             </GoogleMapReact>
                         </Box>
                         <Typography variant="h4" sx={{ my: 2 }}>
@@ -77,18 +86,22 @@ export default function Detail({ trafo }: TrafoDetailProps) {
                         <ParameterInfoCard
                             title="Temperature"
                             description="Tampilkan grafik tren temperatur untuk trafo ini"
+                            trafoId={trafo.id}
                         />
                         <ParameterInfoCard
                             title="Voltage"
                             description="Tampilkan grafik tren tegangan untuk trafo ini"
+                            trafoId={trafo.id}
                         />
                         <ParameterInfoCard
                             title="Pressure"
                             description="Tampilkan grafik tren tekanan untuk trafo ini"
+                            trafoId={trafo.id}
                         />
                         <ParameterInfoCard
                             title="Current"
                             description="Tampilkan grafik tren arus untuk trafo ini"
+                            trafoId={trafo.id}
                         />
                     </Grid>
                 </Grid>
