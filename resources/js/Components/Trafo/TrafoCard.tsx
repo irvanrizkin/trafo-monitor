@@ -13,7 +13,7 @@ export default function TrafoCard({ trafo }: { trafo: Trafo }) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">More Info</Button>
+                <Button size="small" href={route('v2.trafo.show', trafo.id)}>More Info</Button>
             </CardActions>
         </Card>
     );
