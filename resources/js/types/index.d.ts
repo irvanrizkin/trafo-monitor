@@ -12,6 +12,15 @@ export interface Trafo {
     updated_at: string;
 }
 
+export interface Gps {
+    id: number;
+    trafo: string;
+    latitude: string;
+    longtitude: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface Metric {
     created_at: string;
     value: number;
@@ -31,6 +40,10 @@ export type TrafoDetailProps = PageProps & {
     trafo: Trafo;
 };
 
+export type GpsDetailProps = PageProps & {
+    gps: Gps;
+}
+
 export type MetricProps = PageProps & {
     trafo: Trafo;
     metrics: Metric[];
@@ -45,6 +58,7 @@ export type Props<T extends Record<string, unknown> = Record<string, unknown>> =
 export type ParameterInfoCardProps = Props & {
     title: string;
     description: string;
+    trafoId: number;
 };
 
 export type ParameterCardGroupProps = Props & {
