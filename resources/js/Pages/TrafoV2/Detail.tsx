@@ -1,34 +1,28 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { GpsDetailProps, TrafoDetailProps } from "@/types";
+import { TrafoDetailProps } from "@/types";
 import ParameterInfoCard from "@/Components/Detail/ParameterInfoCard";
-import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import GoogleMapReact from "google-map-react";
-// import GoogleMap from "google-maps-react-markers";
-// const AnyReactComponent = ({text}: {text:string}) => <div>{text}</div>
 
-export default function Detail({ trafo }: TrafoDetailProps, { gps }: GpsDetailProps) {
-
-
-    console.log(trafo.id);
+export default function Detail({ trafo, gps }: TrafoDetailProps) {
+    console.log(gps);
 
     const renderMarker = (map: any, maps: any) => {
-        const marker = new maps.Marker({
+        return new maps.Marker({
             position: {
-                lat: 10.99835602,
-                lng: 77.01502627,
+                lat: Number(gps.latitude),
+                lng: Number(gps.longtitude),
             },
             map,
             title: 'test marker'
         });
-        return marker;
     }
 
     const defaultProps = {
         center: {
-            lat: 10.99835602,
-            lng: 77.01502627,
+            lat: Number(gps.latitude),
+            lng: Number(gps.longtitude),
         },
-        zoom: 11,
+        zoom: 15,
     }
 
     return (

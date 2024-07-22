@@ -17,8 +17,6 @@ export interface Gps {
     trafo: string;
     latitude: string;
     longtitude: string;
-    created_at: string;
-    updated_at: string;
 }
 
 export interface Metric {
@@ -38,11 +36,8 @@ export type DashboardProps = PageProps & {
 
 export type TrafoDetailProps = PageProps & {
     trafo: Trafo;
-};
-
-export type GpsDetailProps = PageProps & {
     gps: Gps;
-}
+};
 
 export type MetricProps = PageProps & {
     trafo: Trafo;

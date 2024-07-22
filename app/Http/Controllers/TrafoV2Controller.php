@@ -12,7 +12,7 @@ class TrafoV2Controller extends Controller
     public function show($id)
     {
         $trafo = TrafoSecond::find($id);
-        $gps = GpsSecond::find($id);
+        $gps = GpsSecond::where('trafo', $id)->first();
 
         return Inertia::render('TrafoV2/Detail', [
             'trafo' => $trafo,
