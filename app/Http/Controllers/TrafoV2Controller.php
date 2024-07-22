@@ -13,10 +13,12 @@ class TrafoV2Controller extends Controller
     {
         $trafo = TrafoSecond::find($id);
         $gps = GpsSecond::where('trafo', $id)->first();
+        $mapApiKey = env('MAP_API_KEY', '');
 
         return Inertia::render('TrafoV2/Detail', [
             'trafo' => $trafo,
-            'gps' => $gps
+            'gps' => $gps,
+            'mapApiKey' => $mapApiKey,
         ]);
     }
 }

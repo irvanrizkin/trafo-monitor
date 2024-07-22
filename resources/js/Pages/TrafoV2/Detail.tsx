@@ -3,7 +3,7 @@ import { TrafoDetailProps } from "@/types";
 import ParameterInfoCard from "@/Components/Detail/ParameterInfoCard";
 import GoogleMapReact from "google-map-react";
 
-export default function Detail({ trafo, gps }: TrafoDetailProps) {
+export default function Detail({ trafo, gps, mapApiKey }: TrafoDetailProps) {
     console.log(gps);
 
     const renderMarker = (map: any, maps: any) => {
@@ -45,7 +45,7 @@ export default function Detail({ trafo, gps }: TrafoDetailProps) {
                             component="map"
                         >
                             <GoogleMapReact
-                                bootstrapURLKeys={{ key: import.meta.env.MAP_API_KEY }}
+                                bootstrapURLKeys={{ key: mapApiKey }}
                                 defaultCenter={defaultProps.center}
                                 defaultZoom={defaultProps.zoom}
                                 yesIWantToUseGoogleMapApiInternals

@@ -37,6 +37,7 @@ export type DashboardProps = PageProps & {
 export type TrafoDetailProps = PageProps & {
     trafo: Trafo;
     gps: Gps;
+    mapApiKey: string;
 };
 
 export type MetricProps = PageProps & {
