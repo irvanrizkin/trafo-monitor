@@ -32,6 +32,8 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
 
 export type DashboardProps = PageProps & {
     trafos: Trafo[];
+    gpsArray: Gps[];
+    mapApiKey: string;
 };
 
 export type TrafoDetailProps = PageProps & {
