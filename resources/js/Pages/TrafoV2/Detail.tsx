@@ -28,19 +28,33 @@ export default function Detail({ trafo, gps, mapApiKey }: TrafoDetailProps) {
     return (
         <Container maxWidth="lg">
             <Box sx={{ my: 4 }}>
+                <Box sx={{
+                    mb: 2,
+                    px: 2,
+                }}>
+                    <Typography variant="h4" sx={{ my: 2 }}>
+                        <b>{trafo.name}</b>
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                        <b>Trafo ID</b>
+                    </Typography>
+                    <Typography variant="h6">
+                        {trafo.id}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                        <b>Created Date</b>
+                    </Typography>
+                    <Typography variant="h6">
+                        {new Date(trafo.created_at).toLocaleString()}
+                    </Typography>
+                </Box>
                 <Grid container spacing={2} px={2}>
                     <Grid item xs={12} md={6}>
-                        {/* <Box
-                            sx={{
-                                width: '100%',
-                            }}
-                            component="img"
-                            src="https://placehold.co/600x400/png"
-                        /> */}
                         <Box
                             sx={{
-                                width: '600px',
-                                height: '400px',
+                                width: '100%',
+                                height: '650px',
+                                display: 'flex'
                             }}
                             component="map"
                         >
@@ -54,27 +68,6 @@ export default function Detail({ trafo, gps, mapApiKey }: TrafoDetailProps) {
 
                             </GoogleMapReact>
                         </Box>
-                        <Typography variant="h4" sx={{ my: 2 }}>
-                            <b>{trafo.name}</b>
-                        </Typography>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="body1" color="text.secondary">
-                                    <b>Trafo ID</b>
-                                </Typography>
-                                <Typography variant="h6">
-                                    {trafo.id}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="body1" color="text.secondary">
-                                    <b>Created Date</b>
-                                </Typography>
-                                <Typography variant="h6">
-                                    {new Date(trafo.created_at).toLocaleString()}
-                                </Typography>
-                            </Grid>
-                        </Grid>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <ParameterInfoCard
