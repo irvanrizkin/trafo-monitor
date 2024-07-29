@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardV2Controller;
+use App\Http\Controllers\MetricController;
 use App\Http\Controllers\ParameterV2Controller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TrafoController;
 use App\Http\Controllers\TrafoV2Controller;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +43,16 @@ Route::prefix('v2')->group(function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
+
+Route::prefix('trafo')->group(function () {
+  Route::get('/{id}', [TrafoController::class, 'showWithDates'])
+      ->name('trafo.show');
+});
+
+Route::prefix('metric')->group(function () {
+    Route::get('/{trafoid}/{date}', [MetricController::class, 'getMetrics'])
+        ->name('metric.metrics');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
