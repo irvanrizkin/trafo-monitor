@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardV2Controller;
 use App\Http\Controllers\MetricController;
@@ -52,6 +53,11 @@ Route::prefix('trafo')->group(function () {
 Route::prefix('metric')->group(function () {
     Route::get('/{trafoid}/{date}', [MetricController::class, 'getMetrics'])
         ->name('metric.metrics');
+});
+
+Route::prefix('chart')->group(function () {
+   Route::get('/{trafoid}/{date}', [ChartController::class, 'getChartData'])
+       ->name('chart.data');
 });
 
 Route::middleware('auth')->group(function () {

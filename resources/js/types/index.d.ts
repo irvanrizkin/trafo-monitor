@@ -36,6 +36,7 @@ export interface Metric {
 
 export interface MetricV1 {
     id: number;
+    hour: number;
     trafo_id: string;
     topic_name: string;
     current: number;
@@ -87,6 +88,12 @@ export type MetricV1Props = PageProps & {
     trafo: TrafoV1;
     metrics: MetricV1[];
 };
+
+export type ChartProps = PageProps & {
+    trafo: TrafoV1;
+    metrics: MetricV1[];
+    date: string;
+}
 
 export type Props<T extends Record<string, unknown> = Record<string, unknown>> = T;
 

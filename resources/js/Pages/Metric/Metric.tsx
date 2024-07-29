@@ -1,6 +1,7 @@
 import {MetricV1Props} from "@/types";
-import {Box, Container, Typography} from "@mui/material";
+import {Box, Button, Container, Stack, Typography} from "@mui/material";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 
 export default function Metric({ date, trafo, metrics }: MetricV1Props) {
     const columns: GridColDef[] = [
@@ -36,6 +37,11 @@ export default function Metric({ date, trafo, metrics }: MetricV1Props) {
                     <b>{date}</b>
                 </Typography>
             </Box>
+            <Stack direction="row" justifyContent="end">
+                <Button href={route('chart.data', [trafo.id, date])} variant="contained" endIcon={<ShowChartIcon />} sx={{ mb: 2 }}>
+                    Open Chart
+                </Button>
+            </Stack>
             <DataGrid
                 autosizeOptions={{
                     columns: ['current', 'temperature', 'voltage', 'pressure', 'createdAt'],
