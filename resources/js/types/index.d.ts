@@ -62,6 +62,11 @@ export type DashboardProps = PageProps & {
     mapApiKey: string;
 };
 
+export type DashboardPropsV1 = PageProps & {
+    trafos: TrafoV1[];
+    mapApiKey: string;
+};
+
 export type TrafoDetailProps = PageProps & {
     trafo: Trafo;
     gps: Gps;
