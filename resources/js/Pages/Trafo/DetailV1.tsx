@@ -14,7 +14,8 @@ import {useState} from "react";
 import {TrafoDetailPropsV1} from "@/types";
 import GoogleMapReact from "google-map-react";
 
-export default function DetailV1({trafo, dates, mapApiKey}: TrafoDetailPropsV1) {
+export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
+    const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
     const [dateState, setDateState] = useState('');
 
     const handleChange = (event: SelectChangeEvent) => {

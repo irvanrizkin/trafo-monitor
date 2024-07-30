@@ -3,7 +3,8 @@ import { TrafoDetailProps } from "@/types";
 import ParameterInfoCard from "@/Components/Detail/ParameterInfoCard";
 import GoogleMapReact from "google-map-react";
 
-export default function Detail({ trafo, gps, mapApiKey }: TrafoDetailProps) {
+export default function Detail({ trafo, gps }: TrafoDetailProps) {
+    const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
     console.log(gps);
 
     const renderMarker = (map: any, maps: any) => {

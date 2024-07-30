@@ -16,12 +16,10 @@ class TrafoController extends Controller
             ->where('trafo_id', $id)
             ->groupBy(DB::raw('DATE(created_at)'))
             ->get();
-        $mapApiKey = env('MAP_API_KEY', '');
 
         return Inertia::render('Trafo/DetailV1', [
             'trafo' => $trafo,
             'dates' => $dates,
-            'mapApiKey' => $mapApiKey,
         ]);
     }
 }

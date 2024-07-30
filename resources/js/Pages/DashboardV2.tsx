@@ -3,7 +3,9 @@ import {DashboardProps} from "@/types";
 import TrafoCard from "@/Components/Trafo/TrafoCard";
 import GoogleMapReact from "google-map-react";
 
-export default function DashboardV2({ trafos, gpsArray, mapApiKey } : DashboardProps ) {
+export default function DashboardV2({ trafos, gpsArray } : DashboardProps ) {
+    const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
+
     const renderMarker = (map: any, maps: any) => {
         const markers = gpsArray.map((gps) => {
             const marker = new maps.Marker({

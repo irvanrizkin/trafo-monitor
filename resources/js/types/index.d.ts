@@ -59,24 +59,20 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
 export type DashboardProps = PageProps & {
     trafos: Trafo[];
     gpsArray: Gps[];
-    mapApiKey: string;
 };
 
 export type DashboardPropsV1 = PageProps & {
     trafos: TrafoV1[];
-    mapApiKey: string;
 };
 
 export type TrafoDetailProps = PageProps & {
     trafo: Trafo;
     gps: Gps;
-    mapApiKey: string;
 };
 
 export type TrafoDetailPropsV1 = PageProps & {
     trafo: TrafoV1;
     dates: Date[];
-    mapApiKey: string;
 }
 
 export type MetricProps = PageProps & {

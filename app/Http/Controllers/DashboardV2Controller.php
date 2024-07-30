@@ -13,12 +13,10 @@ class DashboardV2Controller extends Controller
     {
         $trafos = TrafoSecond::all();
         $gpsArray = GpsSecond::all();
-        $mapApiKey = env('MAP_API_KEY', '');
 
         return Inertia::render('DashboardV2', [
             'trafos' => $trafos,
             'gpsArray' => $gpsArray,
-            'mapApiKey' => $mapApiKey,
         ]);
     }
 }

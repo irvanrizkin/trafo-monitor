@@ -3,7 +3,9 @@ import {Box, Container, Grid, Typography} from "@mui/material";
 import TrafoCard from "@/Components/Trafo/TrafoCard";
 import GoogleMapReact from "google-map-react";
 
-export default function Dashboard({ trafos, mapApiKey }: DashboardPropsV1) {
+export default function Dashboard({ trafos }: DashboardPropsV1) {
+    const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
+
     const renderMarker = (map: any, maps: any) => {
         const markers = trafos.map((trafo) => {
             const marker = new maps.Marker({
