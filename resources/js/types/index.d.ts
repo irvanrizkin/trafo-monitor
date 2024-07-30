@@ -95,6 +95,14 @@ export type ChartProps = PageProps & {
     date: string;
 }
 
+export type ChartV2Props = PageProps & {
+    trafo: Trafo;
+    temperatures: Metric[];
+    pressures: Metric[];
+    voltages: Metric[];
+    currents: Metric[];
+}
+
 export type Props<T extends Record<string, unknown> = Record<string, unknown>> = T;
 
 export type ParameterInfoCardProps = Props & {

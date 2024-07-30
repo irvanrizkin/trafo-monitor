@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\ChartV2Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardV2Controller;
 use App\Http\Controllers\MetricController;
@@ -39,6 +40,11 @@ Route::prefix('v2')->group(function () {
             Route::get('/current', [ParameterV2Controller::class, 'showCurrent'])
                 ->name('v2.trafo.current');
         });
+    });
+
+    Route::prefix('chart')->group(function () {
+        Route::get('/{trafoId}', [ChartV2Controller::class, 'getChartData'])
+            ->name('v2.chart.data');
     });
 });
 
