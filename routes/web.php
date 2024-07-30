@@ -27,6 +27,10 @@ Route::prefix('v2')->group(function () {
         ->name('v2.dashboard');
 
     Route::prefix('trafo')->group(function () {
+        Route::get('/create', [TrafoV2Controller::class, 'create'])
+            ->name('v2.trafo.create');
+        Route::post('/', [TrafoV2Controller::class, 'store'])
+            ->name('v2.trafo.store');
         Route::get('/{id}', [TrafoV2Controller::class, 'show'])
             ->name('v2.trafo.show');
 

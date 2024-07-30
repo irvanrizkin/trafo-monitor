@@ -11,4 +11,9 @@ class TrafoSecond extends Model
 
     protected $connection = 'secondmysql';
     protected $table = 'trafo';
+
+    protected $fillable = [
+        'name',
+        'address',
+    ];
 }

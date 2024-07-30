@@ -19,4 +19,31 @@ class TrafoV2Controller extends Controller
             'gps' => $gps,
         ]);
     }
+
+    public function create() {
+        return Inertia::render('TrafoCreate/TrafoCreateV2');
+    }
+
+    public function store() {
+        $data = request()->validate([
+            'name' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+        ]);
+
+        TrafoSecond::create(
+            [
+                'name' => $data['name'],
+            ]
+        );
+        GpsSecond::create(
+            [
+                'trafo' => TrafoSecond::latest()->first()->id,
+                'latitude' => $data['latitude'],
+                'longtitude' => $data['longitude'],
+            ]
+        );
+
+        return redirect()->route('v2.dashboard');
+    }
 }

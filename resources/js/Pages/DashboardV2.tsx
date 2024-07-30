@@ -44,6 +44,7 @@ export default function DashboardV2({ trafos, gpsArray } : DashboardProps ) {
                         marginBottom: 2,
                     }}
                 >
+                    <Button sx={{ mx: 2 }} href={route('v2.trafo.create')} variant="contained">Add Trafo</Button>
                     <Button href={route('dashboard')} variant="contained">Go to Version 1</Button>
                 </Box>
                 <Box
