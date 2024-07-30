@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import {Box, Button, Container, Grid, Typography} from "@mui/material";
 import { TrafoDetailProps } from "@/types";
 import ParameterInfoCard from "@/Components/Detail/ParameterInfoCard";
 import GoogleMapReact from "google-map-react";
@@ -24,6 +24,10 @@ export default function Detail({ trafo, gps }: TrafoDetailProps) {
             lng: Number(gps.longtitude),
         },
         zoom: 15,
+    }
+
+    const handleClick = () => {
+        window.location.href = route('v2.chart.data', [trafo.id]);
     }
 
     return (
@@ -71,26 +75,11 @@ export default function Detail({ trafo, gps }: TrafoDetailProps) {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <ParameterInfoCard
-                            title="Temperature"
-                            description="Tampilkan grafik tren temperatur untuk trafo ini"
-                            trafoId={trafo.id}
-                        />
-                        <ParameterInfoCard
-                            title="Voltage"
-                            description="Tampilkan grafik tren tegangan untuk trafo ini"
-                            trafoId={trafo.id}
-                        />
-                        <ParameterInfoCard
-                            title="Pressure"
-                            description="Tampilkan grafik tren tekanan untuk trafo ini"
-                            trafoId={trafo.id}
-                        />
-                        <ParameterInfoCard
-                            title="Current"
-                            description="Tampilkan grafik tren arus untuk trafo ini"
-                            trafoId={trafo.id}
-                        />
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            onClick={handleClick}
+                        >Show Chart</Button>
                     </Grid>
                 </Grid>
             </Box>
