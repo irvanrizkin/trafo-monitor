@@ -44,6 +44,7 @@ export default function Dashboard({ trafos }: DashboardPropsV1) {
                         marginBottom: 2,
                     }}
                 >
+                    <Button sx={{ mx: 2 }} href={route('trafo.create')} variant="contained">Add Trafo</Button>
                     <Button href={route('v2.dashboard')} variant="contained">Go to Version 2</Button>
                 </Box>
                 <Box

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Trafo extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'address',
+        'latitude',
+        'longitude',
+    ];
 }

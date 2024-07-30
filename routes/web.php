@@ -52,6 +52,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 Route::prefix('trafo')->group(function () {
+    Route::get('/create', [TrafoController::class, 'create'])
+        ->name('trafo.create');
+    Route::post('/', [TrafoController::class, 'store'])
+        ->name('trafo.store');
   Route::get('/{id}', [TrafoController::class, 'showWithDates'])
       ->name('trafo.show');
 });

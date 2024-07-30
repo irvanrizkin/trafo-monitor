@@ -22,4 +22,21 @@ class TrafoController extends Controller
             'dates' => $dates,
         ]);
     }
+
+    public function create() {
+        return Inertia::render('TrafoCreate/TrafoCreateV1');
+    }
+
+    public function store() {
+        $data = request()->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+        ]);
+
+        Trafo::create($data);
+
+        return redirect()->route('dashboard');
+    }
 }
