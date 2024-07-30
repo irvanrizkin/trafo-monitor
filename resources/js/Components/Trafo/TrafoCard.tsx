@@ -1,7 +1,7 @@
 import {Card, CardContent, Typography, CardActions, Button} from "@mui/material";
 import { Trafo } from "@/types";
 
-export default function TrafoCard({ trafo }: { trafo: Trafo }) {
+export default function TrafoCard({ trafo, version }: { trafo: Trafo, version: number }) {
     return (
         <Card sx={{ minWidth: 275 }}>
             <CardContent>
@@ -13,7 +13,11 @@ export default function TrafoCard({ trafo }: { trafo: Trafo }) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" href={route('v2.trafo.show', trafo.id)}>More Info</Button>
+                <Button size="small" href={
+                    version === 1
+                        ? route('trafo.show', trafo.id)
+                        : route('v2.trafo.show', trafo.id)
+                }>More Info</Button>
             </CardActions>
         </Card>
     );

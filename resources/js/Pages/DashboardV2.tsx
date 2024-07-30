@@ -56,7 +56,10 @@ export default function DashboardV2({ trafos, gpsArray, mapApiKey } : DashboardP
                 <Grid container spacing={2} mt={1.5}>
                     {trafos.map((trafo) => (
                         <Grid item key={trafo.id} xs={12} sm={6} md={4}>
-                            <TrafoCard trafo={trafo} />
+                            <TrafoCard
+                                trafo={trafo}
+                                version={2}
+                            />
                         </Grid>
                     ))}
                 </Grid>
