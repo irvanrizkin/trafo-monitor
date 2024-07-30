@@ -1,5 +1,5 @@
 import {DashboardPropsV1} from '@/types';
-import {Box, Container, Grid, Typography} from "@mui/material";
+import {Box, Button, Container, Grid, Typography} from "@mui/material";
 import TrafoCard from "@/Components/Trafo/TrafoCard";
 import GoogleMapReact from "google-map-react";
 
@@ -37,6 +37,15 @@ export default function Dashboard({ trafos }: DashboardPropsV1) {
                 <Typography variant="h4" gutterBottom>
                     Daftar Trafo V1
                 </Typography>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        marginBottom: 2,
+                    }}
+                >
+                    <Button href={route('v2.dashboard')} variant="contained">Go to Version 2</Button>
+                </Box>
                 <Box
                     sx={{
                         width: '100%',
