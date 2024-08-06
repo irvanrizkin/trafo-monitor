@@ -29,10 +29,14 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
         setDateState(event.target.value);
     };
 
-    const handleClick = () => {
-        console.log(dateState);
+    const handleClickTable = () => {
         if (dateState === '') return;
         window.location.href = route('metric.metrics', [trafo.id, dateState]);
+    }
+
+    const handleClickChart = () => {
+        if (dateState === '') return;
+        window.location.href = route('chart.data', [trafo.id, dateState]);
     }
 
     const renderMarker = (map: any, maps: any) => {
@@ -126,13 +130,26 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
                                     ))}
                                 </Select>
                             </FormControl>
-                            <Button
-                                variant="contained"
-                                fullWidth
-                                sx={{ mt: 2 }}
-                                disabled={dateState === ''}
-                                onClick={handleClick}
-                            >Tampilkan Data</Button>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} md={6}>
+                                    <Button
+                                        variant="contained"
+                                        fullWidth
+                                        sx={{ mt: 2 }}
+                                        disabled={dateState === ''}
+                                        onClick={handleClickTable}
+                                    >Buka Tabel</Button>
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <Button
+                                        variant="contained"
+                                        fullWidth
+                                        sx={{ mt: 2 }}
+                                        disabled={dateState === ''}
+                                        onClick={handleClickChart}
+                                    >Buka Grafik</Button>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Box>
