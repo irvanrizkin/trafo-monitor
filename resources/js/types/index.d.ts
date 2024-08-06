@@ -50,6 +50,13 @@ export interface Date {
     date: string;
 }
 
+export interface MetricAggregate {
+    min: number;
+    count: number;
+    max: number;
+    avg: number;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
@@ -92,7 +99,12 @@ export type MetricV1Props = PageProps & {
 
 export type ChartProps = PageProps & {
     trafo: TrafoV1;
+    metricsAvg: MetricV1[];
     metrics: MetricV1[];
+    temperature: MetricAggregate;
+    pressure: MetricAggregate;
+    voltage: MetricAggregate;
+    current: MetricAggregate;
     date: string;
 }
 
