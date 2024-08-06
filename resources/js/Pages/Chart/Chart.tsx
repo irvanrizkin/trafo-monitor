@@ -35,8 +35,8 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
                     return metric.pressure;
                 }),
                 fill: false,
-                backgroundColor: 'rgb(94, 22, 117)',
-                borderColor: 'rgba(94, 22, 117, 0.2)',
+                backgroundColor: 'rgb(33, 150, 243)',
+                borderColor: 'rgba(33, 150, 243, 0.2)',
             }
         ]
     }
@@ -54,8 +54,8 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
                     return metric.pressure;
                 }),
                 fill: false,
-                backgroundColor: 'rgb(94, 22, 117)',
-                borderColor: 'rgba(94, 22, 117, 0.2)',
+                backgroundColor: 'rgb(33, 150, 243)',
+                borderColor: 'rgba(33, 150, 243, 0.2)',
             }
         ]
     }
@@ -101,6 +101,17 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
                 </Toolbar>
             </AppBar>
             <Container maxWidth="xl" sx={{ pt: 8 }}>
+                <Box sx={{ mt: 2 }}>
+                    <Typography variant="h3" textAlign="center" sx={{ mb: 0.5 }}>
+                        <b>{trafo.name}</b>
+                    </Typography>
+                    <Typography variant="h5" textAlign="center" sx={{ mb: 0.5 }}>
+                        <b>{trafo.address}</b>
+                    </Typography>
+                    <Typography variant="h5" textAlign="center" sx={{ mb: 0.5 }}>
+                        <b>{date}</b>
+                    </Typography>
+                </Box>
                 <Grid container spacing={2} sx={{py: 2}}>
                     <Grid item xs={12} md={2}>
                         <Card>
