@@ -154,7 +154,7 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
                             </GoogleMapReact>
                         </Box>
                         <Grid container spacing={2} sx={{py: 2}}>
-                            <Grid item md={6}>
+                            <Grid item xs={12} md={6}>
                                 <Card sx={{mb: 2}}>
                                     <CardContent sx={{textAlign: 'center'}}>
                                         <Typography variant={"h5"}>Average</Typography>
@@ -178,7 +178,7 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
                                     </CardContent>
                                 </Card>
                             </Grid>
-                            <Grid item md={6}>
+                            <Grid item xs={12} md={6}>
                                 <Card sx={{mb: 2}}>
                                     <CardContent sx={{textAlign: 'center'}}>
                                         <Typography variant={"h5"}>Min</Typography>
@@ -207,6 +207,7 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
                     <Grid item xs={12} md={5}>
                         <Card sx={{mb: 2}}>
                             <CardContent>
+                                <Typography variant={"h6"}>Metrik Terbaru</Typography>
                                 <Box
                                     sx={{px: 2}}
                                     display="flex"
@@ -219,6 +220,7 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
                         </Card>
                         <Card>
                             <CardContent>
+                                <Typography variant={"h6"}>Metrik Rerata Harian</Typography>
                                 <Box
                                     sx={{px: 2}}
                                     display="flex"
