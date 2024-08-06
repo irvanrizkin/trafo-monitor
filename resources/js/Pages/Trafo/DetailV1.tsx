@@ -1,13 +1,20 @@
 import {
+    AppBar,
     Box,
     Button,
     Container,
     FormControl,
     Grid,
     InputLabel,
-    MenuItem,
+    MenuItem, Paper,
     Select,
     SelectChangeEvent,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Toolbar,
     Typography
 } from "@mui/material";
 import {useState} from "react";
@@ -48,74 +55,88 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
     }
 
     return (
-        <Container maxWidth="lg">
-            <Box sx={{ my: 4 }}>
-                <Box sx={{
-                    mb: 2,
-                    px: 2,
-                }}>
-                    <Typography variant="h4" sx={{ my: 2 }}>
-                        <b>{trafo.name}</b>
+        <>
+            <AppBar>
+                <Toolbar>
+                    <Typography variant="h6" noWrap component="div">
+                        Trafo Monitoring
                     </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                        <b>Trafo ID</b>
-                    </Typography>
-                    <Typography variant="h6">
-                        {trafo.id}
-                    </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                        <b>Created Date</b>
-                    </Typography>
-                    <Typography variant="h6">
-                        {new Date(trafo.created_at).toLocaleString()}
-                    </Typography>
-                </Box>
-                <Grid container spacing={2} px={2}>
-                    <Grid item xs={12} md={6}>
-                        <Box
-                            sx={{
-                                width: '100%',
-                                height: '650px',
-                                display: 'flex'
-                            }}
-                            component="map"
-                        >
-                            <GoogleMapReact
-                                bootstrapURLKeys={{ key: mapApiKey }}
-                                defaultCenter={defaultProps.center}
-                                defaultZoom={defaultProps.zoom}
-                                yesIWantToUseGoogleMapApiInternals
-                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
+                </Toolbar>
+            </AppBar>
+            <Container maxWidth="xl" sx={{ pt: 6 }}>
+                <Box sx={{ my: 4 }}>
+                    <Grid container spacing={2} px={2}>
+                        <Grid item xs={12} md={6}>
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                    height: '650px',
+                                    display: 'flex'
+                                }}
+                                component="map"
                             >
+                                <GoogleMapReact
+                                    bootstrapURLKeys={{ key: mapApiKey }}
+                                    defaultCenter={defaultProps.center}
+                                    defaultZoom={defaultProps.zoom}
+                                    yesIWantToUseGoogleMapApiInternals
+                                    onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
+                                >
 
-                            </GoogleMapReact>
-                        </Box>
+                                </GoogleMapReact>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Typography variant="h4" gutterBottom fontWeight={"bold"}>
+                                {trafo.name}
+                            </Typography>
+                            <Typography variant="h5" gutterBottom>
+                                {trafo.address}
+                            </Typography>
+                            <TableContainer component={Paper} sx={{ mb: 2 }}>
+                                <Table>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell>Latitude</TableCell>
+                                            <TableCell>{trafo.latitude}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>Longitude</TableCell>
+                                            <TableCell>{trafo.longitude}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>Created At</TableCell>
+                                            <TableCell>{new Date(trafo.created_at).toLocaleString()}</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <Typography sx={{ mb: 2 }} variant={"h6"}>Pilih Tanggal</Typography>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Date</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={dateState}
+                                    label="Date"
+                                    onChange={handleChange}
+                                >
+                                    {dates.map((date, index) => (
+                                        <MenuItem key={index} value={date.date}>{date.date}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <Button
+                                variant="contained"
+                                fullWidth
+                                sx={{ mt: 2 }}
+                                disabled={dateState === ''}
+                                onClick={handleClick}
+                            >Tampilkan Data</Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Date</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={dateState}
-                                label="Date"
-                                onChange={handleChange}
-                            >
-                                {dates.map((date, index) => (
-                                    <MenuItem key={index} value={date.date}>{date.date}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <Button
-                            variant="contained"
-                            fullWidth
-                            sx={{ mt: 2 }}
-                            disabled={dateState === ''}
-                            onClick={handleClick}
-                        >Show Table</Button>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Container>
+                </Box>
+            </Container>
+        </>
     );
 }
