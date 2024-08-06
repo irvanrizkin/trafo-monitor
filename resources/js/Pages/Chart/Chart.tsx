@@ -1,5 +1,6 @@
 import {ChartProps} from "@/types";
 import {
+    AppBar,
     Box,
     Card,
     CardContent,
@@ -9,7 +10,7 @@ import {
     FormLabel,
     Grid,
     Radio,
-    RadioGroup,
+    RadioGroup, Toolbar,
     Typography
 } from "@mui/material";
 import {Bar, Line} from "react-chartjs-2";
@@ -91,126 +92,135 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
     }
 
     return (
-        <Container maxWidth="xl">
-            <Grid container spacing={2} sx={{py: 2}}>
-                <Grid item xs={12} md={2}>
-                    <Card>
-                        <CardContent>
-                            <FormControl>
-                                <FormLabel id="demo-radio-buttons-group-label">Parameter</FormLabel>
-                                <RadioGroup
-                                    aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="pressure"
-                                    name="radio-buttons-group"
-                                    value={property}
-                                    onChange={handleChange}
-                                >
-                                    <FormControlLabel value="pressure" control={<Radio/>} label="Pressure"/>
-                                    <FormControlLabel value="temperature" control={<Radio/>} label="Temperature"/>
-                                    <FormControlLabel value="voltage" control={<Radio/>} label="Voltage"/>
-                                    <FormControlLabel value="current" control={<Radio/>} label="Current"/>
-                                </RadioGroup>
-                            </FormControl>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} md={5}>
-                    <Box
-                        sx={{
-                            width: '100%',
-                            height: '500px',
-                            display: 'flex'
-                        }}
-                        component="map"
-                    >
-                        <GoogleMapReact
-                            bootstrapURLKeys={{key: mapApiKey}}
-                            defaultCenter={defaultProps.center}
-                            defaultZoom={defaultProps.zoom}
-                            yesIWantToUseGoogleMapApiInternals
-                            onGoogleApiLoaded={({map, maps}) => renderMarker(map, maps)}
+        <>
+            <AppBar>
+                <Toolbar>
+                    <Typography variant="h6" noWrap component="div">
+                        Trafo Monitoring
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Container maxWidth="xl" sx={{ pt: 8 }}>
+                <Grid container spacing={2} sx={{py: 2}}>
+                    <Grid item xs={12} md={2}>
+                        <Card>
+                            <CardContent>
+                                <FormControl>
+                                    <FormLabel id="demo-radio-buttons-group-label">Parameter</FormLabel>
+                                    <RadioGroup
+                                        aria-labelledby="demo-radio-buttons-group-label"
+                                        defaultValue="pressure"
+                                        name="radio-buttons-group"
+                                        value={property}
+                                        onChange={handleChange}
+                                    >
+                                        <FormControlLabel value="pressure" control={<Radio/>} label="Pressure"/>
+                                        <FormControlLabel value="temperature" control={<Radio/>} label="Temperature"/>
+                                        <FormControlLabel value="voltage" control={<Radio/>} label="Voltage"/>
+                                        <FormControlLabel value="current" control={<Radio/>} label="Current"/>
+                                    </RadioGroup>
+                                </FormControl>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} md={5}>
+                        <Box
+                            sx={{
+                                width: '100%',
+                                height: '500px',
+                                display: 'flex'
+                            }}
+                            component="map"
                         >
+                            <GoogleMapReact
+                                bootstrapURLKeys={{key: mapApiKey}}
+                                defaultCenter={defaultProps.center}
+                                defaultZoom={defaultProps.zoom}
+                                yesIWantToUseGoogleMapApiInternals
+                                onGoogleApiLoaded={({map, maps}) => renderMarker(map, maps)}
+                            >
 
-                        </GoogleMapReact>
-                    </Box>
-                    <Grid container spacing={2} sx={{py: 2}}>
-                        <Grid item md={6}>
-                            <Card sx={{mb: 2}}>
-                                <CardContent sx={{textAlign: 'center'}}>
-                                    <Typography variant={"h5"}>Average</Typography>
-                                    <Typography
-                                        variant={"h3"}
-                                        sx={{
-                                            fontWeight: 'bold'
-                                        }}
-                                    >{Math.round(aggregateResult(property).avg * 100) / 100}</Typography>
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardContent sx={{textAlign: 'center'}}>
-                                    <Typography variant={"h5"}>Count</Typography>
-                                    <Typography
-                                        variant={"h3"}
-                                        sx={{
-                                            fontWeight: 'bold'
-                                        }}
-                                    >{aggregateResult(property).count}</Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item md={6}>
-                            <Card sx={{mb: 2}}>
-                                <CardContent sx={{textAlign: 'center'}}>
-                                    <Typography variant={"h5"}>Min</Typography>
-                                    <Typography
-                                        variant={"h3"}
-                                        sx={{
-                                            fontWeight: 'bold'
-                                        }}
-                                    >{aggregateResult(property).min}</Typography>
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardContent sx={{textAlign: 'center'}}>
-                                    <Typography variant={"h5"}>Max</Typography>
-                                    <Typography
-                                        variant={"h3"}
-                                        sx={{
-                                            fontWeight: 'bold'
-                                        }}
-                                    >{aggregateResult(property).max}</Typography>
-                                </CardContent>
-                            </Card>
+                            </GoogleMapReact>
+                        </Box>
+                        <Grid container spacing={2} sx={{py: 2}}>
+                            <Grid item md={6}>
+                                <Card sx={{mb: 2}}>
+                                    <CardContent sx={{textAlign: 'center'}}>
+                                        <Typography variant={"h5"}>Average</Typography>
+                                        <Typography
+                                            variant={"h3"}
+                                            sx={{
+                                                fontWeight: 'bold'
+                                            }}
+                                        >{Math.round(aggregateResult(property).avg * 100) / 100}</Typography>
+                                    </CardContent>
+                                </Card>
+                                <Card>
+                                    <CardContent sx={{textAlign: 'center'}}>
+                                        <Typography variant={"h5"}>Count</Typography>
+                                        <Typography
+                                            variant={"h3"}
+                                            sx={{
+                                                fontWeight: 'bold'
+                                            }}
+                                        >{aggregateResult(property).count}</Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item md={6}>
+                                <Card sx={{mb: 2}}>
+                                    <CardContent sx={{textAlign: 'center'}}>
+                                        <Typography variant={"h5"}>Min</Typography>
+                                        <Typography
+                                            variant={"h3"}
+                                            sx={{
+                                                fontWeight: 'bold'
+                                            }}
+                                        >{aggregateResult(property).min}</Typography>
+                                    </CardContent>
+                                </Card>
+                                <Card>
+                                    <CardContent sx={{textAlign: 'center'}}>
+                                        <Typography variant={"h5"}>Max</Typography>
+                                        <Typography
+                                            variant={"h3"}
+                                            sx={{
+                                                fontWeight: 'bold'
+                                            }}
+                                        >{aggregateResult(property).max}</Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
                         </Grid>
                     </Grid>
+                    <Grid item xs={12} md={5}>
+                        <Card sx={{mb: 2}}>
+                            <CardContent>
+                                <Box
+                                    sx={{px: 2}}
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                >
+                                    <Bar data={metricChart}/>
+                                </Box>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardContent>
+                                <Box
+                                    sx={{px: 2}}
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                >
+                                    <Line data={metricAvgChart}/>
+                                </Box>
+                            </CardContent>
+                        </Card>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={5}>
-                    <Card sx={{mb: 2}}>
-                        <CardContent>
-                            <Box
-                                sx={{px: 2}}
-                                display="flex"
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-                                <Bar data={metricChart}/>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardContent>
-                            <Box
-                                sx={{px: 2}}
-                                display="flex"
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-                                <Line data={metricAvgChart}/>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
-        </Container>
+            </Container>
+        </>
     )
 }
