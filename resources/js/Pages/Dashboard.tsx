@@ -40,11 +40,8 @@ export default function Dashboard({ trafos }: DashboardPropsV1) {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Container maxWidth={"xl"}>
+            <Container maxWidth={"xl"} sx={{ pt: 6 }}>
                 <Box sx={{ my: 4 }}>
-                    <Typography variant="h4" gutterBottom>
-                        Daftar Trafo V1
-                    </Typography>
                     <Box
                         sx={{
                             display: 'flex',
