@@ -27,7 +27,7 @@ export default function Chart({metrics, trafo, date, metricsAvg, temperature, pr
         datasets: [
             {
                 label: "Metric",
-                data: metrics.map((metric) => {
+                data: metrics.reverse().map((metric) => {
                     if (property === 'temperature') return metric.temperature;
                     if (property === 'pressure') return metric.pressure;
                     if (property === 'voltage') return metric.voltage;
