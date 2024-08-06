@@ -33,7 +33,7 @@ export default function Metric({ date, trafo, metrics }: MetricV1Props) {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Container maxWidth="lg" sx={{ pt: 6 }}>
+            <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <Box sx={{ my: 4 }}>
                     <Typography variant="h3" textAlign="center" sx={{ mb: 0.5 }}>
                         <b>{trafo.name}</b>
