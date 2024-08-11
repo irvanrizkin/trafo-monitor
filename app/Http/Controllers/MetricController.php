@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\Frequency;
+use App\Models\KFactor;
 use App\Models\Metric;
 use App\Models\Power;
 use App\Models\PowerFactor;
+use App\Models\PowerLoss;
 use App\Models\ReactivePower;
 use App\Models\Trafo;
+use App\Models\TriplenCurrent;
 use App\Models\Voltage;
 use Inertia\Inertia;
 
@@ -58,6 +61,21 @@ class MetricController extends Controller
             'reactivePowers' => $reactivePowers,
             'apparentPowers' => $apparentPowers,
             'powerFactors' => $powerFactors
+        ]);
+    }
+
+    public function getMetricPKA($trafoId, $date) {
+        $trafo = Trafo::find($trafoId);
+        $powerLosses = PowerLoss::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
+        $kFactors = KFactor::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
+        $triplenCurrents = TriplenCurrent::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
+
+        return Inertia::render('Metric/MetricPKA', [
+            'trafo' => $trafo,
+            'date' => $date,
+            'powerLosses' => $powerLosses,
+            'kFactors' => $kFactors,
+            'triplenCurrents' => $triplenCurrents
         ]);
     }
 }

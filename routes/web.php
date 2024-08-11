@@ -66,6 +66,8 @@ Route::prefix('metric')->group(function () {
         ->name('metric.vif');
     Route::get('/{trafoid}/{date}/pqspf', [MetricController::class, 'getMetricPQSPF'])
         ->name('metric.pqspf');
+    Route::get('/{trafoid}/{date}/pka', [MetricController::class, 'getMetricPKA'])
+        ->name('metric.pka');
 });
 
 Route::prefix('chart')->group(function () {

@@ -49,6 +49,18 @@ export interface MetricPowerFactor extends Metric {
     power_factor_t: number;
 }
 
+export interface MetricPowerLoss extends Metric {
+    power_loss: number;
+}
+
+export interface MetricKFactor extends Metric {
+    k_factor: number;
+}
+
+export interface MetricTriplenCurrent extends Metric {
+    triplen_current: number;
+}
+
 export type MetricVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -64,4 +76,12 @@ export type MetricPQSPFProps = PageProps & {
     reactivePowers: MetricReactivePower[];
     apparentPowers: MetricApparentPower[];
     powerFactors: MetricPowerFactor[];
+}
+
+export type MetricPKAProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    powerLosses: MetricPowerLoss[];
+    kFactors: MetricKFactor[];
+    triplenCurrents: MetricTriplenCurrent[];
 }
