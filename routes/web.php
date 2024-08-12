@@ -73,6 +73,8 @@ Route::prefix('metric')->group(function () {
 Route::prefix('chart')->group(function () {
    Route::get('/{trafoid}/{date}', [ChartController::class, 'getChartData'])
        ->name('chart.data');
+    Route::get('/{trafoid}/{date}/vif', [ChartController::class, 'getChartVIF'])
+        ->name('chart.vif');
 });
 
 Route::middleware('auth')->group(function () {
