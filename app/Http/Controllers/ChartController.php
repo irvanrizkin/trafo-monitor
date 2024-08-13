@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\Frequency;
 use App\Models\Metric;
+use App\Models\Power;
+use App\Models\PowerFactor;
+use App\Models\ReactivePower;
 use App\Models\Trafo;
 use App\Models\Voltage;
 use Illuminate\Http\Request;
@@ -122,6 +126,103 @@ class ChartController extends Controller
             'avgFrequencyR' => $avgFrequencyR,
             'avgFrequencyS' => $avgFrequencyS,
             'avgFrequencyT' => $avgFrequencyT,
+            'date' => $date,
+        ]);
+    }
+
+    public function getChartPQSPF($trafoId, $date) {
+        $trafo = Trafo::find($trafoId);
+
+        $powers = Power::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(power_r) as power_r,
+            AVG(power_s) as power_s,
+            AVG(power_t) as power_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $powersRaw = Power::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+        $avgPowerR = $powersRaw->avg('power_r');
+        $avgPowerS = $powersRaw->avg('power_s');
+        $avgPowerT = $powersRaw->avg('power_t');
+
+        $reactivePowers = ReactivePower::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(reactive_power_r) as reactive_power_r,
+            AVG(reactive_power_s) as reactive_power_s,
+            AVG(reactive_power_t) as reactive_power_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $reactivePowersRaw = ReactivePower::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+        $avgReactivePowerR = $reactivePowersRaw->avg('reactive_power_r');
+        $avgReactivePowerS = $reactivePowersRaw->avg('reactive_power_s');
+        $avgReactivePowerT = $reactivePowersRaw->avg('reactive_power_t');
+
+        $apparentPowers = ApparentPower::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(apparent_power_r) as apparent_power_r,
+            AVG(apparent_power_s) as apparent_power_s,
+            AVG(apparent_power_t) as apparent_power_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $apparentPowersRaw = ApparentPower::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+        $avgApparentPowerR = $apparentPowersRaw->avg('apparent_power_r');
+        $avgApparentPowerS = $apparentPowersRaw->avg('apparent_power_s');
+        $avgApparentPowerT = $apparentPowersRaw->avg('apparent_power_t');
+
+        $powerFactors = PowerFactor::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(power_factor_r) as power_factor_r,
+            AVG(power_factor_s) as power_factor_s,
+            AVG(power_factor_t) as power_factor_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $powerFactorsRaw = PowerFactor::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+        $avgPowerFactorR = $powerFactorsRaw->avg('power_factor_r');
+        $avgPowerFactorS = $powerFactorsRaw->avg('power_factor_s');
+        $avgPowerFactorT = $powerFactorsRaw->avg('power_factor_t');
+
+        return Inertia::render('Chart/ChartPQSPF', [
+            'trafo' => $trafo,
+            'powers' => $powers,
+            'reactivePowers' => $reactivePowers,
+            'apparentPowers' => $apparentPowers,
+            'powerFactors' => $powerFactors,
+            'avgPowerR' => $avgPowerR,
+            'avgPowerS' => $avgPowerS,
+            'avgPowerT' => $avgPowerT,
+            'avgReactivePowerR' => $avgReactivePowerR,
+            'avgReactivePowerS' => $avgReactivePowerS,
+            'avgReactivePowerT' => $avgReactivePowerT,
+            'avgApparentPowerR' => $avgApparentPowerR,
+            'avgApparentPowerS' => $avgApparentPowerS,
+            'avgApparentPowerT' => $avgApparentPowerT,
+            'avgPowerFactorR' => $avgPowerFactorR,
+            'avgPowerFactorS' => $avgPowerFactorS,
+            'avgPowerFactorT' => $avgPowerFactorT,
             'date' => $date,
         ]);
     }

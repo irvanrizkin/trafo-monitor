@@ -23,6 +23,30 @@ export interface AveragedMetricFrequency extends AveragedMetric {
     frequency_t: number;
 }
 
+export interface AveragedMetricPower extends AveragedMetric {
+    power_r: number;
+    power_s: number;
+    power_t: number;
+}
+
+export interface AveragedMetricReactivePower extends AveragedMetric {
+    reactive_power_r: number;
+    reactive_power_s: number;
+    reactive_power_t: number;
+}
+
+export interface AveragedMetricApparentPower extends AveragedMetric {
+    apparent_power_r: number;
+    apparent_power_s: number;
+    apparent_power_t: number;
+}
+
+export interface AveragedMetricPowerFactor extends AveragedMetric {
+    power_factor_r: number;
+    power_factor_s: number;
+    power_factor_t: number;
+}
+
 export type ChartVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -38,4 +62,25 @@ export type ChartVIFProps = PageProps & {
     avgFrequencyR: number;
     avgFrequencyS: number;
     avgFrequencyT: number;
+}
+
+export type ChartPQSPFProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    powers: AveragedMetricPower[];
+    reactivePowers: AveragedMetricReactivePower[];
+    apparentPowers: AveragedMetricApparentPower[];
+    powerFactors: AveragedMetricPowerFactor[];
+    avgPowerR: number;
+    avgPowerS: number;
+    avgPowerT: number;
+    avgReactivePowerR: number;
+    avgReactivePowerS: number;
+    avgReactivePowerT: number;
+    avgApparentPowerR: number;
+    avgApparentPowerS: number;
+    avgApparentPowerT: number;
+    avgPowerFactorR: number;
+    avgPowerFactorS: number;
+    avgPowerFactorT: number;
 }
