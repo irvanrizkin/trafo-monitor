@@ -17,27 +17,48 @@ import {
     Toolbar,
     Typography
 } from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TrafoDetailPropsV1} from "@/types";
 import GoogleMapReact from "google-map-react";
 
 export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
+    const dataCategories = [
+        {id: 'vif', name: 'Data 1 : V, I , dan F'},
+        {id: 'pqspf', name: 'Data 2 : P, Q, S dan PF'},
+        {id: 'thd-ihd', name: 'Data 3 : THD dan IHD ( BAR CHART)'},
+        {id: 'ihd', name: 'Data 4 : IHD (BAR CHART)'},
+        {id: 'pka', name: 'Data 5 : ESTIMASI  P LOSS, K FAKTOR, DAN ARUS TRIPLEN'},
+        {id: 'analisis', name: 'Data 6 : ANALISIS'},
+    ]
     const [dateState, setDateState] = useState('');
+    const [tableCategoryState, setTableCategoryState] = useState('');
+    const [chartCategoryState, setChartCategoryState] = useState('');
+
 
     const handleChange = (event: SelectChangeEvent) => {
         setDateState(event.target.value);
     };
 
-    const handleClickTable = () => {
-        if (dateState === '') return;
-        window.location.href = route('metric.metrics', [trafo.id, dateState]);
+    const handleChangeTableCategory = (event: SelectChangeEvent) => {
+        setTableCategoryState(event.target.value);
     }
 
-    const handleClickChart = () => {
-        if (dateState === '') return;
-        window.location.href = route('chart.data', [trafo.id, dateState]);
+    const handleChangeChartCategory = (event: SelectChangeEvent) => {
+        setChartCategoryState(event.target.value);
     }
+
+    useEffect(() => {
+        if (tableCategoryState) {
+            window.location.href = route(`metric.${tableCategoryState}`, [trafo.id, dateState]);
+        }
+    }, [tableCategoryState, route, trafo.id, dateState]);
+
+    useEffect(() => {
+        if (chartCategoryState) {
+            window.location.href = route(`chart.${chartCategoryState}`, [trafo.id, dateState]);
+        }
+    }, [chartCategoryState, route, trafo.id, dateState]);
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({
@@ -116,7 +137,7 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
                                 </Table>
                             </TableContainer>
                             <Typography sx={{ mb: 2 }} variant={"h6"}>Pilih Tanggal</Typography>
-                            <FormControl fullWidth>
+                            <FormControl fullWidth sx={{ mb: 2 }}>
                                 <InputLabel id="demo-simple-select-label">Date</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
@@ -132,22 +153,36 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
                             </FormControl>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} md={6}>
-                                    <Button
-                                        variant="contained"
-                                        fullWidth
-                                        sx={{ mt: 2 }}
-                                        disabled={dateState === ''}
-                                        onClick={handleClickTable}
-                                    >Buka Tabel</Button>
+                                    <FormControl fullWidth disabled={dateState === ''}>
+                                        <InputLabel id="demo-simple-select-label">Table</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={tableCategoryState}
+                                            label="Date"
+                                            onChange={handleChangeTableCategory}
+                                        >
+                                            {dataCategories.map((dataCategory, index) => (
+                                                <MenuItem key={index} value={dataCategory.id}>{dataCategory.name}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                    <Button
-                                        variant="contained"
-                                        fullWidth
-                                        sx={{ mt: 2 }}
-                                        disabled={dateState === ''}
-                                        onClick={handleClickChart}
-                                    >Buka Grafik</Button>
+                                    <FormControl fullWidth disabled={dateState === ''}>
+                                        <InputLabel id="demo-simple-select-label">Chart</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={chartCategoryState}
+                                            label="Date"
+                                            onChange={handleChangeChartCategory}
+                                        >
+                                            {dataCategories.map((dataCategory, index) => (
+                                                <MenuItem key={index} value={dataCategory.id}>{dataCategory.name}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
                                 </Grid>
                             </Grid>
                         </Grid>
