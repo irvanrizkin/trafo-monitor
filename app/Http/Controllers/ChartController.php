@@ -230,6 +230,14 @@ class ChartController extends Controller
         ]);
     }
 
+    public function getChartTHDIHD($trafoId, $date) {
+        return Inertia::render('ComingSoon');
+    }
+
+    public function getChartIHD($trafoId, $date) {
+        return Inertia::render('ComingSoon');
+    }
+
     public function getChartPKA($trafoId, $date)
     {
         $trafo = Trafo::find($trafoId);
@@ -298,5 +306,9 @@ class ChartController extends Controller
             'minTriplenCurrent' => $minTriplenCurrent,
             'date' => $date,
         ]);
+    }
+
+    public function getChartAnalysis($trafoId, $date) {
+        return Inertia::render('ComingSoon');
     }
 }

@@ -64,6 +64,14 @@ class MetricController extends Controller
         ]);
     }
 
+    public function getMetricTHDIHD($trafoId, $date) {
+        return Inertia::render('ComingSoon');
+    }
+
+    public function getMetricIHD($trafoId, $date) {
+        return Inertia::render('ComingSoon');
+    }
+
     public function getMetricPKA($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
         $powerLosses = PowerLoss::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
@@ -77,5 +85,9 @@ class MetricController extends Controller
             'kFactors' => $kFactors,
             'triplenCurrents' => $triplenCurrents
         ]);
+    }
+
+    public function getMetricAnalysis($trafoId, $date) {
+        return Inertia::render('ComingSoon');
     }
 }
