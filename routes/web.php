@@ -77,6 +77,8 @@ Route::prefix('chart')->group(function () {
         ->name('chart.vif');
     Route::get('/{trafoid}/{date}/pqspf', [ChartController::class, 'getChartPQSPF'])
         ->name('chart.pqspf');
+    Route::get('/{trafoid}/{date}/pka', [ChartController::class, 'getChartPKA'])
+        ->name('chart.pka');
 });
 
 Route::middleware('auth')->group(function () {

@@ -47,6 +47,18 @@ export interface AveragedMetricPowerFactor extends AveragedMetric {
     power_factor_t: number;
 }
 
+export interface AveragedMetricPowerLoss extends AveragedMetric {
+    power_loss: number;
+}
+
+export interface AveragedMetricKFactor extends AveragedMetric {
+    k_factor: number;
+}
+
+export interface AveragedMetricTriplenCurrent extends AveragedMetric {
+    triplen_current: number;
+}
+
 export type ChartVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -83,4 +95,21 @@ export type ChartPQSPFProps = PageProps & {
     avgPowerFactorR: number;
     avgPowerFactorS: number;
     avgPowerFactorT: number;
+}
+
+export type ChartPKAProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    powerLosses: AveragedMetricPowerLoss[];
+    kFactors: AveragedMetricKFactor[];
+    triplenCurrents: AveragedMetricTriplenCurrent[];
+    maxPowerLoss: number;
+    avgPowerLoss: number;
+    minPowerLoss: number;
+    maxKFactor: number;
+    avgKFactor: number;
+    minKFactor: number;
+    maxTriplenCurrent: number;
+    avgTriplenCurrent: number;
+    minTriplenCurrent: number;
 }
