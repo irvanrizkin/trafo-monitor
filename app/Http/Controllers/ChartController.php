@@ -11,6 +11,9 @@ use App\Models\Power;
 use App\Models\PowerFactor;
 use App\Models\PowerLoss;
 use App\Models\ReactivePower;
+use App\Models\THDCurrent;
+use App\Models\THDFrequency;
+use App\Models\TotalHarmonicDistortion;
 use App\Models\Trafo;
 use App\Models\TriplenCurrent;
 use App\Models\Voltage;
@@ -231,7 +234,75 @@ class ChartController extends Controller
     }
 
     public function getChartTHDIHD($trafoId, $date) {
-        return Inertia::render('ComingSoon');
+        $trafo = Trafo::find($trafoId);
+
+        $totalHarmonicDistortions = TotalHarmonicDistortion::selectRaw(
+            'DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(voltage_r) as voltage_r,
+            AVG(voltage_s) as voltage_s,
+            AVG(voltage_t) as voltage_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $totalHarmonicDistortionsRaw = TotalHarmonicDistortion::where('trafo_id', $trafoId)->get();
+        $avgVoltageR = $totalHarmonicDistortionsRaw->avg('voltage_r');
+        $avgVoltageS = $totalHarmonicDistortionsRaw->avg('voltage_s');
+        $avgVoltageT = $totalHarmonicDistortionsRaw->avg('voltage_t');
+
+        $thdCurrents = THDCurrent::selectRaw(
+            'DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(current_r) as current_r,
+            AVG(current_s) as current_s,
+            AVG(current_t) as current_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $thdCurrentsRaw = THDCurrent::where('trafo_id', $trafoId)->get();
+        $avgCurrentR = $thdCurrentsRaw->avg('current_r');
+        $avgCurrentS = $thdCurrentsRaw->avg('current_s');
+        $avgCurrentT = $thdCurrentsRaw->avg('current_t');
+
+        $thdFrequencies = THDFrequency::selectRaw(
+            'DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(frequency_r) as frequency_r,
+            AVG(frequency_s) as frequency_s,
+            AVG(frequency_t) as frequency_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $thdFrequenciesRaw = THDFrequency::where('trafo_id', $trafoId)->get();
+        $avgFrequencyR = $thdFrequenciesRaw->avg('frequency_r');
+        $avgFrequencyS = $thdFrequenciesRaw->avg('frequency_s');
+        $avgFrequencyT = $thdFrequenciesRaw->avg('frequency_t');
+
+        return Inertia::render('Chart/ChartTHDIHD', [
+            'trafo' => $trafo,
+            'totalHarmonicDistortions' => $totalHarmonicDistortions,
+            'thdCurrents' => $thdCurrents,
+            'thdFrequencies' => $thdFrequencies,
+            'avgVoltageR' => $avgVoltageR,
+            'avgVoltageS' => $avgVoltageS,
+            'avgVoltageT' => $avgVoltageT,
+            'avgCurrentR' => $avgCurrentR,
+            'avgCurrentS' => $avgCurrentS,
+            'avgCurrentT' => $avgCurrentT,
+            'avgFrequencyR' => $avgFrequencyR,
+            'avgFrequencyS' => $avgFrequencyS,
+            'avgFrequencyT' => $avgFrequencyT,
+            'date' => $date,
+        ]);
     }
 
     public function getChartIHD($trafoId, $date) {

@@ -61,6 +61,24 @@ export interface MetricTriplenCurrent extends Metric {
     triplen_current: number;
 }
 
+export interface MetricTotalHarmonicDistortion extends Metric {
+    voltage_r: number;
+    voltage_s: number;
+    voltage_t: number;
+}
+
+export interface MetricTHDCurrent extends Metric {
+    current_r: number;
+    current_s: number;
+    current_t: number;
+}
+
+export interface MetricTHDFrequency extends Metric {
+    frequency_r: number;
+    frequency_s: number;
+    frequency_t: number;
+}
+
 export type MetricVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -76,6 +94,14 @@ export type MetricPQSPFProps = PageProps & {
     reactivePowers: MetricReactivePower[];
     apparentPowers: MetricApparentPower[];
     powerFactors: MetricPowerFactor[];
+}
+
+export type MetricTHDIHDProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    totalHarmonicDistortions: MetricTotalHarmonicDistortion[];
+    thdCurrents: MetricTHDCurrent[];
+    thdFrequencies: MetricTHDFrequency[];
 }
 
 export type MetricPKAProps = PageProps & {

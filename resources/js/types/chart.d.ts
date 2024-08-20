@@ -59,6 +59,24 @@ export interface AveragedMetricTriplenCurrent extends AveragedMetric {
     triplen_current: number;
 }
 
+export interface AveragedMetricTotalHarmonicDistortion extends AveragedMetric {
+    voltage_r: number;
+    voltage_s: number;
+    voltage_t: number;
+}
+
+export interface AveragedMetricTHDCurrent extends AveragedMetric {
+    current_r: number;
+    current_s: number;
+    current_t: number;
+}
+
+export interface AveragedMetricTHDFrequency extends AveragedMetric {
+    frequency_r: number;
+    frequency_s: number;
+    frequency_t: number;
+}
+
 export type ChartVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -95,6 +113,23 @@ export type ChartPQSPFProps = PageProps & {
     avgPowerFactorR: number;
     avgPowerFactorS: number;
     avgPowerFactorT: number;
+}
+
+export type ChartTHDIHDProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    totalHarmonicDistortions: AveragedMetricTotalHarmonicDistortion[];
+    thdCurrents: AveragedMetricTHDCurrent[];
+    thdFrequencies: AveragedMetricTHDFrequency[];
+    avgVoltageR: number;
+    avgVoltageS: number;
+    avgVoltageT: number;
+    avgCurrentR: number;
+    avgCurrentS: number;
+    avgCurrentT: number;
+    avgFrequencyR: number;
+    avgFrequencyS: number;
+    avgFrequencyT: number;
 }
 
 export type ChartPKAProps = PageProps & {

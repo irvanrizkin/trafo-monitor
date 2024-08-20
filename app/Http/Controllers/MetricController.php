@@ -11,6 +11,9 @@ use App\Models\Power;
 use App\Models\PowerFactor;
 use App\Models\PowerLoss;
 use App\Models\ReactivePower;
+use App\Models\THDCurrent;
+use App\Models\THDFrequency;
+use App\Models\TotalHarmonicDistortion;
 use App\Models\Trafo;
 use App\Models\TriplenCurrent;
 use App\Models\Voltage;
@@ -65,7 +68,24 @@ class MetricController extends Controller
     }
 
     public function getMetricTHDIHD($trafoId, $date) {
-        return Inertia::render('ComingSoon');
+        $trafo = Trafo::find($trafoId);
+        $totalHarmonicDistortions = TotalHarmonicDistortion::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+        $thdCurrents = THDCurrent::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+        $thdFrequencies = THDFrequency::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+
+        return Inertia::render('Metric/MetricTHDIHD', [
+            'trafo' => $trafo,
+            'date' => $date,
+            'totalHarmonicDistortions' => $totalHarmonicDistortions,
+            'thdCurrents' => $thdCurrents,
+            'thdFrequencies' => $thdFrequencies
+        ]);
     }
 
     public function getMetricIHD($trafoId, $date) {
