@@ -15,9 +15,9 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
-});
+})->middleware(['auth']);
 
-Route::prefix('v2')->group(function () {
+Route::prefix('v2')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardV2Controller::class, 'index'])
         ->name('v2.dashboard');
 
@@ -48,9 +48,10 @@ Route::prefix('v2')->group(function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
     ->name('dashboard');
 
-Route::prefix('trafo')->group(function () {
+Route::prefix('trafo')->middleware(['auth'])->group(function () {
     Route::get('/create', [TrafoController::class, 'create'])
         ->name('trafo.create');
     Route::post('/', [TrafoController::class, 'store'])
@@ -59,7 +60,7 @@ Route::prefix('trafo')->group(function () {
       ->name('trafo.show');
 });
 
-Route::prefix('metric')->group(function () {
+Route::prefix('metric')->middleware(['auth'])->group(function () {
     Route::get('/{trafoid}/{date}', [MetricController::class, 'getMetrics'])
         ->name('metric.metrics');
     Route::get('/{trafoid}/{date}/vif', [MetricController::class, 'getMetricVIF'])
@@ -76,7 +77,7 @@ Route::prefix('metric')->group(function () {
         ->name('metric.analisis');
 });
 
-Route::prefix('chart')->group(function () {
+Route::prefix('chart')->middleware(['auth'])->group(function () {
    Route::get('/{trafoid}/{date}', [ChartController::class, 'getChartData'])
        ->name('chart.data');
     Route::get('/{trafoid}/{date}/vif', [ChartController::class, 'getChartVIF'])

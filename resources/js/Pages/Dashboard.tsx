@@ -2,6 +2,7 @@ import {DashboardPropsV1} from '@/types';
 import {AppBar, Box, Button, Container, Grid, Toolbar, Typography} from "@mui/material";
 import TrafoCard from "@/Components/Trafo/TrafoCard";
 import GoogleMapReact from "google-map-react";
+import {router} from "@inertiajs/react";
 
 export default function Dashboard({ trafos }: DashboardPropsV1) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
@@ -31,6 +32,10 @@ export default function Dashboard({ trafos }: DashboardPropsV1) {
         zoom: 9,
     }
 
+    const logout = () => {
+        router.post('logout');
+    }
+
     return (
         <>
             <AppBar>
@@ -49,8 +54,9 @@ export default function Dashboard({ trafos }: DashboardPropsV1) {
                             marginBottom: 2,
                         }}
                     >
-                        <Button sx={{ mx: 2 }} href={route('trafo.create')} variant="contained">Add Trafo</Button>
-                        <Button href={route('v2.dashboard')} variant="contained">Go to Version 2</Button>
+                        <Button href={route('trafo.create')} variant="contained">Add Trafo</Button>
+                        <Button sx={{ mx: 2 }} href={route('v2.dashboard')} variant="contained">Go to Version 2</Button>
+                        <Button onClick={() => logout()} variant="contained">Logout</Button>
                     </Box>
                     <Box
                         sx={{
