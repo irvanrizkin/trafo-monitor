@@ -1,7 +1,7 @@
 import {ChartTHDIHDProps} from "@/types/chart";
 import {ChartData} from "chart.js";
 import {AppBar, Box, Container, Grid, Paper, Toolbar, Typography} from "@mui/material";
-import {Line} from "react-chartjs-2";
+import {Bar} from "react-chartjs-2";
 import GoogleMapReact from "google-map-react";
 import 'chart.js/auto';
 
@@ -23,83 +23,65 @@ export default function ChartTHDIHD({
                                     }: ChartTHDIHDProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const metricAvgTHD: ChartData<"line", number[], number> = {
+    const metricAvgTHD: ChartData<"bar", number[], number> = {
         labels: totalHarmonicDistortions.map(thd => thd.hour),
         datasets: [
             {
-                label: 'R',
+                label: 'VR',
                 data: totalHarmonicDistortions.map(thd => thd.voltage_r),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
+                backgroundColor: 'rgb(75, 192, 192)',
             },
             {
-                label: 'S',
+                label: 'VS',
                 data: totalHarmonicDistortions.map(thd => thd.voltage_s),
-                fill: false,
-                borderColor: 'rgb(255, 99, 132)',
-                tension: 0.1
+                backgroundColor: 'rgb(255, 99, 132)',
             },
             {
-                label: 'T',
+                label: 'VT',
                 data: totalHarmonicDistortions.map(thd => thd.voltage_t),
-                fill: false,
-                borderColor: 'rgb(54, 162, 235)',
-                tension: 0.1
+                backgroundColor: 'rgb(54, 162, 235)',
             }
         ]
     }
 
-    const metricAvgCurrent: ChartData<"line", number[], number> = {
+    const metricAvgCurrent: ChartData<"bar", number[], number> = {
         labels: thdCurrents.map(current => current.hour),
         datasets: [
             {
-                label: 'R',
+                label: 'IR',
                 data: thdCurrents.map(current => current.current_r),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
+                backgroundColor: 'rgb(75, 192, 192)',
             },
             {
-                label: 'S',
+                label: 'IS',
                 data: thdCurrents.map(current => current.current_s),
-                fill: false,
-                borderColor: 'rgb(255, 99, 132)',
-                tension: 0.1
+                backgroundColor: 'rgb(255, 99, 132)',
             },
             {
-                label: 'T',
+                label: 'IT',
                 data: thdCurrents.map(current => current.current_t),
-                fill: false,
-                borderColor: 'rgb(54, 162, 235)',
-                tension: 0.1
+                backgroundColor: 'rgb(54, 162, 235)',
             }
         ]
     }
 
-    const metricAvgFrequency: ChartData<"line", number[], number> = {
+    const metricAvgFrequency: ChartData<"bar", number[], number> = {
         labels: thdFrequencies.map(frequency => frequency.hour),
         datasets: [
             {
-                label: 'R',
+                label: 'FR',
                 data: thdFrequencies.map(frequency => frequency.frequency_r),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
+                backgroundColor: 'rgb(75, 192, 192)',
             },
             {
-                label: 'S',
+                label: 'FS',
                 data: thdFrequencies.map(frequency => frequency.frequency_s),
-                fill: false,
-                borderColor: 'rgb(255, 99, 132)',
-                tension: 0.1
+                backgroundColor: 'rgb(255, 99, 132)',
             },
             {
-                label: 'T',
+                label: 'FT',
                 data: thdFrequencies.map(frequency => frequency.frequency_t),
-                fill: false,
-                borderColor: 'rgb(54, 162, 235)',
-                tension: 0.1
+                backgroundColor: 'rgb(54, 162, 235)',
             }
         ]
     }
@@ -128,7 +110,7 @@ export default function ChartTHDIHD({
             <AppBar>
                 <Toolbar>
                     <Typography variant="h6" noWrap component="div">
-                        Chart VIF
+                        Chart THD IHD
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -154,11 +136,11 @@ export default function ChartTHDIHD({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>THD</Typography>
-                            <Line data={metricAvgTHD}/>
+                            <Bar data={metricAvgTHD}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgVoltageR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgVoltageS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgVoltageT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>VR : {Math.round((avgVoltageR + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>VS : {Math.round((avgVoltageS + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>VT : {Math.round((avgVoltageT + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>
@@ -171,11 +153,11 @@ export default function ChartTHDIHD({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>Current</Typography>
-                            <Line data={metricAvgCurrent}/>
+                            <Bar data={metricAvgCurrent}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgCurrentS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgCurrentT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>IR : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>IS : {Math.round((avgCurrentS + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>IT : {Math.round((avgCurrentT + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>
@@ -188,11 +170,11 @@ export default function ChartTHDIHD({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>Frequency</Typography>
-                            <Line data={metricAvgFrequency}/>
+                            <Bar data={metricAvgFrequency}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgFrequencyR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgFrequencyS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgFrequencyT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>FR : {Math.round((avgFrequencyR + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>FS : {Math.round((avgFrequencyS + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>FT : {Math.round((avgFrequencyT + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>

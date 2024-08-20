@@ -12,25 +12,25 @@ export default function MetricTHDIHD({
     const columnsTHD: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'voltage_r', headerName: 'R'},
-        { field: 'voltage_s', headerName: 'S'},
-        { field: 'voltage_t', headerName: 'T'},
+        { field: 'voltage_r', headerName: 'VR'},
+        { field: 'voltage_s', headerName: 'VS'},
+        { field: 'voltage_t', headerName: 'VT'},
     ]
 
     const columnsCurrent: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'current_r', headerName: 'R'},
-        { field: 'current_s', headerName: 'S'},
-        { field: 'current_t', headerName: 'T'},
+        { field: 'current_r', headerName: 'IR'},
+        { field: 'current_s', headerName: 'IS'},
+        { field: 'current_t', headerName: 'IT'},
     ]
 
     const columnsFrequency: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'frequency_r', headerName: 'R'},
-        { field: 'frequency_s', headerName: 'S'},
-        { field: 'frequency_t', headerName: 'T'},
+        { field: 'frequency_r', headerName: 'FR'},
+        { field: 'frequency_s', headerName: 'FS'},
+        { field: 'frequency_t', headerName: 'FT'},
     ]
 
     const columnGroupTHD: GridColumnGroupingModel = [
