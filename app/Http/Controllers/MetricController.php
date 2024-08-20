@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\Frequency;
+use App\Models\IHDCurrent;
+use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
 use App\Models\Metric;
 use App\Models\Power;
@@ -89,7 +91,20 @@ class MetricController extends Controller
     }
 
     public function getMetricIHD($trafoId, $date) {
-        return Inertia::render('ComingSoon');
+        $trafo = Trafo::find($trafoId);
+        $individualHarmonicDistortions = IndividualHarmonicDistortion::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+        $ihdCurrents = IHDCurrent::where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->get();
+
+        return Inertia::render('Metric/MetricIHD', [
+            'trafo' => $trafo,
+            'date' => $date,
+            'individualHarmonicDistortions' => $individualHarmonicDistortions,
+            'ihdCurrents' => $ihdCurrents
+        ]);
     }
 
     public function getMetricPKA($trafoId, $date) {

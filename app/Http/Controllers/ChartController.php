@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\Frequency;
+use App\Models\IHDCurrent;
+use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
 use App\Models\Metric;
 use App\Models\Power;
@@ -306,7 +308,53 @@ class ChartController extends Controller
     }
 
     public function getChartIHD($trafoId, $date) {
-        return Inertia::render('ComingSoon');
+        $trafo = Trafo::find($trafoId);
+        $individualHarmonicDistortions = IndividualHarmonicDistortion::selectRaw(
+            'DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(voltage_r) as voltage_r,
+            AVG(voltage_s) as voltage_s,
+            AVG(voltage_t) as voltage_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $individualHarmonicDistortionsRaw = IndividualHarmonicDistortion::where('trafo_id', $trafoId)->get();
+        $avgVoltageR = $individualHarmonicDistortionsRaw->avg('voltage_r');
+        $avgVoltageS = $individualHarmonicDistortionsRaw->avg('voltage_s');
+        $avgVoltageT = $individualHarmonicDistortionsRaw->avg('voltage_t');
+
+        $ihdCurrents = IHDCurrent::selectRaw(
+            'DATE(created_at) as date, HOUR(created_at) as hour,
+            AVG(current_r) as current_r,
+            AVG(current_s) as current_s,
+            AVG(current_t) as current_t'
+        )
+            ->where('trafo_id', $trafoId)
+            ->whereDate('created_at', $date)
+            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+            ->get();
+
+        $ihdCurrentsRaw = IHDCurrent::where('trafo_id', $trafoId)->get();
+        $avgCurrentR = $ihdCurrentsRaw->avg('current_r');
+        $avgCurrentS = $ihdCurrentsRaw->avg('current_s');
+        $avgCurrentT = $ihdCurrentsRaw->avg('current_t');
+
+        return Inertia::render('Chart/ChartIHD', [
+            'trafo' => $trafo,
+            'individualHarmonicDistortions' => $individualHarmonicDistortions,
+            'ihdCurrents' => $ihdCurrents,
+            'avgVoltageR' => $avgVoltageR,
+            'avgVoltageS' => $avgVoltageS,
+            'avgVoltageT' => $avgVoltageT,
+            'avgCurrentR' => $avgCurrentR,
+            'avgCurrentS' => $avgCurrentS,
+            'avgCurrentT' => $avgCurrentT,
+            'date' => $date,
+        ]);
     }
 
     public function getChartPKA($trafoId, $date)

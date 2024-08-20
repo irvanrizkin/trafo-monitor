@@ -77,6 +77,18 @@ export interface AveragedMetricTHDFrequency extends AveragedMetric {
     frequency_t: number;
 }
 
+export interface AveragedMetricIndividualHarmonicDistortion extends AveragedMetric {
+    voltage_r: number;
+    voltage_s: number;
+    voltage_t: number;
+}
+
+export interface AveragedMetricTHDCurrent extends AveragedMetric {
+    current_r: number;
+    current_s: number;
+    current_t: number;
+}
+
 export type ChartVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -130,6 +142,19 @@ export type ChartTHDIHDProps = PageProps & {
     avgFrequencyR: number;
     avgFrequencyS: number;
     avgFrequencyT: number;
+}
+
+export type ChartIHDProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    individualHarmonicDistortions: AveragedMetricIndividualHarmonicDistortion[];
+    ihdCurrents: AveragedMetricTHDCurrent[];
+    avgVoltageR: number;
+    avgVoltageS: number;
+    avgVoltageT: number;
+    avgCurrentR: number;
+    avgCurrentS: number;
+    avgCurrentT: number;
 }
 
 export type ChartPKAProps = PageProps & {
