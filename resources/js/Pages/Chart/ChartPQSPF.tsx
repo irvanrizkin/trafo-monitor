@@ -5,6 +5,8 @@ import GoogleMapReact from "google-map-react";
 import {ChartData} from "chart.js";
 import "chart.js/auto";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
+import ShowAssignmentIcon from "@mui/icons-material/Assignment";
+import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 
 export default function ChartPQSPF({
                                        trafo,
@@ -165,7 +167,13 @@ export default function ChartPQSPF({
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
-                <Grid container spacing={2} sx={{py: 2, mt: 2}}>
+                <ButtonEndHref
+                    href={route('trafo.show', [trafo.id])}
+                    text={'Back to Detail'}
+                    icon={<ShowAssignmentIcon />}
+                    sx={{ mt: 2 }}
+                />
+                <Grid container spacing={2} sx={{pb: 2}}>
                     <Grid item xs={12} md={4}>
                         <Box
                             sx={{
