@@ -37,21 +37,21 @@ export default function ChartPQSPF({
                 label: 'R',
                 data: powers.map(power => power.power_r),
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(255, 0, 92)',
                 tension: 0.1
             },
             {
                 label: 'S',
                 data: powers.map(power => power.power_s),
                 fill: false,
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 246, 0)',
                 tension: 0.1
             },
             {
                 label: 'T',
                 data: powers.map(power => power.power_t),
                 fill: false,
-                borderColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(38, 0, 27)',
                 tension: 0.1
             }
         ]
@@ -64,21 +64,21 @@ export default function ChartPQSPF({
                 label: 'R',
                 data: reactivePowers.map(reactivePower => reactivePower.reactive_power_r),
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(255, 0, 92)',
                 tension: 0.1
             },
             {
                 label: 'S',
                 data: reactivePowers.map(reactivePower => reactivePower.reactive_power_s),
                 fill: false,
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 246, 0)',
                 tension: 0.1
             },
             {
                 label: 'T',
                 data: reactivePowers.map(reactivePower => reactivePower.reactive_power_t),
                 fill: false,
-                borderColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(38, 0, 27)',
                 tension: 0.1
             }
         ]
@@ -91,21 +91,21 @@ export default function ChartPQSPF({
                 label: 'R',
                 data: apparentPowers.map(apparentPower => apparentPower.apparent_power_r),
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(255, 0, 92)',
                 tension: 0.1
             },
             {
                 label: 'S',
                 data: apparentPowers.map(apparentPower => apparentPower.apparent_power_s),
                 fill: false,
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 246, 0)',
                 tension: 0.1
             },
             {
                 label: 'T',
                 data: apparentPowers.map(apparentPower => apparentPower.apparent_power_t),
                 fill: false,
-                borderColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(38, 0, 27)',
                 tension: 0.1
             }
         ]
@@ -118,21 +118,21 @@ export default function ChartPQSPF({
                 label: 'R',
                 data: powerFactors.map(powerFactor => powerFactor.power_factor_r),
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(255, 0, 92)',
                 tension: 0.1
             },
             {
                 label: 'S',
                 data: powerFactors.map(powerFactor => powerFactor.power_factor_s),
                 fill: false,
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 246, 0)',
                 tension: 0.1
             },
             {
                 label: 'T',
                 data: powerFactors.map(powerFactor => powerFactor.power_factor_t),
                 fill: false,
-                borderColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(38, 0, 27)',
                 tension: 0.1
             }
         ]

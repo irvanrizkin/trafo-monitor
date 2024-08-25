@@ -30,17 +30,17 @@ export default function ChartTHDIHD({
             {
                 label: 'VR',
                 data: totalHarmonicDistortions.map(thd => thd.voltage_r),
-                backgroundColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(255, 0, 92)',
             },
             {
                 label: 'VS',
                 data: totalHarmonicDistortions.map(thd => thd.voltage_s),
-                backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(255, 246, 0)',
             },
             {
                 label: 'VT',
                 data: totalHarmonicDistortions.map(thd => thd.voltage_t),
-                backgroundColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgb(38, 0, 27)',
             }
         ]
     }
@@ -51,17 +51,17 @@ export default function ChartTHDIHD({
             {
                 label: 'IR',
                 data: thdCurrents.map(current => current.current_r),
-                backgroundColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(255, 0, 92)',
             },
             {
                 label: 'IS',
                 data: thdCurrents.map(current => current.current_s),
-                backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(255, 246, 0)',
             },
             {
                 label: 'IT',
                 data: thdCurrents.map(current => current.current_t),
-                backgroundColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgb(38, 0, 27)',
             }
         ]
     }
@@ -72,17 +72,17 @@ export default function ChartTHDIHD({
             {
                 label: 'FR',
                 data: thdFrequencies.map(frequency => frequency.frequency_r),
-                backgroundColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(255, 0, 92)',
             },
             {
                 label: 'FS',
                 data: thdFrequencies.map(frequency => frequency.frequency_s),
-                backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(255, 246, 0)',
             },
             {
                 label: 'FT',
                 data: thdFrequencies.map(frequency => frequency.frequency_t),
-                backgroundColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgb(38, 0, 27)',
             }
         ]
     }

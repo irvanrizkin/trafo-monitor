@@ -31,21 +31,21 @@ export default function ChartVIF({
                 label: 'R',
                 data: voltages.map(voltage => voltage.voltage_r),
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(255, 0, 92)',
                 tension: 0.1
             },
             {
                 label: 'S',
                 data: voltages.map(voltage => voltage.voltage_s),
                 fill: false,
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 246, 0)',
                 tension: 0.1
             },
             {
                 label: 'T',
                 data: voltages.map(voltage => voltage.voltage_t),
                 fill: false,
-                borderColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(38, 0, 27)',
                 tension: 0.1
             }
         ]
@@ -58,21 +58,21 @@ export default function ChartVIF({
                 label: 'R',
                 data: currents.map(current => current.current_r),
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(255, 0, 92)',
                 tension: 0.1
             },
             {
                 label: 'S',
                 data: currents.map(current => current.current_s),
                 fill: false,
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 246, 0)',
                 tension: 0.1
             },
             {
                 label: 'T',
                 data: currents.map(current => current.current_t),
                 fill: false,
-                borderColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(38, 0, 27)',
                 tension: 0.1
             }
         ]
@@ -85,21 +85,21 @@ export default function ChartVIF({
                 label: 'R',
                 data: frequencies.map(frequency => frequency.frequency_r),
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(255, 0, 92)',
                 tension: 0.1
             },
             {
                 label: 'S',
                 data: frequencies.map(frequency => frequency.frequency_s),
                 fill: false,
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 246, 0)',
                 tension: 0.1
             },
             {
                 label: 'T',
                 data: frequencies.map(frequency => frequency.frequency_t),
                 fill: false,
-                borderColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(38, 0, 27)',
                 tension: 0.1
             }
         ]

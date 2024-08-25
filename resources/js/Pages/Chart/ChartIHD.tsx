@@ -26,17 +26,17 @@ export default function ChartIHD({
             {
                 label: 'VR',
                 data: individualHarmonicDistortions.map(ihd => ihd.voltage_r),
-                backgroundColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(255, 0, 92)',
             },
             {
                 label: 'VS',
                 data: individualHarmonicDistortions.map(ihd => ihd.voltage_s),
-                backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(255, 246, 0)',
             },
             {
                 label: 'VT',
                 data: individualHarmonicDistortions.map(ihd => ihd.voltage_t),
-                backgroundColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgb(38, 0, 27)',
             }
         ]
     }
@@ -47,17 +47,17 @@ export default function ChartIHD({
             {
                 label: 'IR',
                 data: ihdCurrents.map(current => current.current_r),
-                backgroundColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(255, 0, 92)',
             },
             {
                 label: 'IS',
                 data: ihdCurrents.map(current => current.current_s),
-                backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(255, 246, 0)',
             },
             {
                 label: 'IT',
                 data: ihdCurrents.map(current => current.current_t),
-                backgroundColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgb(38, 0, 27)',
             }
         ]
     }
