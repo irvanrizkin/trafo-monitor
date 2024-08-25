@@ -2,6 +2,8 @@ import {MetricTHDIHDProps} from "@/types/metric";
 import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
 import {Container, Grid} from "@mui/material";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
+import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 
 export default function MetricTHDIHD({
                                          trafo,
@@ -93,7 +95,13 @@ export default function MetricTHDIHD({
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
-                <Grid container spacing={2}  sx={{ my: 4 }}>
+                <ButtonEndHref
+                    href={route('chart.thd-ihd', [trafo.id, date])}
+                    text={'Open Chart'}
+                    icon={<ShowChartIcon />}
+                    sx={{ mt: 4 }}
+                />
+                <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                         <DataGrid
                             columnGroupingModel={columnGroupTHD}

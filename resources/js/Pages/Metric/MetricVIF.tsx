@@ -2,6 +2,8 @@ import {MetricVIFProps} from "@/types/metric";
 import {Container, Grid} from "@mui/material";
 import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
+import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 
 export default function Metric({ trafo, date, voltages, currents, frequencies }: MetricVIFProps) {
     const columnsVoltage: GridColDef[] = [
@@ -87,7 +89,13 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
-                <Grid container spacing={2} sx={{ my: 4 }}>
+                <ButtonEndHref
+                    href={route('chart.vif', [trafo.id, date])}
+                    text={'Open Chart'}
+                    icon={<ShowChartIcon />}
+                    sx={{ mt: 4 }}
+                />
+                <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                         <DataGrid
                             columnGroupingModel={columnGroupVoltage}

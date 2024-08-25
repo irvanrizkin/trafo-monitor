@@ -2,6 +2,8 @@ import {MetricPQSPFProps} from "@/types/metric";
 import {Container, Grid} from "@mui/material";
 import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
+import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 
 export default function ({ trafo, date, powers, reactivePowers, apparentPowers, powerFactors }: MetricPQSPFProps) {
     const columnsPower: GridColDef[] = [
@@ -112,7 +114,13 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
-                <Grid container spacing={2} sx={{ my: 4 }}>
+                <ButtonEndHref
+                    href={route('chart.pqspf', [trafo.id, date])}
+                    text={'Open Chart'}
+                    icon={<ShowChartIcon />}
+                    sx={{ mt: 4 }}
+                />
+                <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                         <DataGrid
                             columnGroupingModel={columnGroupPower}
