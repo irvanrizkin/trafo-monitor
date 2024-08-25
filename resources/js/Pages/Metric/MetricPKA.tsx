@@ -1,6 +1,7 @@
 import {MetricPKAProps} from "@/types/metric";
-import {AppBar, Box, Container, Grid, Toolbar, Typography} from "@mui/material";
+import {Container, Grid} from "@mui/material";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
+import AppBarTriple from "@/Components/Shared/AppBarTriple";
 
 export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCurrents}: MetricPKAProps) {
     const columnsPowerLoss: GridColDef[] = [
@@ -47,26 +48,13 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
 
     return (
         <>
-            <AppBar>
-                <Toolbar>
-                    <Typography variant="h6" noWrap component="div">
-                        Metric PKA
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <AppBarTriple
+                startText={'Metric PKA'}
+                middleText={trafo.name + ' - ' + trafo.address}
+                endText={date}
+            />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
-                <Box sx={{ my: 4 }}>
-                    <Typography variant="h3" textAlign="center" sx={{ mb: 0.5 }}>
-                        <b>{trafo.name}</b>
-                    </Typography>
-                    <Typography variant="h5" textAlign="center" sx={{ mb: 0.5 }}>
-                        <b>{trafo.address}</b>
-                    </Typography>
-                    <Typography variant="h5" textAlign="center" sx={{ mb: 0.5 }}>
-                        <b>{date}</b>
-                    </Typography>
-                </Box>
-                <Grid container spacing={2}>
+                <Grid container spacing={2} sx={{ my: 4 }}>
                     <Grid item xs={12} md={6}>
                         <DataGrid
                             rows={rowsPowerLoss}
