@@ -1,9 +1,10 @@
 import {ChartTHDIHDProps} from "@/types/chart";
 import {ChartData} from "chart.js";
-import {AppBar, Box, Container, Grid, Paper, Toolbar, Typography} from "@mui/material";
+import {Box, Container, Grid, Paper, Typography} from "@mui/material";
 import {Bar} from "react-chartjs-2";
 import GoogleMapReact from "google-map-react";
 import 'chart.js/auto';
+import AppBarTriple from "@/Components/Shared/AppBarTriple";
 
 export default function ChartTHDIHD({
                                         trafo,
@@ -107,26 +108,13 @@ export default function ChartTHDIHD({
 
     return (
         <>
-            <AppBar>
-                <Toolbar>
-                    <Typography variant="h6" noWrap component="div">
-                        Chart THD IHD
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <AppBarTriple
+                startText={'Chart THD IHD'}
+                middleText={trafo.name + ' - ' + trafo.address}
+                endText={date}
+            />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
-                <Box sx={{ mt: 2 }}>
-                    <Typography variant="h3" textAlign="center" sx={{ mb: 0.5 }}>
-                        <b>{trafo.name}</b>
-                    </Typography>
-                    <Typography variant="h5" textAlign="center" sx={{ mb: 0.5 }}>
-                        <b>{trafo.address}</b>
-                    </Typography>
-                    <Typography variant="h5" textAlign="center" sx={{ mb: 0.5 }}>
-                        <b>{date}</b>
-                    </Typography>
-                </Box>
-                <Grid container spacing={2} sx={{py: 2}}>
+                <Grid container spacing={2} sx={{py: 2, mt: 2}}>
                     <Grid item xs={12} md={4}>
                         <Box
                             sx={{px: 2}}
