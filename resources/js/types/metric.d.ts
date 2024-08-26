@@ -17,6 +17,7 @@ export interface MetricCurrent extends Metric {
     current_r: number;
     current_s: number;
     current_t: number;
+    current_in: number;
 }
 
 export interface MetricFrequency extends Metric {

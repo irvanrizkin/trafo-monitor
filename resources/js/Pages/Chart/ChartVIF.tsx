@@ -20,6 +20,7 @@ export default function ChartVIF({
                                      avgCurrentR,
                                      avgCurrentS,
                                      avgCurrentT,
+                                     avgCurrentIN,
                                      avgFrequencyR,
                                      avgFrequencyS,
                                      avgFrequencyT
@@ -76,7 +77,14 @@ export default function ChartVIF({
                 fill: false,
                 borderColor: 'rgb(38, 0, 27)',
                 tension: 0.1
-            }
+            },
+            {
+                label: 'IN',
+                data: currents.map(current => current.current_in),
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            },
         ]
     }
 
@@ -172,6 +180,7 @@ export default function ChartVIF({
                                 <Typography>R : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>
                                 <Typography>S : {Math.round((avgCurrentS + Number.EPSILON) * 100) / 100}</Typography>
                                 <Typography>T : {Math.round((avgCurrentT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>IN : {Math.round((avgCurrentIN + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>

@@ -20,6 +20,7 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
         { field: 'current_r', headerName: 'R'},
         { field: 'current_s', headerName: 'S'},
         { field: 'current_t', headerName: 'T'},
+        { field: 'current_in', headerName: 'IN' },
     ]
 
     const columnsFrequency: GridColDef[] = [
@@ -40,7 +41,7 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
     const columnGroupCurrent: GridColumnGroupingModel = [
         {
             groupId: 'Current',
-            children: [{ field: 'current_r' }, { field: 'current_s' }, { field: 'current_t' }]
+            children: [{ field: 'current_r' }, { field: 'current_s' }, { field: 'current_t' }, { field: 'current_in' }]
         }
     ]
 
@@ -68,6 +69,7 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
             current_r: current.current_r,
             current_s: current.current_s,
             current_t: current.current_t,
+            current_in: current.current_in,
         }
     });
 

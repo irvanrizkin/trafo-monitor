@@ -87,7 +87,8 @@ class ChartController extends Controller
         $currents = Current::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
             AVG(current_r) as current_r,
             AVG(current_s) as current_s,
-            AVG(current_t) as current_t'
+            AVG(current_t) as current_t,
+            AVG(current_in) as current_in'
         )
             ->where('trafo_id', $trafoId)
             ->whereDate('created_at', $date)
@@ -101,6 +102,7 @@ class ChartController extends Controller
         $avgCurrentR = $currentsRaw->avg('current_r');
         $avgCurrentS = $currentsRaw->avg('current_s');
         $avgCurrentT = $currentsRaw->avg('current_t');
+        $avgCurrentIN = $currentsRaw->avg('current_in');
 
         $frequencies = Frequency::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
             AVG(frequency_r) as frequency_r,
@@ -131,6 +133,7 @@ class ChartController extends Controller
             'avgCurrentR' => $avgCurrentR,
             'avgCurrentS' => $avgCurrentS,
             'avgCurrentT' => $avgCurrentT,
+            'avgCurrentIN' => $avgCurrentIN,
             'avgFrequencyR' => $avgFrequencyR,
             'avgFrequencyS' => $avgFrequencyS,
             'avgFrequencyT' => $avgFrequencyT,

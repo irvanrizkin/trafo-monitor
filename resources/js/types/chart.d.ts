@@ -15,6 +15,7 @@ export interface AveragedMetricCurrent extends AveragedMetric {
     current_r: number;
     current_s: number;
     current_t: number;
+    current_in: number;
 }
 
 export interface AveragedMetricFrequency extends AveragedMetric {
@@ -101,6 +102,7 @@ export type ChartVIFProps = PageProps & {
     avgCurrentR: number;
     avgCurrentS: number;
     avgCurrentT: number;
+    avgCurrentIN: number;
     avgFrequencyR: number;
     avgFrequencyS: number;
     avgFrequencyT: number;
