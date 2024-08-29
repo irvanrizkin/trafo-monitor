@@ -1,8 +1,15 @@
 import {PageProps, TrafoV1} from "@/types/index";
+import {Metric} from "@/types/metric";
 
 export interface AveragedMetric {
     date: string;
     hour: number;
+}
+
+export interface Order {
+    r: number;
+    s: number;
+    t: number;
 }
 
 export interface AveragedMetricVoltage extends AveragedMetric {
@@ -90,6 +97,24 @@ export interface AveragedMetricTHDCurrent extends AveragedMetric {
     current_t: number;
 }
 
+export interface ChartMetricHD extends Metric {
+    h1: Order;
+    h2: Order;
+    h3: Order;
+    h4: Order;
+    h5: Order;
+    h6: Order;
+    h7: Order;
+    h8: Order;
+    h9: Order;
+    h10: Order;
+    h11: Order;
+    h12: Order;
+    h13: Order;
+    h14: Order;
+    h15: Order;
+}
+
 export type ChartVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -174,4 +199,11 @@ export type ChartPKAProps = PageProps & {
     maxTriplenCurrent: number;
     avgTriplenCurrent: number;
     minTriplenCurrent: number;
+}
+
+export type ChartHDProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    title: string;
+    harmonicDistortions: ChartMetricHD;
 }

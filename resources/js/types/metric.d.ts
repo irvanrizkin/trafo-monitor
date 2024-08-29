@@ -7,6 +7,12 @@ export interface Metric {
     created_at: string;
 }
 
+export interface Order {
+    r: number;
+    s: number;
+    t: number;
+}
+
 export interface MetricVoltage extends Metric {
     voltage_r: number;
     voltage_s: number;
@@ -92,6 +98,24 @@ export interface MetricIHDCurrent extends Metric {
     current_t: number;
 }
 
+export interface MetricHD extends Metric {
+    h1: Order;
+    h2: Order;
+    h3: Order;
+    h4: Order;
+    h5: Order;
+    h6: Order;
+    h7: Order;
+    h8: Order;
+    h9: Order;
+    h10: Order;
+    h11: Order;
+    h12: Order;
+    h13: Order;
+    h14: Order;
+    h15: Order;
+}
+
 export type MetricVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -130,4 +154,12 @@ export type MetricPKAProps = PageProps & {
     powerLosses: MetricPowerLoss[];
     kFactors: MetricKFactor[];
     triplenCurrents: MetricTriplenCurrent[];
+}
+
+export type MetricHDProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    title: string;
+    chartRoute: string;
+    harmonicDistortions: MetricHD;
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\Frequency;
+use App\Models\IHD;
 use App\Models\IHDCurrent;
 use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
@@ -13,6 +14,7 @@ use App\Models\Power;
 use App\Models\PowerFactor;
 use App\Models\PowerLoss;
 use App\Models\ReactivePower;
+use App\Models\THD;
 use App\Models\THDCurrent;
 use App\Models\THDFrequency;
 use App\Models\TotalHarmonicDistortion;
@@ -71,39 +73,27 @@ class MetricController extends Controller
 
     public function getMetricTHDIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $totalHarmonicDistortions = TotalHarmonicDistortion::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $thdCurrents = THDCurrent::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $thdFrequencies = THDFrequency::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
+        $thd = THD::where('trafo_id', $trafoId)->latest()->first();
 
-        return Inertia::render('Metric/MetricTHDIHD', [
+        return Inertia::render('Metric/MetricHD', [
             'trafo' => $trafo,
             'date' => $date,
-            'totalHarmonicDistortions' => $totalHarmonicDistortions,
-            'thdCurrents' => $thdCurrents,
-            'thdFrequencies' => $thdFrequencies
+            'title' => 'Metric THD',
+            'chartRoute' => 'chart.thd-ihd',
+            'harmonicDistortions' => $thd,
         ]);
     }
 
     public function getMetricIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $individualHarmonicDistortions = IndividualHarmonicDistortion::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $ihdCurrents = IHDCurrent::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
+        $ihd = IHD::where('trafo_id', $trafoId)->latest()->first();
 
-        return Inertia::render('Metric/MetricIHD', [
+        return Inertia::render('Metric/MetricHD', [
             'trafo' => $trafo,
             'date' => $date,
-            'individualHarmonicDistortions' => $individualHarmonicDistortions,
-            'ihdCurrents' => $ihdCurrents
+            'title' => 'Metric IHD',
+            'chartRoute' => 'chart.ihd',
+            'harmonicDistortions' => $ihd,
         ]);
     }
 
@@ -124,5 +114,73 @@ class MetricController extends Controller
 
     public function getMetricAnalysis($trafoId, $date) {
         return Inertia::render('ComingSoon');
+    }
+
+    public function storeMetricTHD($trafoId) {
+        $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return response()->json([
+                'message' => 'Trafo not found'
+            ], 404);
+        }
+
+        $thd = new THD();
+        $thd->trafo_id = $trafoId;
+        $thd->topic_name = 'THD';
+        $thd->h1 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h2 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h3 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h4 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h5 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h6 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h7 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h8 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h9 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h10 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h11 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h12 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h13 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h14 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $thd->h15 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+
+        $thd->save();
+
+        return response()->json([
+            'message' => 'Dummy THD created successfully'
+        ], 201);
+    }
+
+    public function storeMetricIHD($trafoId) {
+        $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return response()->json([
+                'message' => 'Trafo not found'
+            ], 404);
+        }
+
+        $ihd = new IHD();
+        $ihd->trafo_id = $trafoId;
+        $ihd->topic_name = 'IHD';
+        $ihd->h1 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h2 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h3 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h4 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h5 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h6 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h7 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h8 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h9 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h10 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h11 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h12 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h13 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h14 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h15 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+
+        $ihd->save();
+
+        return response()->json([
+            'message' => 'Dummy IHD created successfully'
+        ], 201);
     }
 }
