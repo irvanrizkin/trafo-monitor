@@ -128,9 +128,9 @@ export type ChartVIFProps = PageProps & {
     avgCurrentS: number;
     avgCurrentT: number;
     avgCurrentIN: number;
-    avgFrequencyR: number;
-    avgFrequencyS: number;
-    avgFrequencyT: number;
+    maxFrequency: number;
+    avgFrequency: number;
+    minFrequency: number;
 }
 
 export type ChartPQSPFProps = PageProps & {

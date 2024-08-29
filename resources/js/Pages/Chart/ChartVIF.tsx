@@ -21,9 +21,9 @@ export default function ChartVIF({
                                      avgCurrentS,
                                      avgCurrentT,
                                      avgCurrentIN,
-                                     avgFrequencyR,
-                                     avgFrequencyS,
-                                     avgFrequencyT
+                                     maxFrequency,
+                                     avgFrequency,
+                                     minFrequency,
                                  }: ChartVIFProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
@@ -95,23 +95,9 @@ export default function ChartVIF({
                 label: 'R',
                 data: frequencies.map(frequency => frequency.frequency_r),
                 fill: false,
-                borderColor: 'rgb(255, 0, 92)',
+                borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1
             },
-            {
-                label: 'S',
-                data: frequencies.map(frequency => frequency.frequency_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: frequencies.map(frequency => frequency.frequency_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            }
         ]
     }
 
@@ -195,9 +181,9 @@ export default function ChartVIF({
                             <Typography variant={"h6"}>Frequency</Typography>
                             <Line data={metricAvgFrequency}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgFrequencyR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgFrequencyS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgFrequencyT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Max : {Math.round((maxFrequency + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Avg : {Math.round((avgFrequency + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Min : {Math.round((minFrequency + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>

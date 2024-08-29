@@ -26,9 +26,7 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
     const columnsFrequency: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'frequency_r', headerName: 'R'},
-        { field: 'frequency_s', headerName: 'S'},
-        { field: 'frequency_t', headerName: 'T'},
+        { field: 'frequency_r', headerName: 'Frequency'},
     ]
 
     const columnGroupVoltage: GridColumnGroupingModel = [
@@ -42,13 +40,6 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
         {
             groupId: 'Current',
             children: [{ field: 'current_r' }, { field: 'current_s' }, { field: 'current_t' }, { field: 'current_in' }]
-        }
-    ]
-
-    const columnGroupFrequency: GridColumnGroupingModel = [
-        {
-            groupId: 'Frequency',
-            children: [{ field: 'frequency_r' }, { field: 'frequency_s' }, { field: 'frequency_t' }]
         }
     ]
 
@@ -126,7 +117,6 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                     </Grid>
                     <Grid item xs={12}>
                         <DataGrid
-                            columnGroupingModel={columnGroupFrequency}
                             rows={rowsFrequency}
                             columns={columnsFrequency}
                             initialState={{

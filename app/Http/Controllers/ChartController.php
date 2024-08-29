@@ -120,9 +120,9 @@ class ChartController extends Controller
         $frequenciesRaw = Frequency::where('trafo_id', $trafoId)
             ->whereDate('created_at', $date)
             ->get();
-        $avgFrequencyR = $frequenciesRaw->avg('frequency_r');
-        $avgFrequencyS = $frequenciesRaw->avg('frequency_s');
-        $avgFrequencyT = $frequenciesRaw->avg('frequency_t');
+        $maxFrequency = $frequenciesRaw->max('frequency_r');
+        $avgFrequency = $frequenciesRaw->avg('frequency_r');
+        $minFrequency = $frequenciesRaw->min('frequency_r');
 
         return Inertia::render('Chart/ChartVIF', [
             'trafo' => $trafo,
@@ -136,9 +136,9 @@ class ChartController extends Controller
             'avgCurrentS' => $avgCurrentS,
             'avgCurrentT' => $avgCurrentT,
             'avgCurrentIN' => $avgCurrentIN,
-            'avgFrequencyR' => $avgFrequencyR,
-            'avgFrequencyS' => $avgFrequencyS,
-            'avgFrequencyT' => $avgFrequencyT,
+            'maxFrequency' => $maxFrequency,
+            'avgFrequency' => $avgFrequency,
+            'minFrequency' => $minFrequency,
             'date' => $date,
         ]);
     }
