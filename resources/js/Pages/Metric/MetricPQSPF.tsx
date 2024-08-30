@@ -1,9 +1,11 @@
 import {MetricPQSPFProps} from "@/types/metric";
-import {Container, Grid} from "@mui/material";
+import {Container, Grid, Stack, Typography} from "@mui/material";
 import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import {Gauge} from "@mui/x-charts";
+import GaugeGroup from "@/Components/Metric/GaugeGroup";
 
 export default function ({ trafo, date, powers, reactivePowers, apparentPowers, powerFactors }: MetricPQSPFProps) {
     const columnsPower: GridColDef[] = [
@@ -106,6 +108,22 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
         }
     });
 
+    const powerR = [...powers.map(p => p.power_r)];
+    const powerS = [...powers.map(p => p.power_s)];
+    const powerT = [...powers.map(p => p.power_t)];
+
+    const reactivePowerR = [...reactivePowers.map(rp => rp.reactive_power_r)];
+    const reactivePowerS = [...reactivePowers.map(rp => rp.reactive_power_s)];
+    const reactivePowerT = [...reactivePowers.map(rp => rp.reactive_power_t)];
+
+    const apparentPowerR = [...apparentPowers.map(ap => ap.apparent_power_r)];
+    const apparentPowerS = [...apparentPowers.map(ap => ap.apparent_power_s)];
+    const apparentPowerT = [...apparentPowers.map(ap => ap.apparent_power_t)];
+
+    const powerFactorR = [...powerFactors.map(pf => pf.power_factor_r)];
+    const powerFactorS = [...powerFactors.map(pf => pf.power_factor_s)];
+    const powerFactorT = [...powerFactors.map(pf => pf.power_factor_t)];
+
     return (
         <>
             <AppBarTriple
@@ -121,6 +139,18 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
                     sx={{ mt: 4 }}
                 />
                 <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <GaugeGroup
+                            gauges={[powerR, powerS, powerT]}
+                            labels={['R', 'S', 'T']}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <GaugeGroup
+                            gauges={[reactivePowerR, reactivePowerS, reactivePowerT]}
+                            labels={['R', 'S', 'T']}
+                        />
+                    </Grid>
                     <Grid item xs={12} md={6}>
                         <DataGrid
                             columnGroupingModel={columnGroupPower}
@@ -145,6 +175,18 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
                                 },
                             }}
                             pageSizeOptions={[5, 10]}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <GaugeGroup
+                            gauges={[apparentPowerR, apparentPowerS, apparentPowerT]}
+                            labels={['R', 'S', 'T']}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <GaugeGroup
+                            gauges={[powerFactorR, powerFactorS, powerFactorT]}
+                            labels={['R', 'S', 'T']}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>

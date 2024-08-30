@@ -21,3 +21,8 @@ export type OrderTableBodyProps = Props & {
     orderName: string;
     order: Order;
 }
+
+export type GaugeGroupProps = Props & {
+    gauges: number[][]
+    labels: string[]
+}

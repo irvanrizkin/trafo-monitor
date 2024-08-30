@@ -1,9 +1,11 @@
 import {MetricVIFProps} from "@/types/metric";
-import {Container, Grid} from "@mui/material";
+import {Box, Container, Grid, Stack, Typography} from "@mui/material";
 import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import {Gauge, gaugeClasses} from "@mui/x-charts";
+import GaugeGroup from "@/Components/Metric/GaugeGroup";
 
 export default function Metric({ trafo, date, voltages, currents, frequencies }: MetricVIFProps) {
     const columnsVoltage: GridColDef[] = [
@@ -74,6 +76,16 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
         }
     });
 
+    const voltageR = [...voltages.map(v => v.voltage_r)];
+    const voltageS = [...voltages.map(v => v.voltage_s)];
+    const voltageT = [...voltages.map(v => v.voltage_t)];
+
+    const currentR = [...currents.map(c => c.current_r)];
+    const currentS = [...currents.map(c => c.current_s)];
+    const currentT = [...currents.map(c => c.current_t)];
+
+    const frequency = [...frequencies.map(f => f.frequency_r)];
+
     return (
         <>
             <AppBarTriple
@@ -89,6 +101,18 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                     sx={{ mt: 4 }}
                 />
                 <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <GaugeGroup
+                            gauges={[voltageR, voltageS, voltageT]}
+                            labels={['R', 'S', 'T']}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <GaugeGroup
+                            gauges={[currentR, currentS, currentT]}
+                            labels={['R', 'S', 'T']}
+                        />
+                    </Grid>
                     <Grid item xs={12} md={6}>
                         <DataGrid
                             columnGroupingModel={columnGroupVoltage}
@@ -113,6 +137,12 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                                 },
                             }}
                             pageSizeOptions={[5, 10]}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <GaugeGroup
+                            gauges={[frequency]}
+                            labels={['F']}
                         />
                     </Grid>
                     <Grid item xs={12}>

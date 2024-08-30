@@ -4,6 +4,7 @@ import {DataGrid, GridColDef} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import GaugeGroup from "@/Components/Metric/GaugeGroup";
 
 export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCurrents}: MetricPKAProps) {
     const columnsPowerLoss: GridColDef[] = [
@@ -48,6 +49,10 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
         }
     });
 
+    const powerLoss = [...powerLosses.map((powerLoss) => powerLoss.power_loss)];
+    const kFactor = [...kFactors.map((kFactor) => kFactor.k_factor)];
+    const triplenCurrent = [...triplenCurrents.map((triplenCurrent) => triplenCurrent.triplen_current)];
+
     return (
         <>
             <AppBarTriple
@@ -63,6 +68,18 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
                     sx={{ mt: 4 }}
                 />
                 <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <GaugeGroup
+                            gauges={[powerLoss]}
+                            labels={['PL']}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <GaugeGroup
+                            gauges={[kFactor]}
+                            labels={['KF']}
+                        />
+                    </Grid>
                     <Grid item xs={12} md={6}>
                         <DataGrid
                             rows={rowsPowerLoss}
@@ -85,6 +102,12 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
                                 },
                             }}
                             pageSizeOptions={[5, 10]}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <GaugeGroup
+                            gauges={[triplenCurrent]}
+                            labels={['TC']}
                         />
                     </Grid>
                     <Grid item xs={12}>
