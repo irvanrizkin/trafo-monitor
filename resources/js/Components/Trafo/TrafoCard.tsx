@@ -1,15 +1,18 @@
 import {Card, CardContent, Typography, CardActions, Button} from "@mui/material";
-import { Trafo } from "@/types";
+import {TrafoV1} from "@/types";
 
-export default function TrafoCard({ trafo, version }: { trafo: Trafo, version: number }) {
+export default function TrafoCard({ trafo, version }: { trafo: TrafoV1, version: number }) {
     return (
         <Card sx={{ minWidth: 275 }}>
             <CardContent>
                 <Typography variant="h5" component="div">
                     {trafo.name}
                 </Typography>
+                <Typography component="div">
+                    {trafo.address ?? ''}
+                </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {new Date(trafo.created_at).toLocaleString()}
+                    Created at : {new Date(trafo.created_at).toLocaleString()}
                 </Typography>
             </CardContent>
             <CardActions>
