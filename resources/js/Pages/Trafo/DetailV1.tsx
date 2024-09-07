@@ -26,10 +26,11 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
     const dataCategories = [
         {id: 'vif', name: 'Data 1 : V, I , dan F'},
         {id: 'pqspf', name: 'Data 2 : P, Q, S dan PF'},
-        {id: 'thd-ihd', name: 'Data 3 : THD dan IHD ( BAR CHART)'},
-        {id: 'ihd', name: 'Data 4 : IHD (BAR CHART)'},
-        {id: 'pka', name: 'Data 5 : ESTIMASI  P LOSS, K FAKTOR, DAN ARUS TRIPLEN'},
-        {id: 'analisis', name: 'Data 6 : ANALISIS'},
+        {id: 'thd-ihd', name: 'Data 3 : TOTAL HARMONICS DISTORTION'},
+        {id: 'ihd', name: 'Data 4 : INDIVIDUAL HARMONICS DISTORTION'},
+        {id: 'analisis', name: 'Data 5 : T, P, LV MINYAK, DAN AMBIENT TEMPERATURE'},
+        {id: 'pka', name: 'Data 6 : ESTIMASI P LOSS, K FACTOR, TRIPLEN HARMONICS'},
+        {id: 'analisis', name: 'Data 7 : ANALISIS'},
     ]
     const [dateState, setDateState] = useState('');
     const [tableCategoryState, setTableCategoryState] = useState('');
