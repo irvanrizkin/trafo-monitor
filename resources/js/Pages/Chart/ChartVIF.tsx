@@ -7,6 +7,7 @@ import 'chart.js/auto';
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import {rstLineChart, singleLineChart} from "@/helpers/generator/chart-generator";
 
 export default function ChartVIF({
                                      trafo,
@@ -27,79 +28,29 @@ export default function ChartVIF({
                                  }: ChartVIFProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const metricAvgVoltage: ChartData<"line", number[], number> = {
-        labels: voltages.map(voltage => voltage.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: voltages.map(voltage => voltage.voltage_r),
-                fill: false,
-                borderColor: 'rgb(255, 0, 92)',
-                tension: 0.1
-            },
-            {
-                label: 'S',
-                data: voltages.map(voltage => voltage.voltage_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: voltages.map(voltage => voltage.voltage_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            }
-        ]
-    }
+    const metricAvgVoltage = rstLineChart(
+        {
+            labels: voltages.map(voltage => voltage.hour),
+            rData: voltages.map(voltage => voltage.voltage_r),
+            sData: voltages.map(voltage => voltage.voltage_s),
+            tData: voltages.map(voltage => voltage.voltage_t),
+        }
+    );
 
-    const metricAvgCurrent: ChartData<"line", number[], number> = {
-        labels: currents.map(current => current.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: currents.map(current => current.current_r),
-                fill: false,
-                borderColor: 'rgb(255, 0, 92)',
-                tension: 0.1
-            },
-            {
-                label: 'S',
-                data: currents.map(current => current.current_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: currents.map(current => current.current_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            },
-            {
-                label: 'IN',
-                data: currents.map(current => current.current_in),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            },
-        ]
-    }
+    const metricAvgCurrent = rstLineChart(
+        {
+            labels: currents.map(current => current.hour),
+            rData: currents.map(current => current.current_r),
+            sData: currents.map(current => current.current_s),
+            tData: currents.map(current => current.current_t),
+        }
+    );
 
-    const metricAvgFrequency: ChartData<"line", number[], number> = {
+    const metricAvgFrequency = singleLineChart({
         labels: frequencies.map(frequency => frequency.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: frequencies.map(frequency => frequency.frequency_r),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            },
-        ]
-    }
+        data: frequencies.map(frequency => frequency.frequency_r),
+        label: 'Frequency',
+    });
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({

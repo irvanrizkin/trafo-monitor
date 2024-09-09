@@ -7,6 +7,7 @@ import "chart.js/auto";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import {rstLineChart} from "@/helpers/generator/chart-generator";
 
 export default function ChartPQSPF({
                                        trafo,
@@ -32,113 +33,33 @@ export default function ChartPQSPF({
     const theme = useTheme()
     const onlyMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-    const metricAvgPower: ChartData<"line", number[], number> = {
+    const metricAvgPower = rstLineChart({
         labels: powers.map(power => power.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: powers.map(power => power.power_r),
-                fill: false,
-                borderColor: 'rgb(255, 0, 92)',
-                tension: 0.1
-            },
-            {
-                label: 'S',
-                data: powers.map(power => power.power_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: powers.map(power => power.power_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            }
-        ]
-    }
+        rData: powers.map(power => power.power_r),
+        sData: powers.map(power => power.power_s),
+        tData: powers.map(power => power.power_t),
+    });
 
-    const metricAvgReactivePower: ChartData<"line", number[], number> = {
+    const metricAvgReactivePower = rstLineChart({
         labels: reactivePowers.map(reactivePower => reactivePower.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: reactivePowers.map(reactivePower => reactivePower.reactive_power_r),
-                fill: false,
-                borderColor: 'rgb(255, 0, 92)',
-                tension: 0.1
-            },
-            {
-                label: 'S',
-                data: reactivePowers.map(reactivePower => reactivePower.reactive_power_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: reactivePowers.map(reactivePower => reactivePower.reactive_power_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            }
-        ]
-    }
+        rData: reactivePowers.map(reactivePower => reactivePower.reactive_power_r),
+        sData: reactivePowers.map(reactivePower => reactivePower.reactive_power_s),
+        tData: reactivePowers.map(reactivePower => reactivePower.reactive_power_t),
+    });
 
-    const metricAvgApparentPower: ChartData<"line", number[], number> = {
+    const metricAvgApparentPower = rstLineChart({
         labels: apparentPowers.map(apparentPower => apparentPower.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: apparentPowers.map(apparentPower => apparentPower.apparent_power_r),
-                fill: false,
-                borderColor: 'rgb(255, 0, 92)',
-                tension: 0.1
-            },
-            {
-                label: 'S',
-                data: apparentPowers.map(apparentPower => apparentPower.apparent_power_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: apparentPowers.map(apparentPower => apparentPower.apparent_power_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            }
-        ]
-    }
+        rData: apparentPowers.map(apparentPower => apparentPower.apparent_power_r),
+        sData: apparentPowers.map(apparentPower => apparentPower.apparent_power_s),
+        tData: apparentPowers.map(apparentPower => apparentPower.apparent_power_t),
+    });
 
-    const metricAvgPowerFactor: ChartData<"line", number[], number> = {
+    const metricAvgPowerFactor = rstLineChart({
         labels: powerFactors.map(powerFactor => powerFactor.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: powerFactors.map(powerFactor => powerFactor.power_factor_r),
-                fill: false,
-                borderColor: 'rgb(255, 0, 92)',
-                tension: 0.1
-            },
-            {
-                label: 'S',
-                data: powerFactors.map(powerFactor => powerFactor.power_factor_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: powerFactors.map(powerFactor => powerFactor.power_factor_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            }
-        ]
-    }
+        rData: powerFactors.map(powerFactor => powerFactor.power_factor_r),
+        sData: powerFactors.map(powerFactor => powerFactor.power_factor_s),
+        tData: powerFactors.map(powerFactor => powerFactor.power_factor_t),
+    });
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({
