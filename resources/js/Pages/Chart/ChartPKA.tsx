@@ -7,6 +7,9 @@ import 'chart.js/auto';
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import datasetGenerator from "@/helpers/generator/dataset-generator";
+import {blue} from "@mui/material/colors";
+import {singleLineChart} from "@/helpers/generator/chart-generator";
 
 export default function ChartPKA({
                                      trafo,
@@ -26,44 +29,23 @@ export default function ChartPKA({
                                  }: ChartPKAProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const metricAvgPowerLoss: ChartData<"line", number[], number> = {
+    const metricAvgPowerLoss = singleLineChart({
         labels: powerLosses.map(powerLoss => powerLoss.hour),
-        datasets: [
-            {
-                label: 'Power Loss',
-                data: powerLosses.map(powerLoss => powerLoss.power_loss),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }
-        ]
-    }
+        data: powerLosses.map(powerLoss => powerLoss.power_loss),
+        label: 'Power Loss',
+    });
 
-    const metricAvgKFactor: ChartData<"line", number[], number> = {
+    const metricAvgKFactor = singleLineChart({
         labels: kFactors.map(kFactor => kFactor.hour),
-        datasets: [
-            {
-                label: 'K Factor',
-                data: kFactors.map(kFactor => kFactor.k_factor),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }
-        ]
-    }
+        data: kFactors.map(kFactor => kFactor.k_factor),
+        label: 'K Factor',
+    });
 
-    const metricAvgTriplenCurrent: ChartData<"line", number[], number> = {
+    const metricAvgTriplenCurrent = singleLineChart({
         labels: triplenCurrents.map(triplenCurrent => triplenCurrent.hour),
-        datasets: [
-            {
-                label: 'Triplen Current',
-                data: triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }
-        ]
-    }
+        data: triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current),
+        label: 'Triplen Current',
+    });
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({
