@@ -97,6 +97,21 @@ export default function ChartPKA({
                                 <Typography>Min : {Math.round((minPowerLoss + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
+                        <Box
+                            sx={{px: 2}}
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="end"
+                            flexDirection="column"
+                        >
+                            <Typography variant={"h6"}>Frequency</Typography>
+                            <Line data={metricAvgTriplenCurrent}/>
+                            <Paper sx={{ p: 2 }}>
+                                <Typography>Max : {Math.round((maxTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Avg : {Math.round((avgTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Min : {Math.round((minTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
+                            </Paper>
+                        </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Box
@@ -116,32 +131,17 @@ export default function ChartPKA({
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box
-                            sx={{px: 2}}
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="end"
-                            flexDirection="column"
-                        >
-                            <Typography variant={"h6"}>Frequency</Typography>
-                            <Line data={metricAvgTriplenCurrent}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                        <Box sx={{ height: '75vh', width: '100%' }}>
+                            <GoogleMapReact
+                                bootstrapURLKeys={{ key: mapApiKey }}
+                                defaultCenter={defaultProps.center}
+                                defaultZoom={defaultProps.zoom}
+                                yesIWantToUseGoogleMapApiInternals
+                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
+                            />
                         </Box>
                     </Grid>
                 </Grid>
-                <Box sx={{ height: '35vh', width: '100%' }}>
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: mapApiKey }}
-                        defaultCenter={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                        yesIWantToUseGoogleMapApiInternals
-                        onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                    />
-                </Box>
             </Container>
         </>
     );
