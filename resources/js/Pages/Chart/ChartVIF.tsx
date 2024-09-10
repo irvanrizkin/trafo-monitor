@@ -1,5 +1,5 @@
 import {ChartVIFProps} from "@/types/chart";
-import {Box, Container, Grid, Paper, Typography} from "@mui/material";
+import {Box, Container, Grid, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
 import GoogleMapReact from "google-map-react";
 import {ChartData} from "chart.js";
 import {Line} from "react-chartjs-2";
@@ -27,6 +27,8 @@ export default function ChartVIF({
                                      minFrequency,
                                  }: ChartVIFProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
+    const theme = useTheme()
+    const onlyMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
 
     const metricAvgVoltage = rstLineChart(
         {
@@ -102,6 +104,21 @@ export default function ChartVIF({
                                 <Typography>T : {Math.round((avgVoltageT + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
+                        <Box
+                            sx={{px: 2}}
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="end"
+                            flexDirection="column"
+                        >
+                            <Typography variant={"h6"}>Frequency</Typography>
+                            <Line data={metricAvgFrequency}/>
+                            <Paper sx={{ p: 2 }}>
+                                <Typography>Max : {Math.round((maxFrequency + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Avg : {Math.round((avgFrequency + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Min : {Math.round((minFrequency + Number.EPSILON) * 100) / 100}</Typography>
+                            </Paper>
+                        </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Box
@@ -122,32 +139,17 @@ export default function ChartVIF({
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box
-                            sx={{px: 2}}
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="end"
-                            flexDirection="column"
-                        >
-                            <Typography variant={"h6"}>Frequency</Typography>
-                            <Line data={metricAvgFrequency}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxFrequency + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgFrequency + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minFrequency + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                        <Box sx={{ height: '75vh', width: '100%' }}>
+                            <GoogleMapReact
+                                bootstrapURLKeys={{ key: mapApiKey }}
+                                defaultCenter={defaultProps.center}
+                                defaultZoom={defaultProps.zoom}
+                                yesIWantToUseGoogleMapApiInternals
+                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
+                            />
                         </Box>
                     </Grid>
                 </Grid>
-                <Box sx={{ height: '35vh', width: '100%' }}>
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: mapApiKey }}
-                        defaultCenter={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                        yesIWantToUseGoogleMapApiInternals
-                        onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                    />
-                </Box>
             </Container>
         </>
     )
