@@ -7,6 +7,7 @@ use App\Models\Current;
 use App\Models\Frequency;
 use App\Models\IHD;
 use App\Models\IHDCurrent;
+use App\Models\IHDVoltage;
 use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
 use App\Models\Metric;
@@ -257,13 +258,15 @@ class ChartController extends Controller
 
     public function getChartIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $ihd = IHD::where('trafo_id', $trafoId)->latest()->first();
+        $ihd = IHD::where('trafo_id', $trafoId)->latest()->get();
+        $ihdVoltages = IHDVoltage::where('trafo_id', $trafoId)->latest()->get();
 
-        return Inertia::render('Chart/ChartHD', [
+        return Inertia::render('Chart/ChartIHD', [
             'trafo' => $trafo,
             'date' => $date,
             'title' => 'Chart IHD',
-            'harmonicDistortions' => $ihd,
+            'ihdCurrents' => $ihd,
+            'ihdVoltages' => $ihdVoltages,
         ]);
     }
 
