@@ -1,5 +1,5 @@
 import {PageProps, TrafoV1} from "@/types/index";
-import {Metric, MetricTHDCurrent, MetricTHDVoltage} from "@/types/metric";
+import {Metric, MetricHD, MetricTHDCurrent, MetricTHDVoltage} from "@/types/metric";
 
 export interface AveragedMetric {
     date: string;
@@ -170,8 +170,8 @@ export type ChartTHDIHDProps = PageProps & {
 export type ChartIHDProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    individualHarmonicDistortions: AveragedMetricIndividualHarmonicDistortion[];
-    ihdCurrents: AveragedMetricTHDCurrent[];
+    ihdVoltages: MetricHD[];
+    ihdCurrents: MetricHD[];
     avgVoltageR: number;
     avgVoltageS: number;
     avgVoltageT: number;

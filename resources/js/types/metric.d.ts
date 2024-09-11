@@ -114,6 +114,12 @@ export interface MetricHD extends Metric {
     h13: Order;
     h14: Order;
     h15: Order;
+    h16: Order;
+    h17: Order;
+    h18: Order;
+    h19: Order;
+    h20: Order;
+    h21: Order;
 }
 
 export type MetricVIFProps = PageProps & {
@@ -143,8 +149,8 @@ export type MetricTHDIHDProps = PageProps & {
 export type MetricIHDProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    individualHarmonicDistortions: MetricIndividualHarmonicDistortion[];
-    ihdCurrents: MetricIHDCurrent[];
+    ihdCurrents: MetricHD[];
+    ihdVoltages: MetricHD[];
 }
 
 export type MetricPKAProps = PageProps & {
