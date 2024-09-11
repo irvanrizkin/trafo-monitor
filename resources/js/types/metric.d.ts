@@ -80,10 +80,10 @@ export interface MetricTHDCurrent extends Metric {
     current_t: number;
 }
 
-export interface MetricTHDFrequency extends Metric {
-    frequency_r: number;
-    frequency_s: number;
-    frequency_t: number;
+export interface MetricTHDVoltage extends Metric {
+    voltage_r: number;
+    voltage_s: number;
+    voltage_t: number;
 }
 
 export interface MetricIndividualHarmonicDistortion extends Metric {
@@ -136,9 +136,8 @@ export type MetricPQSPFProps = PageProps & {
 export type MetricTHDIHDProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    totalHarmonicDistortions: MetricTotalHarmonicDistortion[];
     thdCurrents: MetricTHDCurrent[];
-    thdFrequencies: MetricTHDFrequency[];
+    thdVoltages: MetricTHDVoltage[];
 }
 
 export type MetricIHDProps = PageProps & {

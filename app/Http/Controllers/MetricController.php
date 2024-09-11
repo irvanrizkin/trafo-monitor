@@ -17,6 +17,7 @@ use App\Models\ReactivePower;
 use App\Models\THD;
 use App\Models\THDCurrent;
 use App\Models\THDFrequency;
+use App\Models\THDVoltage;
 use App\Models\TotalHarmonicDistortion;
 use App\Models\Trafo;
 use App\Models\TriplenCurrent;
@@ -73,14 +74,16 @@ class MetricController extends Controller
 
     public function getMetricTHDIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $thd = THD::where('trafo_id', $trafoId)->latest()->first();
+        $thdCurrents = THDCurrent::where('trafo_id', $trafoId)->get();
+        $thdVoltages = THDVoltage::where('trafo_id', $trafoId)->get();
 
-        return Inertia::render('Metric/MetricHD', [
+        return Inertia::render('Metric/MetricTHDIHD', [
             'trafo' => $trafo,
             'date' => $date,
             'title' => 'Metric THD',
             'chartRoute' => 'chart.thd-ihd',
-            'harmonicDistortions' => $thd,
+            'thdCurrents' => $thdCurrents,
+            'thdVoltages' => $thdVoltages,
         ]);
     }
 
