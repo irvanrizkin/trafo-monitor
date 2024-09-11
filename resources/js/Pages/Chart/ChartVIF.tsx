@@ -7,7 +7,7 @@ import 'chart.js/auto';
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
-import {rstLineChart, singleLineChart} from "@/helpers/generator/chart-generator";
+import {rstinLineChart, rstLineChart, singleLineChart} from "@/helpers/generator/chart-generator";
 
 export default function ChartVIF({
                                      trafo,
@@ -39,12 +39,15 @@ export default function ChartVIF({
         }
     );
 
-    const metricAvgCurrent = rstLineChart(
+    console.log('metricAvgVoltage', metricAvgVoltage);
+
+    const metricAvgCurrent = rstinLineChart(
         {
             labels: currents.map(current => current.hour),
             rData: currents.map(current => current.current_r),
             sData: currents.map(current => current.current_s),
             tData: currents.map(current => current.current_t),
+            inData: currents.map(current => current.current_in),
         }
     );
 

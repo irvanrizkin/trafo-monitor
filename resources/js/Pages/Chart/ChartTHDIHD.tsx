@@ -1,93 +1,41 @@
 import {ChartTHDIHDProps} from "@/types/chart";
 import {ChartData} from "chart.js";
 import {Box, Container, Grid, Paper, Typography} from "@mui/material";
-import {Bar} from "react-chartjs-2";
+import {Bar, Line} from "react-chartjs-2";
 import GoogleMapReact from "google-map-react";
 import 'chart.js/auto';
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import {rstBarChart, rstLineChart} from "@/helpers/generator/chart-generator";
 
 export default function ChartTHDIHD({
                                         trafo,
                                         date,
-                                        totalHarmonicDistortions,
+                                        thdVoltages,
                                         thdCurrents,
-                                        thdFrequencies,
-                                        avgVoltageR,
-                                        avgVoltageS,
-                                        avgVoltageT,
-                                        avgCurrentR,
-                                        avgCurrentS,
-                                        avgCurrentT,
-                                        avgFrequencyR,
-                                        avgFrequencyS,
-                                        avgFrequencyT
+                                        avgVoltageR = 0,
+                                        avgVoltageS = 0,
+                                        avgVoltageT = 0,
+                                        avgCurrentR = 0,
+                                        avgCurrentS = 0,
+                                        avgCurrentT = 0,
                                     }: ChartTHDIHDProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const metricAvgTHD: ChartData<"bar", number[], number> = {
-        labels: totalHarmonicDistortions.map(thd => thd.hour),
-        datasets: [
-            {
-                label: 'VR',
-                data: totalHarmonicDistortions.map(thd => thd.voltage_r),
-                backgroundColor: 'rgb(255, 0, 92)',
-            },
-            {
-                label: 'VS',
-                data: totalHarmonicDistortions.map(thd => thd.voltage_s),
-                backgroundColor: 'rgb(255, 246, 0)',
-            },
-            {
-                label: 'VT',
-                data: totalHarmonicDistortions.map(thd => thd.voltage_t),
-                backgroundColor: 'rgb(38, 0, 27)',
-            }
-        ]
-    }
+    const metricVoltages = rstBarChart({
+        labels: thdVoltages.reverse().map(voltage => new Date(voltage.created_at).getMinutes()),
+        rData: thdVoltages.reverse().map(voltage => voltage.voltage_r),
+        sData: thdVoltages.reverse().map(voltage => voltage.voltage_s),
+        tData: thdVoltages.reverse().map(voltage => voltage.voltage_t),
+    });
 
-    const metricAvgCurrent: ChartData<"bar", number[], number> = {
-        labels: thdCurrents.map(current => current.hour),
-        datasets: [
-            {
-                label: 'IR',
-                data: thdCurrents.map(current => current.current_r),
-                backgroundColor: 'rgb(255, 0, 92)',
-            },
-            {
-                label: 'IS',
-                data: thdCurrents.map(current => current.current_s),
-                backgroundColor: 'rgb(255, 246, 0)',
-            },
-            {
-                label: 'IT',
-                data: thdCurrents.map(current => current.current_t),
-                backgroundColor: 'rgb(38, 0, 27)',
-            }
-        ]
-    }
-
-    const metricAvgFrequency: ChartData<"bar", number[], number> = {
-        labels: thdFrequencies.map(frequency => frequency.hour),
-        datasets: [
-            {
-                label: 'FR',
-                data: thdFrequencies.map(frequency => frequency.frequency_r),
-                backgroundColor: 'rgb(255, 0, 92)',
-            },
-            {
-                label: 'FS',
-                data: thdFrequencies.map(frequency => frequency.frequency_s),
-                backgroundColor: 'rgb(255, 246, 0)',
-            },
-            {
-                label: 'FT',
-                data: thdFrequencies.map(frequency => frequency.frequency_t),
-                backgroundColor: 'rgb(38, 0, 27)',
-            }
-        ]
-    }
+    const metricCurrents = rstBarChart({
+        labels: thdCurrents.reverse().map(current => new Date(current.created_at).getMinutes()),
+        rData: thdCurrents.reverse().map(current => current.current_r),
+        sData: thdCurrents.reverse().map(current => current.current_s),
+        tData: thdCurrents.reverse().map(current => current.current_t),
+    });
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({
@@ -107,6 +55,8 @@ export default function ChartTHDIHD({
         },
         zoom: 15,
     }
+
+    console.log('metricVoltages', metricVoltages)
 
     return (
         <>
@@ -132,7 +82,7 @@ export default function ChartTHDIHD({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>THD</Typography>
-                            <Bar data={metricAvgTHD}/>
+                            <Bar data={metricVoltages}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>VR : {Math.round((avgVoltageR + Number.EPSILON) * 100) / 100}</Typography>
                                 <Typography>VS : {Math.round((avgVoltageS + Number.EPSILON) * 100) / 100}</Typography>
@@ -149,7 +99,7 @@ export default function ChartTHDIHD({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>Current</Typography>
-                            <Bar data={metricAvgCurrent}/>
+                            <Bar data={metricCurrents}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>IR : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>
                                 <Typography>IS : {Math.round((avgCurrentS + Number.EPSILON) * 100) / 100}</Typography>
@@ -158,32 +108,17 @@ export default function ChartTHDIHD({
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box
-                            sx={{px: 2}}
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="end"
-                            flexDirection="column"
-                        >
-                            <Typography variant={"h6"}>Frequency</Typography>
-                            <Bar data={metricAvgFrequency}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>FR : {Math.round((avgFrequencyR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>FS : {Math.round((avgFrequencyS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>FT : {Math.round((avgFrequencyT + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                        <Box sx={{ height: '75vh', width: '100%' }}>
+                            <GoogleMapReact
+                                bootstrapURLKeys={{ key: mapApiKey }}
+                                defaultCenter={defaultProps.center}
+                                defaultZoom={defaultProps.zoom}
+                                yesIWantToUseGoogleMapApiInternals
+                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
+                            />
                         </Box>
                     </Grid>
                 </Grid>
-                <Box sx={{ height: '35vh', width: '100%' }}>
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: mapApiKey }}
-                        defaultCenter={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                        yesIWantToUseGoogleMapApiInternals
-                        onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                    />
-                </Box>
             </Container>
         </>
     )

@@ -75,6 +75,39 @@ export function rstinLineChart({
     }
 }
 
+export function rstBarChart({
+                                 labels,
+                                 rData,
+                                 sData,
+                                 tData,
+                             }: {
+    labels: number[],
+    rData: number[],
+    sData: number[],
+    tData: number[],
+}): ChartData<"bar", number[], number> {
+    return {
+        labels: labels,
+        datasets: [
+            {
+                label: 'R',
+                data: rData,
+                backgroundColor: red[500],
+            },
+            {
+                label: 'S',
+                data: sData,
+                backgroundColor: amber[500],
+            },
+            {
+                label: 'T',
+                data: tData,
+                backgroundColor: grey[500],
+            }
+        ]
+    }
+}
+
 export function singleLineChart({
                                     labels,
                                     data,
