@@ -7,6 +7,7 @@ use App\Models\Current;
 use App\Models\Frequency;
 use App\Models\IHD;
 use App\Models\IHDCurrent;
+use App\Models\IHDVoltage;
 use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
 use App\Models\Metric;
@@ -89,14 +90,16 @@ class MetricController extends Controller
 
     public function getMetricIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $ihd = IHD::where('trafo_id', $trafoId)->latest()->first();
+        $ihd = IHD::where('trafo_id', $trafoId)->latest()->get();
+        $ihdVoltage = IHDVoltage::where('trafo_id', $trafoId)->latest()->get();
 
-        return Inertia::render('Metric/MetricHD', [
+        return Inertia::render('Metric/MetricIHD', [
             'trafo' => $trafo,
             'date' => $date,
             'title' => 'Metric IHD',
             'chartRoute' => 'chart.ihd',
-            'harmonicDistortions' => $ihd,
+            'ihdCurrents' => $ihd,
+            'ihdVoltages' => $ihdVoltage,
         ]);
     }
 
@@ -161,7 +164,8 @@ class MetricController extends Controller
             ], 404);
         }
 
-        $ihd = new IHD();
+//        $ihd = new IHD();
+        $ihd = new IHDVoltage();
         $ihd->trafo_id = $trafoId;
         $ihd->topic_name = 'IHD';
         $ihd->h1 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
@@ -179,6 +183,12 @@ class MetricController extends Controller
         $ihd->h13 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
         $ihd->h14 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
         $ihd->h15 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h16 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h17 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h18 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h19 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h20 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
+        $ihd->h21 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
 
         $ihd->save();
 
