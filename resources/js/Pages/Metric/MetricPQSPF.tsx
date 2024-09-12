@@ -42,28 +42,28 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
 
     const columnGroupPower: GridColumnGroupingModel = [
         {
-            groupId: 'Power',
+            groupId: 'Power (P)',
             children: [{ field: 'power_r' }, { field: 'power_s' }, { field: 'power_t' }]
         }
     ]
 
     const columnGroupReactivePower: GridColumnGroupingModel = [
         {
-            groupId: 'Reactive Power',
+            groupId: 'Reactive Power (Q)',
             children: [{ field: 'reactive_power_r' }, { field: 'reactive_power_s' }, { field: 'reactive_power_t' }]
         }
     ]
 
     const columnGroupApparentPower: GridColumnGroupingModel = [
         {
-            groupId: 'Apparent Power',
+            groupId: 'Apparent Power (VA)',
             children: [{ field: 'apparent_power_r' }, { field: 'apparent_power_s' }, { field: 'apparent_power_t' }]
         }
     ]
 
     const columnGroupPowerFactor: GridColumnGroupingModel = [
         {
-            groupId: 'Power Factor',
+            groupId: 'Power Factor (PF)',
             children: [{ field: 'power_factor_r' }, { field: 'power_factor_s' }, { field: 'power_factor_t' }]
         }
     ]

@@ -10,13 +10,13 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
     const columnsTemperature: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'temperature', headerName: 'Temperature'},
+        { field: 'temperature', headerName: 'Temperature (°C)', width: 200},
     ]
 
     const columnsPressure: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'pressure', headerName: 'Pressure'},
+        { field: 'pressure', headerName: 'Pressure (p)'},
     ]
 
     const columnsOilLevel: GridColDef[] = [
@@ -28,7 +28,7 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
     const columnsAmbientTemperature: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'ambient_temperature', headerName: 'Ambient Temperature'},
+        { field: 'ambient_temperature', headerName: 'Ambient Temperature (°C)', width: 200},
     ]
 
     return (
