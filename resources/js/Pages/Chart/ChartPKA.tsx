@@ -104,7 +104,7 @@ export default function ChartPKA({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Frequency</Typography>
+                            <Typography variant={"h6"}>Triplen Current</Typography>
                             <Line data={metricAvgTriplenCurrent}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>Max : {Math.round((maxTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
@@ -121,7 +121,7 @@ export default function ChartPKA({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Current</Typography>
+                            <Typography variant={"h6"}>K Factor</Typography>
                             <Line data={metricAvgKFactor}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>Max : {Math.round((maxKFactor + Number.EPSILON) * 100) / 100}</Typography>

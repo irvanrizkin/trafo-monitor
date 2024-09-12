@@ -81,7 +81,7 @@ export default function ChartTHDIHD({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>THD</Typography>
+                            <Typography variant={"h6"}>Total Harmonics Distortion Voltage (THDv)</Typography>
                             <Bar data={metricVoltages}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>VR : {Math.round((avgVoltageR + Number.EPSILON) * 100) / 100}</Typography>
@@ -98,7 +98,7 @@ export default function ChartTHDIHD({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Current</Typography>
+                            <Typography variant={"h6"}>Total Harmonics Distortion Current (THDi)</Typography>
                             <Bar data={metricCurrents}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>IR : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>

@@ -106,7 +106,7 @@ export default function ChartPQSPF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Power</Typography>
+                            <Typography variant={"h6"}>Power (P)</Typography>
                             <Line data={metricAvgPower}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>R : {Math.round((avgPowerR + Number.EPSILON) * 100) / 100}</Typography>
@@ -121,7 +121,7 @@ export default function ChartPQSPF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Reactive Power</Typography>
+                            <Typography variant={"h6"}>Reactive Power (Q)</Typography>
                             <Line data={metricAvgReactivePower}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>R : {Math.round((avgReactivePowerR + Number.EPSILON) * 100) / 100}</Typography>
@@ -141,7 +141,7 @@ export default function ChartPQSPF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Apparent Power</Typography>
+                            <Typography variant={"h6"}>Apparent Power (VA)</Typography>
                             <Line data={metricAvgApparentPower}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>R : {Math.round((avgApparentPowerR + Number.EPSILON) * 100) / 100}</Typography>
@@ -156,7 +156,7 @@ export default function ChartPQSPF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Power Factor</Typography>
+                            <Typography variant={"h6"}>Power Factor (PF)</Typography>
                             <Line data={metricAvgPowerFactor}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>R : {Math.round((avgPowerFactorR + Number.EPSILON) * 100) / 100}</Typography>
