@@ -173,8 +173,8 @@ class MetricController extends Controller
             ], 404);
         }
 
-//        $ihd = new IHD();
-        $ihd = new IHDVoltage();
+       $ihd = new IHD();
+        // $ihd = new IHDVoltage();
         $ihd->trafo_id = $trafoId;
         $ihd->topic_name = 'IHD';
         $ihd->h1 = ['r' => rand(1, 100), 's' => rand(1, 100), 't' => rand(1, 100)];
