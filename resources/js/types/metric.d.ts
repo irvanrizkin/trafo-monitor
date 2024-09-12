@@ -153,6 +153,11 @@ export type MetricIHDProps = PageProps & {
     ihdVoltages: MetricHD[];
 }
 
+export type MetricTPOProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+}
+
 export type MetricPKAProps = PageProps & {
     trafo: TrafoV1;
     date: string;

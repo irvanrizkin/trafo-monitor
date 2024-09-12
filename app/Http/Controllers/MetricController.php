@@ -103,6 +103,15 @@ class MetricController extends Controller
         ]);
     }
 
+    public function getMetricTPO($trafoId, $date) {
+        $trafo = Trafo::find($trafoId);
+
+        return Inertia::render('Metric/MetricTPO', [
+            'trafo' => $trafo,
+            'date' => $date,
+        ]);
+    }
+
     public function getMetricPKA($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
         $powerLosses = PowerLoss::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();

@@ -58,12 +58,12 @@ export default function MetricIHD({
                                 <OrderTableBody key={'h13'} orderName={'H13'} order={ihdCurrents[0].h13} />
                                 <OrderTableBody key={'h14'} orderName={'H14'} order={ihdCurrents[0].h14} />
                                 <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h15} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h16} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h17} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h18} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h19} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h20} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h21} />
+                                <OrderTableBody key={'h16'} orderName={'H16'} order={ihdCurrents[0].h16} />
+                                <OrderTableBody key={'h17'} orderName={'H17'} order={ihdCurrents[0].h17} />
+                                <OrderTableBody key={'h18'} orderName={'H18'} order={ihdCurrents[0].h18} />
+                                <OrderTableBody key={'h19'} orderName={'H19'} order={ihdCurrents[0].h19} />
+                                <OrderTableBody key={'h20'} orderName={'H20'} order={ihdCurrents[0].h20} />
+                                <OrderTableBody key={'h21'} orderName={'H21'} order={ihdCurrents[0].h21} />
 
                             </Table>
                         </TableContainer>
@@ -99,12 +99,12 @@ export default function MetricIHD({
                                 <OrderTableBody key={'h13'} orderName={'H13'} order={ihdVoltages[0].h13} />
                                 <OrderTableBody key={'h14'} orderName={'H14'} order={ihdVoltages[0].h14} />
                                 <OrderTableBody key={'h15'} orderName={'H15'} order={ihdVoltages[0].h15} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h16} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h17} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h18} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h19} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h20} />
-                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[0].h21} />
+                                <OrderTableBody key={'h16'} orderName={'H16'} order={ihdCurrents[0].h16} />
+                                <OrderTableBody key={'h17'} orderName={'H17'} order={ihdCurrents[0].h17} />
+                                <OrderTableBody key={'h18'} orderName={'H18'} order={ihdCurrents[0].h18} />
+                                <OrderTableBody key={'h19'} orderName={'H19'} order={ihdCurrents[0].h19} />
+                                <OrderTableBody key={'h20'} orderName={'H20'} order={ihdCurrents[0].h20} />
+                                <OrderTableBody key={'h21'} orderName={'H21'} order={ihdCurrents[0].h21} />
                             </Table>
                         </TableContainer>
                     </Grid>

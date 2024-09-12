@@ -270,6 +270,15 @@ class ChartController extends Controller
         ]);
     }
 
+    public function getChartTPO($trafoId, $date) {
+        $trafo = Trafo::find($trafoId);
+
+        return Inertia::render('Chart/ChartTPO', [
+            'trafo' => $trafo,
+            'date' => $date,
+        ]);
+    }
+
     public function getChartPKA($trafoId, $date)
     {
         $trafo = Trafo::find($trafoId);

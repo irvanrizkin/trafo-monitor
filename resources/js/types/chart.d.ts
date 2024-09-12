@@ -180,6 +180,11 @@ export type ChartIHDProps = PageProps & {
     avgCurrentT: number;
 }
 
+export type ChartTPOProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+}
+
 export type ChartPKAProps = PageProps & {
     trafo: TrafoV1;
     date: string;
