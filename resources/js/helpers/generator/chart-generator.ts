@@ -35,6 +35,39 @@ export function rstLineChart({
     }
 }
 
+export function rstLineChartString({
+                                 labels,
+                                 rData,
+                                 sData,
+                                 tData,
+                             }: {
+    labels: string[],
+    rData: number[],
+    sData: number[],
+    tData: number[],
+}): ChartData<"line", number[], string> {
+    return {
+        labels: labels,
+        datasets: [
+            datasetGenerator({
+                label: 'R',
+                data: rData,
+                borderColor: red[500],
+            }),
+            datasetGenerator({
+                label: 'S',
+                data: sData,
+                borderColor: amber[500],
+            }),
+            datasetGenerator({
+                label: 'T',
+                data: tData,
+                borderColor: grey[900],
+            }),
+        ]
+    }
+}
+
 export function rstinLineChart({
                                    labels,
                                    rData,
@@ -48,6 +81,46 @@ export function rstinLineChart({
     tData: number[],
     inData: number[],
 }): ChartData<"line", number[], number> {
+    return {
+        labels: labels,
+        datasets: [
+            datasetGenerator({
+                label: 'R',
+                data: rData,
+                borderColor: red[500],
+            }),
+            datasetGenerator({
+                label: 'S',
+                data: sData,
+                borderColor: amber[500],
+            }),
+            datasetGenerator({
+                label: 'T',
+                data: tData,
+                borderColor: grey[900],
+            }),
+            datasetGenerator({
+                label: 'IN',
+                data: inData,
+                borderColor: blue[500],
+            }),
+        ]
+    }
+}
+
+export function rstinLineChartString({
+                                   labels,
+                                   rData,
+                                   sData,
+                                   tData,
+                                   inData,
+                               }: {
+    labels: string[],
+    rData: number[],
+    sData: number[],
+    tData: number[],
+    inData: number[],
+}): ChartData<"line", number[], string> {
     return {
         labels: labels,
         datasets: [
@@ -150,6 +223,27 @@ export function singleLineChart({
     data: number[]
     label: string
 }): ChartData<"line", number[], number> {
+    return {
+        labels: labels,
+        datasets: [
+            datasetGenerator({
+                label: label,
+                data: data,
+                borderColor: blue[500],
+            }),
+        ]
+    }
+}
+
+export function singleLineChartString({
+                                    labels,
+                                    data,
+                                    label
+                                }: {
+    labels: string[],
+    data: number[]
+    label: string
+}): ChartData<"line", number[], string> {
     return {
         labels: labels,
         datasets: [

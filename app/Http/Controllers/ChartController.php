@@ -23,6 +23,7 @@ use App\Models\TotalHarmonicDistortion;
 use App\Models\Trafo;
 use App\Models\TriplenCurrent;
 use App\Models\Voltage;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -69,78 +70,25 @@ class ChartController extends Controller
 
     public function getChartVIF($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        $oneHourAgo = Carbon::now()->subHour();
 
-        $voltages = Voltage::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(voltage_r) as voltage_r,
-            AVG(voltage_s) as voltage_s,
-            AVG(voltage_t) as voltage_t'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $voltages = Voltage::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $voltagesRaw = Voltage::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $avgVoltageR = $voltagesRaw->avg('voltage_r');
-        $avgVoltageS = $voltagesRaw->avg('voltage_s');
-        $avgVoltageT = $voltagesRaw->avg('voltage_t');
-
-        $currents = Current::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(current_r) as current_r,
-            AVG(current_s) as current_s,
-            AVG(current_t) as current_t,
-            AVG(current_in) as current_in'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $currents = Current::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $currentsRaw = Current::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
+        $frequencies = Frequency::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
-        $avgCurrentR = $currentsRaw->avg('current_r');
-        $avgCurrentS = $currentsRaw->avg('current_s');
-        $avgCurrentT = $currentsRaw->avg('current_t');
-        $avgCurrentIN = $currentsRaw->avg('current_in');
-
-        $frequencies = Frequency::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(frequency_r) as frequency_r,
-            AVG(frequency_s) as frequency_s,
-            AVG(frequency_t) as frequency_t'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->get();
-
-        $frequenciesRaw = Frequency::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $maxFrequency = $frequenciesRaw->max('frequency_r');
-        $avgFrequency = $frequenciesRaw->avg('frequency_r');
-        $minFrequency = $frequenciesRaw->min('frequency_r');
 
         return Inertia::render('Chart/ChartVIF', [
             'trafo' => $trafo,
             'voltages' => $voltages,
             'currents' => $currents,
             'frequencies' => $frequencies,
-            'avgVoltageR' => $avgVoltageR,
-            'avgVoltageS' => $avgVoltageS,
-            'avgVoltageT' => $avgVoltageT,
-            'avgCurrentR' => $avgCurrentR,
-            'avgCurrentS' => $avgCurrentS,
-            'avgCurrentT' => $avgCurrentT,
-            'avgCurrentIN' => $avgCurrentIN,
-            'maxFrequency' => $maxFrequency,
-            'avgFrequency' => $avgFrequency,
-            'minFrequency' => $minFrequency,
             'date' => $date,
         ]);
     }
