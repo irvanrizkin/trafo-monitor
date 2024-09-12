@@ -28,7 +28,7 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
         {id: 'pqspf', name: 'Data 2 : P, Q, S dan PF'},
         {id: 'thd-ihd', name: 'Data 3 : TOTAL HARMONICS DISTORTION'},
         {id: 'ihd', name: 'Data 4 : INDIVIDUAL HARMONICS DISTORTION'},
-        {id: 'analisis', name: 'Data 5 : T, P, LV MINYAK, DAN AMBIENT TEMPERATURE'},
+        {id: 'tpo', name: 'Data 5 : T, P, LV MINYAK, DAN AMBIENT TEMPERATURE'},
         {id: 'pka', name: 'Data 6 : ESTIMASI P LOSS, K FACTOR, TRIPLEN HARMONICS'},
         {id: 'analisis', name: 'Data 7 : ANALISIS'},
     ]
