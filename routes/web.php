@@ -90,6 +90,8 @@ Route::prefix('chart')->middleware(['auth'])->group(function () {
         ->name('chart.thd-ihd');
     Route::get('/{trafoid}/{date}/ihd', [ChartController::class, 'getChartIHD'])
         ->name('chart.ihd');
+    Route::get('/{trafoid}/{date}/tpo', [ChartController::class, 'getChartTPO'])
+        ->name('chart.tpo');
     Route::get('/{trafoid}/{date}/pka', [ChartController::class, 'getChartPKA'])
         ->name('chart.pka');
     Route::get('/{trafoid}/{date}/analisis', [ChartController::class, 'getChartAnalysis'])
