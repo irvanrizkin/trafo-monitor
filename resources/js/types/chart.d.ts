@@ -1,9 +1,9 @@
 import {PageProps, TrafoV1} from "@/types/index";
 import {
-    Metric,
+    Metric, MetricApparentPower,
     MetricCurrent,
     MetricFrequency,
-    MetricHD,
+    MetricHD, MetricPower, MetricPowerFactor, MetricReactivePower,
     MetricTHDCurrent,
     MetricTHDVoltage,
     MetricVoltage
@@ -144,22 +144,10 @@ export type ChartVIFProps = PageProps & {
 export type ChartPQSPFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    powers: AveragedMetricPower[];
-    reactivePowers: AveragedMetricReactivePower[];
-    apparentPowers: AveragedMetricApparentPower[];
-    powerFactors: AveragedMetricPowerFactor[];
-    avgPowerR: number;
-    avgPowerS: number;
-    avgPowerT: number;
-    avgReactivePowerR: number;
-    avgReactivePowerS: number;
-    avgReactivePowerT: number;
-    avgApparentPowerR: number;
-    avgApparentPowerS: number;
-    avgApparentPowerT: number;
-    avgPowerFactorR: number;
-    avgPowerFactorS: number;
-    avgPowerFactorT: number;
+    powers: MetricPower[];
+    reactivePowers: MetricReactivePower[];
+    apparentPowers: MetricApparentPower[];
+    powerFactors: MetricPowerFactor[];
 }
 
 export type ChartTHDIHDProps = PageProps & {
