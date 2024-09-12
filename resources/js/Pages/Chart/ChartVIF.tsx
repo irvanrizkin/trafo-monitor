@@ -99,7 +99,7 @@ export default function ChartVIF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Voltage</Typography>
+                            <Typography variant={"h6"}>Voltage (V)</Typography>
                             <Line data={metricAvgVoltage}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>R : {Math.round((avgVoltageR + Number.EPSILON) * 100) / 100}</Typography>
@@ -114,7 +114,7 @@ export default function ChartVIF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Frequency</Typography>
+                            <Typography variant={"h6"}>Frequency (f)</Typography>
                             <Line data={metricAvgFrequency}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>Max : {Math.round((maxFrequency + Number.EPSILON) * 100) / 100}</Typography>
@@ -131,7 +131,7 @@ export default function ChartVIF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Current</Typography>
+                            <Typography variant={"h6"}>Current (I)</Typography>
                             <Line data={metricAvgCurrent}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>R : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>

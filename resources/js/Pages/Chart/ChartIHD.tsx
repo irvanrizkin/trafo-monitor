@@ -213,7 +213,7 @@ export default function ChartIHD({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>IHD Voltage</Typography>
+                            <Typography variant={"h6"}>Individual Harmonics Distortion Voltage (IHDv)</Typography>
                             <Bar data={metricAvgVoltage}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>VR : {Math.round((avgVoltageR + Number.EPSILON) * 100) / 100}</Typography>
@@ -230,7 +230,7 @@ export default function ChartIHD({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>IHD Current</Typography>
+                            <Typography variant={"h6"}>Individual Harmonics Distortion Current (IHDi)</Typography>
                             <Bar data={metricAvgCurrent}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>IR : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>

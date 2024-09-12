@@ -85,7 +85,7 @@ export default function ChartTPO({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Temperature</Typography>
+                            <Typography variant={"h6"}>Temperature (°C)</Typography>
                             <Line data={metricTemperature}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
@@ -100,7 +100,7 @@ export default function ChartTPO({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Pressure</Typography>
+                            <Typography variant={"h6"}>Pressure (p)</Typography>
                             <Line data={metricPressure}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
@@ -135,7 +135,7 @@ export default function ChartTPO({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Ambient Temp</Typography>
+                            <Typography variant={"h6"}>Ambient Temperature (°C)</Typography>
                             <Line data={metricAmbientTemperature}/>
                             <Paper sx={{ p: 2 }}>
                                 <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
