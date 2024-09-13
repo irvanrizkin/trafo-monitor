@@ -3,9 +3,9 @@ import {
     Metric, MetricApparentPower,
     MetricCurrent,
     MetricFrequency,
-    MetricHD, MetricPower, MetricPowerFactor, MetricReactivePower,
+    MetricHD, MetricKFactor, MetricPower, MetricPowerFactor, MetricPowerLoss, MetricReactivePower,
     MetricTHDCurrent,
-    MetricTHDVoltage,
+    MetricTHDVoltage, MetricTriplenCurrent,
     MetricVoltage
 } from "@/types/metric";
 
@@ -178,18 +178,9 @@ export type ChartTPOProps = PageProps & {
 export type ChartPKAProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    powerLosses: AveragedMetricPowerLoss[];
-    kFactors: AveragedMetricKFactor[];
-    triplenCurrents: AveragedMetricTriplenCurrent[];
-    maxPowerLoss: number;
-    avgPowerLoss: number;
-    minPowerLoss: number;
-    maxKFactor: number;
-    avgKFactor: number;
-    minKFactor: number;
-    maxTriplenCurrent: number;
-    avgTriplenCurrent: number;
-    minTriplenCurrent: number;
+    powerLosses: MetricPowerLoss[];
+    kFactors: MetricKFactor[];
+    triplenCurrents: MetricTriplenCurrent[];
 }
 
 export type ChartHDProps = PageProps & {

@@ -170,69 +170,25 @@ class ChartController extends Controller
     public function getChartPKA($trafoId, $date)
     {
         $trafo = Trafo::find($trafoId);
+        $oneHourAgo = Carbon::now()->subHour();
 
-        $powerLosses = PowerLoss::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(power_loss) as power_loss'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $powerLosses = PowerLoss::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $powerLossesRaw = PowerLoss::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $maxPowerLoss = $powerLossesRaw->max('power_loss');
-        $avgPowerLoss = $powerLossesRaw->avg('power_loss');
-        $minPowerLoss = $powerLossesRaw->min('power_loss');
-
-        $kFactors = KFactor::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(k_factor) as k_factor'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $kFactors = KFactor::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $kFactorsRaw = KFactor::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
+        $triplenCurrents = TriplenCurrent::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
-        $maxKFactor = $kFactorsRaw->max('k_factor');
-        $avgKFactor = $kFactorsRaw->avg('k_factor');
-        $minKFactor = $kFactorsRaw->min('k_factor');
-
-        $triplenCurrents = TriplenCurrent::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(triplen_current) as triplen_current'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->get();
-
-        $triplenCurrentsRaw = TriplenCurrent::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $maxTriplenCurrent = $triplenCurrentsRaw->max('triplen_current');
-        $avgTriplenCurrent = $triplenCurrentsRaw->avg('triplen_current');
-        $minTriplenCurrent = $triplenCurrentsRaw->min('triplen_current');
 
         return Inertia::render('Chart/ChartPKA', [
             'trafo' => $trafo,
             'powerLosses' => $powerLosses,
             'kFactors' => $kFactors,
             'triplenCurrents' => $triplenCurrents,
-            'maxPowerLoss' => $maxPowerLoss,
-            'avgPowerLoss' => $avgPowerLoss,
-            'minPowerLoss' => $minPowerLoss,
-            'maxKFactor' => $maxKFactor,
-            'avgKFactor' => $avgKFactor,
-            'minKFactor' => $minKFactor,
-            'maxTriplenCurrent' => $maxTriplenCurrent,
-            'avgTriplenCurrent' => $avgTriplenCurrent,
-            'minTriplenCurrent' => $minTriplenCurrent,
             'date' => $date,
         ]);
     }
