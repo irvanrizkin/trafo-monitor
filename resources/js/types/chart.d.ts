@@ -155,12 +155,6 @@ export type ChartTHDIHDProps = PageProps & {
     date: string;
     thdVoltages: MetricTHDVoltage[];
     thdCurrents: MetricTHDCurrent[];
-    avgVoltageR: number;
-    avgVoltageS: number;
-    avgVoltageT: number;
-    avgCurrentR: number;
-    avgCurrentS: number;
-    avgCurrentT: number;
 }
 
 export type ChartIHDProps = PageProps & {

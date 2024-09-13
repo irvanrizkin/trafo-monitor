@@ -125,8 +125,15 @@ class ChartController extends Controller
 
     public function getChartTHDIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $thdCurrents = THDCurrent::latest()->where('trafo_id', $trafoId)->take(12)->get();
-        $thdVoltages = THDVoltage::latest()->where('trafo_id', $trafoId)->take(12)->get();
+        $oneHourAgo = Carbon::now()->subHour();
+
+        $thdCurrents = THDCurrent::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
+            ->get();
+
+        $thdVoltages = THDVoltage::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
+            ->get();
 
         return Inertia::render('Chart/ChartTHDIHD', [
             'trafo' => $trafo,
