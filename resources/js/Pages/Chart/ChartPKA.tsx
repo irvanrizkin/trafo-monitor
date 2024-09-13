@@ -9,7 +9,8 @@ import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import datasetGenerator from "@/helpers/generator/dataset-generator";
 import {blue} from "@mui/material/colors";
-import {singleLineChart} from "@/helpers/generator/chart-generator";
+import {singleLineChart, singleLineChartString} from "@/helpers/generator/chart-generator";
+import timeMinuteString from "@/helpers/converter/date-time";
 
 export default function ChartPKA({
                                      trafo,
@@ -29,20 +30,20 @@ export default function ChartPKA({
                                  }: ChartPKAProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const metricAvgPowerLoss = singleLineChart({
-        labels: powerLosses.map(powerLoss => powerLoss.hour),
+    const metricAvgPowerLoss = singleLineChartString({
+        labels: powerLosses.map(powerLoss => timeMinuteString(new Date(powerLoss.created_at))),
         data: powerLosses.map(powerLoss => powerLoss.power_loss),
         label: 'Power Loss',
     });
 
-    const metricAvgKFactor = singleLineChart({
-        labels: kFactors.map(kFactor => kFactor.hour),
+    const metricAvgKFactor = singleLineChartString({
+        labels: kFactors.map(kFactor => timeMinuteString(new Date(kFactor.created_at))),
         data: kFactors.map(kFactor => kFactor.k_factor),
         label: 'K Factor',
     });
 
-    const metricAvgTriplenCurrent = singleLineChart({
-        labels: triplenCurrents.map(triplenCurrent => triplenCurrent.hour),
+    const metricAvgTriplenCurrent = singleLineChartString({
+        labels: triplenCurrents.map(triplenCurrent => timeMinuteString(new Date(triplenCurrent.created_at))),
         data: triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current),
         label: 'Triplen Current',
     });
@@ -92,9 +93,9 @@ export default function ChartPKA({
                             <Typography variant={"h6"}>Power Loss</Typography>
                             <Line data={metricAvgPowerLoss}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxPowerLoss + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgPowerLoss + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minPowerLoss + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                         <Box
@@ -107,9 +108,9 @@ export default function ChartPKA({
                             <Typography variant={"h6"}>Triplen Current</Typography>
                             <Line data={metricAvgTriplenCurrent}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>
@@ -124,9 +125,9 @@ export default function ChartPKA({
                             <Typography variant={"h6"}>K Factor</Typography>
                             <Line data={metricAvgKFactor}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxKFactor + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgKFactor + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minKFactor + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>

@@ -7,7 +7,8 @@ import "chart.js/auto";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
-import {rstLineChart} from "@/helpers/generator/chart-generator";
+import {rstLineChartString} from "@/helpers/generator/chart-generator";
+import timeMinuteString from "@/helpers/converter/date-time";
 
 export default function ChartPQSPF({
                                        trafo,
@@ -16,46 +17,36 @@ export default function ChartPQSPF({
                                        reactivePowers,
                                        apparentPowers,
                                        powerFactors,
-                                       avgPowerR,
-                                       avgPowerS,
-                                       avgPowerT,
-                                       avgReactivePowerR,
-                                       avgReactivePowerS,
-                                       avgReactivePowerT,
-                                       avgApparentPowerR,
-                                       avgApparentPowerS,
-                                       avgApparentPowerT,
-                                       avgPowerFactorR,
-                                       avgPowerFactorS,
-                                       avgPowerFactorT,
                                    }: ChartPQSPFProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
     const theme = useTheme()
     const onlyMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-    const metricAvgPower = rstLineChart({
-        labels: powers.map(power => power.hour),
+    console.log(powers.length);
+
+    const metricAvgPower = rstLineChartString({
+        labels: powers.map(power => timeMinuteString(new Date(power.created_at))),
         rData: powers.map(power => power.power_r),
         sData: powers.map(power => power.power_s),
         tData: powers.map(power => power.power_t),
     });
 
-    const metricAvgReactivePower = rstLineChart({
-        labels: reactivePowers.map(reactivePower => reactivePower.hour),
+    const metricAvgReactivePower = rstLineChartString({
+        labels: reactivePowers.map(reactivePower => timeMinuteString(new Date(reactivePower.created_at))),
         rData: reactivePowers.map(reactivePower => reactivePower.reactive_power_r),
         sData: reactivePowers.map(reactivePower => reactivePower.reactive_power_s),
         tData: reactivePowers.map(reactivePower => reactivePower.reactive_power_t),
     });
 
-    const metricAvgApparentPower = rstLineChart({
-        labels: apparentPowers.map(apparentPower => apparentPower.hour),
+    const metricAvgApparentPower = rstLineChartString({
+        labels: apparentPowers.map(apparentPower => timeMinuteString(new Date(apparentPower.created_at))),
         rData: apparentPowers.map(apparentPower => apparentPower.apparent_power_r),
         sData: apparentPowers.map(apparentPower => apparentPower.apparent_power_s),
         tData: apparentPowers.map(apparentPower => apparentPower.apparent_power_t),
     });
 
-    const metricAvgPowerFactor = rstLineChart({
-        labels: powerFactors.map(powerFactor => powerFactor.hour),
+    const metricAvgPowerFactor = rstLineChartString({
+        labels: powerFactors.map(powerFactor => timeMinuteString(new Date(powerFactor.created_at))),
         rData: powerFactors.map(powerFactor => powerFactor.power_factor_r),
         sData: powerFactors.map(powerFactor => powerFactor.power_factor_s),
         tData: powerFactors.map(powerFactor => powerFactor.power_factor_t),
@@ -109,9 +100,9 @@ export default function ChartPQSPF({
                             <Typography variant={"h6"}>Power (P)</Typography>
                             <Line data={metricAvgPower}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgPowerR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgPowerS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgPowerT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                         <Box
@@ -124,9 +115,9 @@ export default function ChartPQSPF({
                             <Typography variant={"h6"}>Reactive Power (Q)</Typography>
                             <Line data={metricAvgReactivePower}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgReactivePowerR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgReactivePowerS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgReactivePowerT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>
@@ -144,9 +135,9 @@ export default function ChartPQSPF({
                             <Typography variant={"h6"}>Apparent Power (VA)</Typography>
                             <Line data={metricAvgApparentPower}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgApparentPowerR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgApparentPowerS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgApparentPowerT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                         <Box
@@ -159,9 +150,9 @@ export default function ChartPQSPF({
                             <Typography variant={"h6"}>Power Factor (PF)</Typography>
                             <Line data={metricAvgPowerFactor}/>
                             <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgPowerFactorR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgPowerFactorS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgPowerFactorT + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
+                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
                             </Paper>
                         </Box>
                     </Grid>

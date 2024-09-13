@@ -1,5 +1,13 @@
 import {PageProps, TrafoV1} from "@/types/index";
-import {Metric, MetricHD, MetricTHDCurrent, MetricTHDVoltage} from "@/types/metric";
+import {
+    Metric, MetricApparentPower,
+    MetricCurrent,
+    MetricFrequency,
+    MetricHD, MetricKFactor, MetricPower, MetricPowerFactor, MetricPowerLoss, MetricReactivePower,
+    MetricTHDCurrent,
+    MetricTHDVoltage, MetricTriplenCurrent,
+    MetricVoltage
+} from "@/types/metric";
 
 export interface AveragedMetric {
     date: string;
@@ -118,9 +126,9 @@ export interface ChartMetricHD extends Metric {
 export type ChartVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    voltages: AveragedMetricVoltage[];
-    currents: AveragedMetricCurrent[];
-    frequencies: AveragedMetricFrequency[];
+    voltages: MetricVoltage[];
+    currents: MetricCurrent[];
+    frequencies: MetricFrequency[];
     avgVoltageR: number;
     avgVoltageS: number;
     avgVoltageT: number;
@@ -136,22 +144,10 @@ export type ChartVIFProps = PageProps & {
 export type ChartPQSPFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    powers: AveragedMetricPower[];
-    reactivePowers: AveragedMetricReactivePower[];
-    apparentPowers: AveragedMetricApparentPower[];
-    powerFactors: AveragedMetricPowerFactor[];
-    avgPowerR: number;
-    avgPowerS: number;
-    avgPowerT: number;
-    avgReactivePowerR: number;
-    avgReactivePowerS: number;
-    avgReactivePowerT: number;
-    avgApparentPowerR: number;
-    avgApparentPowerS: number;
-    avgApparentPowerT: number;
-    avgPowerFactorR: number;
-    avgPowerFactorS: number;
-    avgPowerFactorT: number;
+    powers: MetricPower[];
+    reactivePowers: MetricReactivePower[];
+    apparentPowers: MetricApparentPower[];
+    powerFactors: MetricPowerFactor[];
 }
 
 export type ChartTHDIHDProps = PageProps & {
@@ -159,12 +155,6 @@ export type ChartTHDIHDProps = PageProps & {
     date: string;
     thdVoltages: MetricTHDVoltage[];
     thdCurrents: MetricTHDCurrent[];
-    avgVoltageR: number;
-    avgVoltageS: number;
-    avgVoltageT: number;
-    avgCurrentR: number;
-    avgCurrentS: number;
-    avgCurrentT: number;
 }
 
 export type ChartIHDProps = PageProps & {
@@ -188,18 +178,9 @@ export type ChartTPOProps = PageProps & {
 export type ChartPKAProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    powerLosses: AveragedMetricPowerLoss[];
-    kFactors: AveragedMetricKFactor[];
-    triplenCurrents: AveragedMetricTriplenCurrent[];
-    maxPowerLoss: number;
-    avgPowerLoss: number;
-    minPowerLoss: number;
-    maxKFactor: number;
-    avgKFactor: number;
-    minKFactor: number;
-    maxTriplenCurrent: number;
-    avgTriplenCurrent: number;
-    minTriplenCurrent: number;
+    powerLosses: MetricPowerLoss[];
+    kFactors: MetricKFactor[];
+    triplenCurrents: MetricTriplenCurrent[];
 }
 
 export type ChartHDProps = PageProps & {
