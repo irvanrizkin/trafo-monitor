@@ -9,6 +9,8 @@ import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import {rstLineChartString} from "@/helpers/generator/chart-generator";
 import timeMinuteString from "@/helpers/converter/date-time";
+import calculateMetrics from "@/helpers/analysis/calculate-metric";
+import AggregationRST from "@/Components/Chart/AggregationRST";
 
 export default function ChartPQSPF({
                                        trafo,
@@ -31,12 +33,22 @@ export default function ChartPQSPF({
         tData: powers.map(power => power.power_t),
     });
 
+    const powerRAggregation = calculateMetrics(powers.map(power => power.power_r));
+    const powerSAggregation = calculateMetrics(powers.map(power => power.power_s));
+    const powerTAggregation = calculateMetrics(powers.map(power => power.power_t));
+    const { power_r = 0, power_s = 0, power_t = 0 } = powers[powers.length - 1] || {};
+
     const metricAvgReactivePower = rstLineChartString({
         labels: reactivePowers.map(reactivePower => timeMinuteString(new Date(reactivePower.created_at))),
         rData: reactivePowers.map(reactivePower => reactivePower.reactive_power_r),
         sData: reactivePowers.map(reactivePower => reactivePower.reactive_power_s),
         tData: reactivePowers.map(reactivePower => reactivePower.reactive_power_t),
     });
+
+    const reactivePowerRAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_r));
+    const reactivePowerSAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_s));
+    const reactivePowerTAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_t));
+    const { reactive_power_r = 0, reactive_power_s = 0, reactive_power_t = 0 } = reactivePowers[reactivePowers.length - 1] || {};
 
     const metricAvgApparentPower = rstLineChartString({
         labels: apparentPowers.map(apparentPower => timeMinuteString(new Date(apparentPower.created_at))),
@@ -45,12 +57,22 @@ export default function ChartPQSPF({
         tData: apparentPowers.map(apparentPower => apparentPower.apparent_power_t),
     });
 
+    const apparentPowerRAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_r));
+    const apparentPowerSAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_s));
+    const apparentPowerTAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_t));
+    const { apparent_power_r = 0, apparent_power_s = 0, apparent_power_t = 0 } = apparentPowers[apparentPowers.length - 1] || {};
+
     const metricAvgPowerFactor = rstLineChartString({
         labels: powerFactors.map(powerFactor => timeMinuteString(new Date(powerFactor.created_at))),
         rData: powerFactors.map(powerFactor => powerFactor.power_factor_r),
         sData: powerFactors.map(powerFactor => powerFactor.power_factor_s),
         tData: powerFactors.map(powerFactor => powerFactor.power_factor_t),
     });
+
+    const powerFactorRAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_r));
+    const powerFactorSAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_s));
+    const powerFactorTAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_t));
+    const { power_factor_r = 0, power_factor_s = 0, power_factor_t = 0 } = powerFactors[powerFactors.length - 1] || {};
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({
@@ -99,11 +121,22 @@ export default function ChartPQSPF({
                         >
                             <Typography variant={"h6"}>Power (P)</Typography>
                             <Line data={metricAvgPower}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRST
+                                    rMax={powerRAggregation.max}
+                                    sMax={powerSAggregation.max}
+                                    tMax={powerTAggregation.max}
+                                    rMin={powerRAggregation.min}
+                                    sMin={powerSAggregation.min}
+                                    tMin={powerTAggregation.min}
+                                    rAvg={powerRAggregation.avg}
+                                    sAvg={powerSAggregation.avg}
+                                    tAvg={powerTAggregation.avg}
+                                    rLatest={power_r}
+                                    sLatest={power_s}
+                                    tLatest={power_t}
+                                />
+                            </Container>
                         </Box>
                         <Box
                             sx={{px: 2, mt: 3}}
@@ -114,11 +147,20 @@ export default function ChartPQSPF({
                         >
                             <Typography variant={"h6"}>Reactive Power (Q)</Typography>
                             <Line data={metricAvgReactivePower}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <AggregationRST
+                                rMax={reactivePowerRAggregation.max}
+                                sMax={reactivePowerSAggregation.max}
+                                tMax={reactivePowerTAggregation.max}
+                                rMin={reactivePowerRAggregation.min}
+                                sMin={reactivePowerSAggregation.min}
+                                tMin={reactivePowerTAggregation.min}
+                                rAvg={reactivePowerRAggregation.avg}
+                                sAvg={reactivePowerSAggregation.avg}
+                                tAvg={reactivePowerTAggregation.avg}
+                                rLatest={reactive_power_r}
+                                sLatest={reactive_power_s}
+                                tLatest={reactive_power_t}
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -134,11 +176,20 @@ export default function ChartPQSPF({
                         >
                             <Typography variant={"h6"}>Apparent Power (VA)</Typography>
                             <Line data={metricAvgApparentPower}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <AggregationRST
+                                rMax={apparentPowerRAggregation.max}
+                                sMax={apparentPowerSAggregation.max}
+                                tMax={apparentPowerTAggregation.max}
+                                rMin={apparentPowerRAggregation.min}
+                                sMin={apparentPowerSAggregation.min}
+                                tMin={apparentPowerTAggregation.min}
+                                rAvg={apparentPowerRAggregation.avg}
+                                sAvg={apparentPowerSAggregation.avg}
+                                tAvg={apparentPowerTAggregation.avg}
+                                rLatest={apparent_power_r}
+                                sLatest={apparent_power_s}
+                                tLatest={apparent_power_t}
+                            />
                         </Box>
                         <Box
                             sx={{px: 2, mt: 3}}
@@ -149,11 +200,20 @@ export default function ChartPQSPF({
                         >
                             <Typography variant={"h6"}>Power Factor (PF)</Typography>
                             <Line data={metricAvgPowerFactor}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <AggregationRST
+                                rMax={powerFactorRAggregation.max}
+                                sMax={powerFactorSAggregation.max}
+                                tMax={powerFactorTAggregation.max}
+                                rMin={powerFactorRAggregation.min}
+                                sMin={powerFactorSAggregation.min}
+                                tMin={powerFactorTAggregation.min}
+                                rAvg={powerFactorRAggregation.avg}
+                                sAvg={powerFactorSAggregation.avg}
+                                tAvg={powerFactorTAggregation.avg}
+                                rLatest={power_factor_r}
+                                sLatest={power_factor_s}
+                                tLatest={power_factor_t}
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
