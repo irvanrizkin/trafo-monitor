@@ -114,13 +114,15 @@ export default function ChartPKA({
                         >
                             <Typography variant={"h6"}>Triplen Current</Typography>
                             <Line data={metricAvgTriplenCurrent}/>
-                            <AggregationSingle
-                                property={"Triplen Current"}
-                                max={triplenCurrentAggregation.max}
-                                avg={triplenCurrentAggregation.avg}
-                                min={triplenCurrentAggregation.min}
-                                latest={triplen_current}
-                            />
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Triplen Current"}
+                                    max={triplenCurrentAggregation.max}
+                                    avg={triplenCurrentAggregation.avg}
+                                    min={triplenCurrentAggregation.min}
+                                    latest={triplen_current}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -133,13 +135,15 @@ export default function ChartPKA({
                         >
                             <Typography variant={"h6"}>K Factor</Typography>
                             <Line data={metricAvgKFactor}/>
-                            <AggregationSingle
-                                property={"K Factor"}
-                                max={kFactorAggregation.max}
-                                avg={kFactorAggregation.avg}
-                                min={kFactorAggregation.min}
-                                latest={k_factor}
-                            />
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"K Factor"}
+                                    max={kFactorAggregation.max}
+                                    avg={kFactorAggregation.avg}
+                                    min={kFactorAggregation.min}
+                                    latest={k_factor}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>

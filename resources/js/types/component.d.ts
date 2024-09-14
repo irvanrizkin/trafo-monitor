@@ -42,6 +42,18 @@ export type AggregationRSTProps = Props & {
     tLatest: number;
 }
 
+export type AggregationRSTOnlyProps = Props & {
+    rMax: number;
+    sMax: number;
+    tMax: number;
+    rMin: number;
+    sMin: number;
+    tMin: number;
+    rAvg: number;
+    sAvg: number;
+    tAvg: number;
+}
+
 export type AggregationRSTINProps = Props & {
     rMax: number;
     sMax: number;

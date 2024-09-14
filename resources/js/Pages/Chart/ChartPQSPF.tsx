@@ -110,10 +110,7 @@ export default function ChartPQSPF({
                 <Grid container spacing={2} sx={{pb: 2}}>
                     <Grid item xs={12} md={4}>
                         <Box
-                            sx={{
-                                px: 2,
-                                mt: onlyMediumScreen ? 3 : 0,
-                            }}
+                            sx={{px: 2}}
                             display="flex"
                             justifyContent="center"
                             alignItems="end"
@@ -139,7 +136,7 @@ export default function ChartPQSPF({
                             </Container>
                         </Box>
                         <Box
-                            sx={{px: 2, mt: 3}}
+                            sx={{px: 2}}
                             display="flex"
                             justifyContent="center"
                             alignItems="end"
@@ -147,28 +144,27 @@ export default function ChartPQSPF({
                         >
                             <Typography variant={"h6"}>Reactive Power (Q)</Typography>
                             <Line data={metricAvgReactivePower}/>
-                            <AggregationRST
-                                rMax={reactivePowerRAggregation.max}
-                                sMax={reactivePowerSAggregation.max}
-                                tMax={reactivePowerTAggregation.max}
-                                rMin={reactivePowerRAggregation.min}
-                                sMin={reactivePowerSAggregation.min}
-                                tMin={reactivePowerTAggregation.min}
-                                rAvg={reactivePowerRAggregation.avg}
-                                sAvg={reactivePowerSAggregation.avg}
-                                tAvg={reactivePowerTAggregation.avg}
-                                rLatest={reactive_power_r}
-                                sLatest={reactive_power_s}
-                                tLatest={reactive_power_t}
-                            />
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRST
+                                    rMax={reactivePowerRAggregation.max}
+                                    sMax={reactivePowerSAggregation.max}
+                                    tMax={reactivePowerTAggregation.max}
+                                    rMin={reactivePowerRAggregation.min}
+                                    sMin={reactivePowerSAggregation.min}
+                                    tMin={reactivePowerTAggregation.min}
+                                    rAvg={reactivePowerRAggregation.avg}
+                                    sAvg={reactivePowerSAggregation.avg}
+                                    tAvg={reactivePowerTAggregation.avg}
+                                    rLatest={reactive_power_r}
+                                    sLatest={reactive_power_s}
+                                    tLatest={reactive_power_t}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Box
-                            sx={{
-                                px: 2,
-                                mt: onlyMediumScreen ? 3 : 0,
-                            }}
+                            sx={{px: 2}}
                             display="flex"
                             justifyContent="center"
                             alignItems="end"
@@ -176,23 +172,25 @@ export default function ChartPQSPF({
                         >
                             <Typography variant={"h6"}>Apparent Power (VA)</Typography>
                             <Line data={metricAvgApparentPower}/>
-                            <AggregationRST
-                                rMax={apparentPowerRAggregation.max}
-                                sMax={apparentPowerSAggregation.max}
-                                tMax={apparentPowerTAggregation.max}
-                                rMin={apparentPowerRAggregation.min}
-                                sMin={apparentPowerSAggregation.min}
-                                tMin={apparentPowerTAggregation.min}
-                                rAvg={apparentPowerRAggregation.avg}
-                                sAvg={apparentPowerSAggregation.avg}
-                                tAvg={apparentPowerTAggregation.avg}
-                                rLatest={apparent_power_r}
-                                sLatest={apparent_power_s}
-                                tLatest={apparent_power_t}
-                            />
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRST
+                                    rMax={apparentPowerRAggregation.max}
+                                    sMax={apparentPowerSAggregation.max}
+                                    tMax={apparentPowerTAggregation.max}
+                                    rMin={apparentPowerRAggregation.min}
+                                    sMin={apparentPowerSAggregation.min}
+                                    tMin={apparentPowerTAggregation.min}
+                                    rAvg={apparentPowerRAggregation.avg}
+                                    sAvg={apparentPowerSAggregation.avg}
+                                    tAvg={apparentPowerTAggregation.avg}
+                                    rLatest={apparent_power_r}
+                                    sLatest={apparent_power_s}
+                                    tLatest={apparent_power_t}
+                                />
+                            </Container>
                         </Box>
                         <Box
-                            sx={{px: 2, mt: 3}}
+                            sx={{px: 2}}
                             display="flex"
                             justifyContent="center"
                             alignItems="end"
@@ -200,20 +198,22 @@ export default function ChartPQSPF({
                         >
                             <Typography variant={"h6"}>Power Factor (PF)</Typography>
                             <Line data={metricAvgPowerFactor}/>
-                            <AggregationRST
-                                rMax={powerFactorRAggregation.max}
-                                sMax={powerFactorSAggregation.max}
-                                tMax={powerFactorTAggregation.max}
-                                rMin={powerFactorRAggregation.min}
-                                sMin={powerFactorSAggregation.min}
-                                tMin={powerFactorTAggregation.min}
-                                rAvg={powerFactorRAggregation.avg}
-                                sAvg={powerFactorSAggregation.avg}
-                                tAvg={powerFactorTAggregation.avg}
-                                rLatest={power_factor_r}
-                                sLatest={power_factor_s}
-                                tLatest={power_factor_t}
-                            />
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRST
+                                    rMax={powerFactorRAggregation.max}
+                                    sMax={powerFactorSAggregation.max}
+                                    tMax={powerFactorTAggregation.max}
+                                    rMin={powerFactorRAggregation.min}
+                                    sMin={powerFactorSAggregation.min}
+                                    tMin={powerFactorTAggregation.min}
+                                    rAvg={powerFactorRAggregation.avg}
+                                    sAvg={powerFactorSAggregation.avg}
+                                    tAvg={powerFactorTAggregation.avg}
+                                    rLatest={power_factor_r}
+                                    sLatest={power_factor_s}
+                                    tLatest={power_factor_t}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
