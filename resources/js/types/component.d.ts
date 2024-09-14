@@ -80,3 +80,10 @@ export type AggregationSingleProps = Props & {
     avg: number;
     latest: number;
 }
+
+export type GoogleMapProps = Props & {
+    lat: number;
+    lng: number;
+    title: string;
+    height: string;
+}

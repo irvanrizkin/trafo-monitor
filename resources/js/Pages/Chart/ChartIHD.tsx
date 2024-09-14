@@ -11,6 +11,7 @@ import {rstBarChartString} from "@/helpers/generator/chart-generator";
 import calculateMetrics from "@/helpers/analysis/calculate-metric";
 import AggregationSingle from "@/Components/Chart/AggregationSingle";
 import AggregationRSTOnly from "@/Components/Chart/AggregationRSTOnly";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function ChartIHD({
                                      trafo,
@@ -186,25 +187,6 @@ export default function ChartIHD({
     const ihdCurrentSAggregation = calculateMetrics(ihdCurrentS);
     const ihdCurrentTAggregation = calculateMetrics(ihdCurrentT);
 
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
-
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
-
     return (
         <>
             <AppBarTriple
@@ -271,15 +253,12 @@ export default function ChartIHD({
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ height: '75vh', width: '100%' }}>
-                            <GoogleMapReact
-                                bootstrapURLKeys={{ key: mapApiKey }}
-                                defaultCenter={defaultProps.center}
-                                defaultZoom={defaultProps.zoom}
-                                yesIWantToUseGoogleMapApiInternals
-                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                            />
-                        </Box>
+                        <GoogleMap
+                            lat={Number(trafo.latitude)}
+                            lng={Number(trafo.longitude)}
+                            title={trafo.name}
+                            height={'700px'}
+                        />
                     </Grid>
                 </Grid>
             </Container>
