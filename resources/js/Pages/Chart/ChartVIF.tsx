@@ -16,6 +16,9 @@ import {
     singleLineChartString
 } from "@/helpers/generator/chart-generator";
 import timeMinuteString from "@/helpers/converter/date-time";
+import AggregationRST from "@/Components/Chart/AggregationRST";
+import AggregationSingle from "@/Components/Chart/AggregationSingle";
+import AggregationRSTIN from "@/Components/Chart/AggregationRSTIN";
 
 export default function ChartVIF({
                                      trafo,
@@ -37,7 +40,18 @@ export default function ChartVIF({
         }
     );
 
-    console.log('metricAvgVoltage', metricAvgVoltage);
+    const voltageRMax = Math.max(...voltages.map(voltage => voltage.voltage_r));
+    const voltageSMax = Math.max(...voltages.map(voltage => voltage.voltage_s));
+    const voltageTMax = Math.max(...voltages.map(voltage => voltage.voltage_t));
+    const voltageRMin = Math.min(...voltages.map(voltage => voltage.voltage_r));
+    const voltageSMin = Math.min(...voltages.map(voltage => voltage.voltage_s));
+    const voltageTMin = Math.min(...voltages.map(voltage => voltage.voltage_t));
+    const voltageRAvg = voltages.reduce((acc, voltage) => acc + voltage.voltage_r, 0) / voltages.length;
+    const voltageSAvg = voltages.reduce((acc, voltage) => acc + voltage.voltage_s, 0) / voltages.length;
+    const voltageTAvg = voltages.reduce((acc, voltage) => acc + voltage.voltage_t, 0) / voltages.length;
+    const voltageRLatest = voltages[voltages.length - 1].voltage_r ?? 0;
+    const voltageSLatest = voltages[voltages.length - 1].voltage_s ?? 0;
+    const voltageTLatest = voltages[voltages.length - 1].voltage_t ?? 0;
 
     const metricAvgCurrent = rstinLineChartString(
         {
@@ -49,11 +63,33 @@ export default function ChartVIF({
         }
     );
 
+    const currentRMax = Math.max(...currents.map(current => current.current_r));
+    const currentSMax = Math.max(...currents.map(current => current.current_s));
+    const currentTMax = Math.max(...currents.map(current => current.current_t));
+    const currentInMax = Math.max(...currents.map(current => current.current_in));
+    const currentRMin = Math.min(...currents.map(current => current.current_r));
+    const currentSMin = Math.min(...currents.map(current => current.current_s));
+    const currentTMin = Math.min(...currents.map(current => current.current_t));
+    const currentInMin = Math.min(...currents.map(current => current.current_in));
+    const currentRAvg = currents.reduce((acc, current) => acc + current.current_r, 0) / currents.length;
+    const currentSAvg = currents.reduce((acc, current) => acc + current.current_s, 0) / currents.length;
+    const currentTAvg = currents.reduce((acc, current) => acc + current.current_t, 0) / currents.length;
+    const currentInAvg = currents.reduce((acc, current) => acc + current.current_in, 0) / currents.length;
+    const currentRLatest = currents[currents.length - 1].current_r ?? 0;
+    const currentSLatest = currents[currents.length - 1].current_s ?? 0;
+    const currentTLatest = currents[currents.length - 1].current_t ?? 0;
+    const currentInLatest = currents[currents.length - 1].current_in ?? 0;
+
     const metricAvgFrequency = singleLineChartString({
         labels: frequencies.map(frequency => timeMinuteString(new Date(frequency.created_at))),
         data: frequencies.map(frequency => frequency.frequency_r),
         label: 'Frequency',
     });
+
+    const frequencyMax = Math.max(...frequencies.map(frequency => frequency.frequency_r));
+    const frequencyMin = Math.min(...frequencies.map(frequency => frequency.frequency_r));
+    const frequencyAvg = frequencies.reduce((acc, frequency) => acc + frequency.frequency_r, 0) / frequencies.length;
+    const frequencyLatest = frequencies[frequencies.length - 1].frequency_r ?? 0;
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({
@@ -99,11 +135,22 @@ export default function ChartVIF({
                         >
                             <Typography variant={"h6"}>Voltage (V)</Typography>
                             <Line data={metricAvgVoltage}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRST
+                                    rMax={voltageRMax}
+                                    sMax={voltageSMax}
+                                    tMax={voltageTMax}
+                                    rMin={voltageRMin}
+                                    sMin={voltageSMin}
+                                    tMin={voltageTMin}
+                                    rAvg={voltageRAvg}
+                                    sAvg={voltageSAvg}
+                                    tAvg={voltageTAvg}
+                                    rLatest={voltageRLatest}
+                                    sLatest={voltageSLatest}
+                                    tLatest={voltageTLatest}
+                                />
+                            </Container>
                         </Box>
                         <Box
                             sx={{px: 2}}
@@ -114,11 +161,16 @@ export default function ChartVIF({
                         >
                             <Typography variant={"h6"}>Frequency (f)</Typography>
                             <Line data={metricAvgFrequency}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Frequency"}
+                                    max={frequencyMax}
+                                    min={frequencyMin}
+                                    avg={frequencyAvg}
+                                    latest={frequencyLatest}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -131,12 +183,26 @@ export default function ChartVIF({
                         >
                             <Typography variant={"h6"}>Current (I)</Typography>
                             <Line data={metricAvgCurrent}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>IN : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRSTIN
+                                    rMax={currentRMax}
+                                    sMax={currentSMax}
+                                    tMax={currentTMax}
+                                    inMax={currentInMax}
+                                    rMin={currentRMin}
+                                    sMin={currentSMin}
+                                    tMin={currentTMin}
+                                    inMin={currentInMin}
+                                    rAvg={currentRAvg}
+                                    sAvg={currentSAvg}
+                                    tAvg={currentTAvg}
+                                    inAvg={currentInAvg}
+                                    rLatest={currentRLatest}
+                                    sLatest={currentSLatest}
+                                    tLatest={currentTLatest}
+                                    inLatest={currentInLatest}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
