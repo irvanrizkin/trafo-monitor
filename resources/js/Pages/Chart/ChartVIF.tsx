@@ -19,6 +19,7 @@ import timeMinuteString from "@/helpers/converter/date-time";
 import AggregationRST from "@/Components/Chart/AggregationRST";
 import AggregationSingle from "@/Components/Chart/AggregationSingle";
 import AggregationRSTIN from "@/Components/Chart/AggregationRSTIN";
+import calculateMetrics from "@/helpers/analysis/calculate-metric";
 
 export default function ChartVIF({
                                      trafo,
@@ -40,18 +41,10 @@ export default function ChartVIF({
         }
     );
 
-    const voltageRMax = Math.max(...voltages.map(voltage => voltage.voltage_r));
-    const voltageSMax = Math.max(...voltages.map(voltage => voltage.voltage_s));
-    const voltageTMax = Math.max(...voltages.map(voltage => voltage.voltage_t));
-    const voltageRMin = Math.min(...voltages.map(voltage => voltage.voltage_r));
-    const voltageSMin = Math.min(...voltages.map(voltage => voltage.voltage_s));
-    const voltageTMin = Math.min(...voltages.map(voltage => voltage.voltage_t));
-    const voltageRAvg = voltages.reduce((acc, voltage) => acc + voltage.voltage_r, 0) / voltages.length;
-    const voltageSAvg = voltages.reduce((acc, voltage) => acc + voltage.voltage_s, 0) / voltages.length;
-    const voltageTAvg = voltages.reduce((acc, voltage) => acc + voltage.voltage_t, 0) / voltages.length;
-    const voltageRLatest = voltages[voltages.length - 1].voltage_r ?? 0;
-    const voltageSLatest = voltages[voltages.length - 1].voltage_s ?? 0;
-    const voltageTLatest = voltages[voltages.length - 1].voltage_t ?? 0;
+    const voltageRAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_r));
+    const voltageSAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_s));
+    const voltageTAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_t));
+    const { voltage_r = 0, voltage_s = 0, voltage_t = 0 } = voltages[voltages.length - 1] || {};
 
     const metricAvgCurrent = rstinLineChartString(
         {
@@ -63,22 +56,11 @@ export default function ChartVIF({
         }
     );
 
-    const currentRMax = Math.max(...currents.map(current => current.current_r));
-    const currentSMax = Math.max(...currents.map(current => current.current_s));
-    const currentTMax = Math.max(...currents.map(current => current.current_t));
-    const currentInMax = Math.max(...currents.map(current => current.current_in));
-    const currentRMin = Math.min(...currents.map(current => current.current_r));
-    const currentSMin = Math.min(...currents.map(current => current.current_s));
-    const currentTMin = Math.min(...currents.map(current => current.current_t));
-    const currentInMin = Math.min(...currents.map(current => current.current_in));
-    const currentRAvg = currents.reduce((acc, current) => acc + current.current_r, 0) / currents.length;
-    const currentSAvg = currents.reduce((acc, current) => acc + current.current_s, 0) / currents.length;
-    const currentTAvg = currents.reduce((acc, current) => acc + current.current_t, 0) / currents.length;
-    const currentInAvg = currents.reduce((acc, current) => acc + current.current_in, 0) / currents.length;
-    const currentRLatest = currents[currents.length - 1].current_r ?? 0;
-    const currentSLatest = currents[currents.length - 1].current_s ?? 0;
-    const currentTLatest = currents[currents.length - 1].current_t ?? 0;
-    const currentInLatest = currents[currents.length - 1].current_in ?? 0;
+    const currentRAggregation = calculateMetrics(currents.map(current => current.current_r));
+    const currentSAggregation = calculateMetrics(currents.map(current => current.current_s));
+    const currentTAggregation = calculateMetrics(currents.map(current => current.current_t));
+    const currentInAggregation = calculateMetrics(currents.map(current => current.current_in));
+    const { current_r = 0, current_s = 0, current_t = 0, current_in = 0 } = currents[currents.length - 1] || {};
 
     const metricAvgFrequency = singleLineChartString({
         labels: frequencies.map(frequency => timeMinuteString(new Date(frequency.created_at))),
@@ -86,10 +68,8 @@ export default function ChartVIF({
         label: 'Frequency',
     });
 
-    const frequencyMax = Math.max(...frequencies.map(frequency => frequency.frequency_r));
-    const frequencyMin = Math.min(...frequencies.map(frequency => frequency.frequency_r));
-    const frequencyAvg = frequencies.reduce((acc, frequency) => acc + frequency.frequency_r, 0) / frequencies.length;
-    const frequencyLatest = frequencies[frequencies.length - 1].frequency_r ?? 0;
+    const frequencyAggregation = calculateMetrics(frequencies.map(frequency => frequency.frequency_r));
+    const { frequency_r = 0 } = frequencies[frequencies.length - 1] || {};
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({
@@ -137,18 +117,18 @@ export default function ChartVIF({
                             <Line data={metricAvgVoltage}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
-                                    rMax={voltageRMax}
-                                    sMax={voltageSMax}
-                                    tMax={voltageTMax}
-                                    rMin={voltageRMin}
-                                    sMin={voltageSMin}
-                                    tMin={voltageTMin}
-                                    rAvg={voltageRAvg}
-                                    sAvg={voltageSAvg}
-                                    tAvg={voltageTAvg}
-                                    rLatest={voltageRLatest}
-                                    sLatest={voltageSLatest}
-                                    tLatest={voltageTLatest}
+                                    rMax={voltageRAggregation.max}
+                                    sMax={voltageSAggregation.max}
+                                    tMax={voltageTAggregation.max}
+                                    rMin={voltageRAggregation.min}
+                                    sMin={voltageSAggregation.min}
+                                    tMin={voltageTAggregation.min}
+                                    rAvg={voltageRAggregation.avg}
+                                    sAvg={voltageSAggregation.avg}
+                                    tAvg={voltageTAggregation.avg}
+                                    rLatest={voltage_r}
+                                    sLatest={voltage_s}
+                                    tLatest={voltage_t}
                                 />
                             </Container>
                         </Box>
@@ -165,10 +145,10 @@ export default function ChartVIF({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Frequency"}
-                                    max={frequencyMax}
-                                    min={frequencyMin}
-                                    avg={frequencyAvg}
-                                    latest={frequencyLatest}
+                                    max={frequencyAggregation.max}
+                                    avg={frequencyAggregation.avg}
+                                    min={frequencyAggregation.min}
+                                    latest={frequency_r}
                                 />
                             </Container>
                         </Box>
@@ -185,22 +165,22 @@ export default function ChartVIF({
                             <Line data={metricAvgCurrent}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRSTIN
-                                    rMax={currentRMax}
-                                    sMax={currentSMax}
-                                    tMax={currentTMax}
-                                    inMax={currentInMax}
-                                    rMin={currentRMin}
-                                    sMin={currentSMin}
-                                    tMin={currentTMin}
-                                    inMin={currentInMin}
-                                    rAvg={currentRAvg}
-                                    sAvg={currentSAvg}
-                                    tAvg={currentTAvg}
-                                    inAvg={currentInAvg}
-                                    rLatest={currentRLatest}
-                                    sLatest={currentSLatest}
-                                    tLatest={currentTLatest}
-                                    inLatest={currentInLatest}
+                                    rMax={currentRAggregation.max}
+                                    sMax={currentSAggregation.max}
+                                    tMax={currentTAggregation.max}
+                                    inMax={currentInAggregation.max}
+                                    rMin={currentRAggregation.min}
+                                    sMin={currentSAggregation.min}
+                                    tMin={currentTAggregation.min}
+                                    inMin={currentInAggregation.min}
+                                    rAvg={currentRAggregation.avg}
+                                    sAvg={currentSAggregation.avg}
+                                    tAvg={currentTAggregation.avg}
+                                    inAvg={currentInAggregation.avg}
+                                    rLatest={current_r}
+                                    sLatest={current_s}
+                                    tLatest={current_t}
+                                    inLatest={current_in}
                                 />
                             </Container>
                         </Box>
