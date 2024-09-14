@@ -3,26 +3,10 @@ import {AppBar, Box, Button, Container, Grid, Toolbar, Typography} from "@mui/ma
 import TrafoCard from "@/Components/Trafo/TrafoCard";
 import GoogleMapReact from "google-map-react";
 import {router} from "@inertiajs/react";
+import CustomMarker from "@/Components/Map/CustomMarker";
 
 export default function Dashboard({ trafos }: DashboardPropsV1) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
-
-    const renderMarker = (map: any, maps: any) => {
-        const markers = trafos.map((trafo) => {
-            const marker = new maps.Marker({
-                position: {
-                    lat: Number(trafo.latitude),
-                    lng: Number(trafo.longitude),
-                },
-                map,
-                title: trafo.id,
-            });
-
-            marker.addListener('click', () => {
-                window.location.href = route('trafo.show', trafo.id)
-            })
-        });
-    }
 
     const defaultProps = {
         center: {
@@ -71,9 +55,15 @@ export default function Dashboard({ trafos }: DashboardPropsV1) {
                             defaultCenter={defaultProps.center}
                             defaultZoom={defaultProps.zoom}
                             yesIWantToUseGoogleMapApiInternals
-                            onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
+                            // onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
                         >
-
+                            {trafos.map((trafo) => (
+                                <CustomMarker
+                                    text={trafo.name}
+                                    lat={Number(trafo.latitude)}
+                                    lng={Number(trafo.longitude)}
+                                />
+                            ))}
                         </GoogleMapReact>
                     </Box>
                     <Grid container spacing={2} mt={1.5}>
