@@ -14,6 +14,7 @@ import timeMinuteString from "@/helpers/converter/date-time";
 import calculateMetrics from "@/helpers/analysis/calculate-metric";
 import AggregationRST from "@/Components/Chart/AggregationRST";
 import AggregationSingle from "@/Components/Chart/AggregationSingle";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function ChartPKA({
                                      trafo,
@@ -50,25 +51,6 @@ export default function ChartPKA({
 
     const triplenCurrentAggregation = calculateMetrics(triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current));
     const { triplen_current = 0 } = triplenCurrents[triplenCurrents.length - 1] || {};
-
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
-
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
 
     return (
         <>
@@ -147,15 +129,12 @@ export default function ChartPKA({
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ height: '75vh', width: '100%' }}>
-                            <GoogleMapReact
-                                bootstrapURLKeys={{ key: mapApiKey }}
-                                defaultCenter={defaultProps.center}
-                                defaultZoom={defaultProps.zoom}
-                                yesIWantToUseGoogleMapApiInternals
-                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                            />
-                        </Box>
+                        <GoogleMap
+                            lat={Number(trafo.latitude)}
+                            lng={Number(trafo.longitude)}
+                            title={trafo.name}
+                            height={'700px'}
+                        />
                     </Grid>
                 </Grid>
             </Container>

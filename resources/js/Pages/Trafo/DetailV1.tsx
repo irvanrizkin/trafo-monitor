@@ -20,6 +20,7 @@ import {
 import {useEffect, useState} from "react";
 import {TrafoDetailPropsV1} from "@/types";
 import GoogleMapReact from "google-map-react";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
@@ -61,25 +62,6 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
         }
     }, [chartCategoryState, route, trafo.id, dateState]);
 
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
-
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
-
     return (
         <>
             <AppBar>
@@ -93,24 +75,12 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
                 <Box sx={{ my: 4 }}>
                     <Grid container spacing={2} px={2}>
                         <Grid item xs={12} md={6}>
-                            <Box
-                                sx={{
-                                    width: '100%',
-                                    height: '650px',
-                                    display: 'flex'
-                                }}
-                                component="map"
-                            >
-                                <GoogleMapReact
-                                    bootstrapURLKeys={{ key: mapApiKey }}
-                                    defaultCenter={defaultProps.center}
-                                    defaultZoom={defaultProps.zoom}
-                                    yesIWantToUseGoogleMapApiInternals
-                                    onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                                >
-
-                                </GoogleMapReact>
-                            </Box>
+                            <GoogleMap
+                                lat={Number(trafo.latitude)}
+                                lng={Number(trafo.longitude)}
+                                title={trafo.name}
+                                height={'650px'}
+                            />
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <Typography variant="h4" gutterBottom fontWeight={"bold"}>

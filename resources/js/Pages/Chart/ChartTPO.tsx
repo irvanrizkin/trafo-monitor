@@ -8,6 +8,7 @@ import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import {singleLineChart} from "@/helpers/generator/chart-generator";
 import AggregationSingle from "@/Components/Chart/AggregationSingle";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function ChartTPO({
                                        trafo,
@@ -40,25 +41,6 @@ export default function ChartTPO({
         data: [],
         label: 'Ambient Temperature',
     });
-
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
-
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
 
     return (
         <>
@@ -162,15 +144,12 @@ export default function ChartTPO({
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ height: '75vh', width: '100%' }}>
-                            <GoogleMapReact
-                                bootstrapURLKeys={{ key: mapApiKey }}
-                                defaultCenter={defaultProps.center}
-                                defaultZoom={defaultProps.zoom}
-                                yesIWantToUseGoogleMapApiInternals
-                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                            />
-                        </Box>
+                        <GoogleMap
+                            lat={Number(trafo.latitude)}
+                            lng={Number(trafo.longitude)}
+                            title={trafo.name}
+                            height={'700px'}
+                        />
                     </Grid>
                 </Grid>
             </Container>

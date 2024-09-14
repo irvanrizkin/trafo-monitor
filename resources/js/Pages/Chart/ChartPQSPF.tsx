@@ -11,6 +11,7 @@ import {rstLineChartString} from "@/helpers/generator/chart-generator";
 import timeMinuteString from "@/helpers/converter/date-time";
 import calculateMetrics from "@/helpers/analysis/calculate-metric";
 import AggregationRST from "@/Components/Chart/AggregationRST";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function ChartPQSPF({
                                        trafo,
@@ -73,25 +74,6 @@ export default function ChartPQSPF({
     const powerFactorSAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_s));
     const powerFactorTAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_t));
     const { power_factor_r = 0, power_factor_s = 0, power_factor_t = 0 } = powerFactors[powerFactors.length - 1] || {};
-
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
-
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
 
     return (
         <>
@@ -217,15 +199,12 @@ export default function ChartPQSPF({
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ height: '75vh', width: '100%' }}>
-                            <GoogleMapReact
-                                bootstrapURLKeys={{ key: mapApiKey }}
-                                defaultCenter={defaultProps.center}
-                                defaultZoom={defaultProps.zoom}
-                                yesIWantToUseGoogleMapApiInternals
-                                onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                            />
-                        </Box>
+                        <GoogleMap
+                            lat={Number(trafo.latitude)}
+                            lng={Number(trafo.longitude)}
+                            title={trafo.name}
+                            height={'700px'}
+                        />
                     </Grid>
                 </Grid>
             </Container>
