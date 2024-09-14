@@ -1,66 +1,22 @@
-import {MetricIHDProps} from "@/types/metric";
-import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
-import {Container, Grid} from "@mui/material";
+import { MetricIHDProps } from "@/types/metric";
+import { DataGrid, GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
+import { Container, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
+import OrderTableBody from "@/Components/Metric/OrderTableBody";
+import { useState } from "react";
+import TimeNavigator from "@/Components/Metric/TimeNavigator";
 
 export default function MetricIHD({
-                                      trafo,
-                                      date,
-                                      individualHarmonicDistortions,
-                                      ihdCurrents,
-                                  }: MetricIHDProps) {
-    const columnsIHD: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'voltage_r', headerName: 'VR'},
-        { field: 'voltage_s', headerName: 'VS'},
-        { field: 'voltage_t', headerName: 'VT'},
-    ]
-
-    const columnsCurrent: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'current_r', headerName: 'IR'},
-        { field: 'current_s', headerName: 'IS'},
-        { field: 'current_t', headerName: 'IT'},
-    ]
-
-    const columnGroupIHD: GridColumnGroupingModel = [
-        {
-            groupId: 'Individual Harmonic Distortion',
-            children: [{ field: 'voltage_r' }, { field: 'voltage_s' }, { field: 'voltage_t' }]
-        }
-    ]
-
-    const columnGroupCurrent: GridColumnGroupingModel = [
-        {
-            groupId: 'IHD Current',
-            children: [{ field: 'current_r' }, { field: 'current_s' }, { field: 'current_t' }]
-        }
-    ]
-
-    const rowsVoltage = individualHarmonicDistortions.map((voltage) => {
-        return {
-            id: voltage.id,
-            createdAt: new Date(voltage.created_at).toLocaleString(),
-            voltage_r: voltage.voltage_r,
-            voltage_s: voltage.voltage_s,
-            voltage_t: voltage.voltage_t,
-        }
-    });
-
-    const rowsCurrent = ihdCurrents.map((current) => {
-        return {
-            id: current.id,
-            createdAt: new Date(current.created_at).toLocaleString(),
-            current_r: current.current_r,
-            current_s: current.current_s,
-            current_t: current.current_t,
-        }
-    });
-
+    trafo,
+    date,
+    ihdCurrents,
+    ihdVoltages
+}: MetricIHDProps) {
+    console.log(ihdCurrents.length);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [voltageIndex, setVoltageIndex] = useState(0);
     return (
         <>
             <AppBarTriple
@@ -77,30 +33,99 @@ export default function MetricIHD({
                 />
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                        <DataGrid
-                            columnGroupingModel={columnGroupIHD}
-                            rows={rowsVoltage}
-                            columns={columnsIHD}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: { page: 0, pageSize: 5 },
-                                },
-                            }}
-                            pageSizeOptions={[5, 10]}
-                        />
+                        <TimeNavigator
+                            timestamp={ihdCurrents[currentIndex].created_at}
+                            enableBefore={currentIndex > 0}
+                            enableNext={currentIndex < ihdCurrents.length - 1}
+                            onBefore={() => setCurrentIndex(currentIndex - 1)}
+                            onNext={() => setCurrentIndex(currentIndex + 1)}
+                        ></TimeNavigator>
+                        <TableContainer component={Paper} sx={{ mb: 4 }}>
+                            <Table size='medium'>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell align="center" colSpan={4}>
+                                            Individual Harmonics Distortion Currents (IHDi)
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Orde</TableCell>
+                                        <TableCell align="right">R</TableCell>
+                                        <TableCell align="right">S</TableCell>
+                                        <TableCell align="right">T</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <OrderTableBody key={'h1'} orderName={'H1'} order={ihdCurrents[currentIndex].h1} />
+                                <OrderTableBody key={'h2'} orderName={'H2'} order={ihdCurrents[currentIndex].h2} />
+                                <OrderTableBody key={'h3'} orderName={'H3'} order={ihdCurrents[currentIndex].h3} />
+                                <OrderTableBody key={'h4'} orderName={'H4'} order={ihdCurrents[currentIndex].h4} />
+                                <OrderTableBody key={'h5'} orderName={'H5'} order={ihdCurrents[currentIndex].h5} />
+                                <OrderTableBody key={'h6'} orderName={'H6'} order={ihdCurrents[currentIndex].h6} />
+                                <OrderTableBody key={'h7'} orderName={'H7'} order={ihdCurrents[currentIndex].h7} />
+                                <OrderTableBody key={'h8'} orderName={'H8'} order={ihdCurrents[currentIndex].h8} />
+                                <OrderTableBody key={'h9'} orderName={'H9'} order={ihdCurrents[currentIndex].h9} />
+                                <OrderTableBody key={'h10'} orderName={'H10'} order={ihdCurrents[currentIndex].h10} />
+                                <OrderTableBody key={'h11'} orderName={'H11'} order={ihdCurrents[currentIndex].h11} />
+                                <OrderTableBody key={'h12'} orderName={'H12'} order={ihdCurrents[currentIndex].h12} />
+                                <OrderTableBody key={'h13'} orderName={'H13'} order={ihdCurrents[currentIndex].h13} />
+                                <OrderTableBody key={'h14'} orderName={'H14'} order={ihdCurrents[currentIndex].h14} />
+                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdCurrents[currentIndex].h15} />
+                                <OrderTableBody key={'h16'} orderName={'H16'} order={ihdCurrents[currentIndex].h16} />
+                                <OrderTableBody key={'h17'} orderName={'H17'} order={ihdCurrents[currentIndex].h17} />
+                                <OrderTableBody key={'h18'} orderName={'H18'} order={ihdCurrents[currentIndex].h18} />
+                                <OrderTableBody key={'h19'} orderName={'H19'} order={ihdCurrents[currentIndex].h19} />
+                                <OrderTableBody key={'h20'} orderName={'H20'} order={ihdCurrents[currentIndex].h20} />
+                                <OrderTableBody key={'h21'} orderName={'H21'} order={ihdCurrents[currentIndex].h21} />
+
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <DataGrid
-                            columnGroupingModel={columnGroupCurrent}
-                            rows={rowsCurrent}
-                            columns={columnsCurrent}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: { page: 0, pageSize: 5 },
-                                },
-                            }}
-                            pageSizeOptions={[5, 10]}
-                        />
+                        <TimeNavigator
+                            timestamp={ihdVoltages[voltageIndex].created_at}
+                            enableBefore={voltageIndex > 0}
+                            enableNext={voltageIndex < ihdVoltages.length - 1}
+                            onBefore={() => setVoltageIndex(voltageIndex - 1)}
+                            onNext={() => setVoltageIndex(voltageIndex + 1)}
+                        ></TimeNavigator>
+                        <TableContainer component={Paper} sx={{ mb: 4 }}>
+                            <Table size='medium'>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell align="center" colSpan={4}>
+                                            Individual Harmonics Distortion Voltages (IHDv)
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Orde</TableCell>
+                                        <TableCell align="right">R</TableCell>
+                                        <TableCell align="right">S</TableCell>
+                                        <TableCell align="right">T</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <OrderTableBody key={'h1'} orderName={'H1'} order={ihdVoltages[voltageIndex].h1} />
+                                <OrderTableBody key={'h2'} orderName={'H2'} order={ihdVoltages[voltageIndex].h2} />
+                                <OrderTableBody key={'h3'} orderName={'H3'} order={ihdVoltages[voltageIndex].h3} />
+                                <OrderTableBody key={'h4'} orderName={'H4'} order={ihdVoltages[voltageIndex].h4} />
+                                <OrderTableBody key={'h5'} orderName={'H5'} order={ihdVoltages[voltageIndex].h5} />
+                                <OrderTableBody key={'h6'} orderName={'H6'} order={ihdVoltages[voltageIndex].h6} />
+                                <OrderTableBody key={'h7'} orderName={'H7'} order={ihdVoltages[voltageIndex].h7} />
+                                <OrderTableBody key={'h8'} orderName={'H8'} order={ihdVoltages[voltageIndex].h8} />
+                                <OrderTableBody key={'h9'} orderName={'H9'} order={ihdVoltages[voltageIndex].h9} />
+                                <OrderTableBody key={'h10'} orderName={'H10'} order={ihdVoltages[voltageIndex].h10} />
+                                <OrderTableBody key={'h11'} orderName={'H11'} order={ihdVoltages[voltageIndex].h11} />
+                                <OrderTableBody key={'h12'} orderName={'H12'} order={ihdVoltages[voltageIndex].h12} />
+                                <OrderTableBody key={'h13'} orderName={'H13'} order={ihdVoltages[voltageIndex].h13} />
+                                <OrderTableBody key={'h14'} orderName={'H14'} order={ihdVoltages[voltageIndex].h14} />
+                                <OrderTableBody key={'h15'} orderName={'H15'} order={ihdVoltages[voltageIndex].h15} />
+                                <OrderTableBody key={'h16'} orderName={'H16'} order={ihdVoltages[voltageIndex].h16} />
+                                <OrderTableBody key={'h17'} orderName={'H17'} order={ihdVoltages[voltageIndex].h17} />
+                                <OrderTableBody key={'h18'} orderName={'H18'} order={ihdVoltages[voltageIndex].h18} />
+                                <OrderTableBody key={'h19'} orderName={'H19'} order={ihdVoltages[voltageIndex].h19} />
+                                <OrderTableBody key={'h20'} orderName={'H20'} order={ihdVoltages[voltageIndex].h20} />
+                                <OrderTableBody key={'h21'} orderName={'H21'} order={ihdVoltages[voltageIndex].h21} />
+                            </Table>
+                        </TableContainer>
                     </Grid>
                 </Grid>
             </Container>

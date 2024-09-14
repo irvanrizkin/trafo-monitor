@@ -8,18 +8,9 @@ import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 export default function MetricTHDIHD({
                                          trafo,
                                          date,
-                                         totalHarmonicDistortions,
                                          thdCurrents,
-                                         thdFrequencies
+                                         thdVoltages,
                                      }: MetricTHDIHDProps) {
-    const columnsTHD: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'voltage_r', headerName: 'VR'},
-        { field: 'voltage_s', headerName: 'VS'},
-        { field: 'voltage_t', headerName: 'VT'},
-    ]
-
     const columnsCurrent: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
@@ -28,44 +19,27 @@ export default function MetricTHDIHD({
         { field: 'current_t', headerName: 'IT'},
     ]
 
-    const columnsFrequency: GridColDef[] = [
+    const columnsVoltage: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'frequency_r', headerName: 'FR'},
-        { field: 'frequency_s', headerName: 'FS'},
-        { field: 'frequency_t', headerName: 'FT'},
-    ]
-
-    const columnGroupTHD: GridColumnGroupingModel = [
-        {
-            groupId: 'Total Harmonic Distortion',
-            children: [{ field: 'voltage_r' }, { field: 'voltage_s' }, { field: 'voltage_t' }]
-        }
+        { field: 'voltage_r', headerName: 'VR'},
+        { field: 'voltage_s', headerName: 'VS'},
+        { field: 'voltage_t', headerName: 'VT'},
     ]
 
     const columnGroupCurrent: GridColumnGroupingModel = [
         {
-            groupId: 'Current',
+            groupId: 'Total Harmonic Distortion Current (THDi)',
             children: [{ field: 'current_r' }, { field: 'current_s' }, { field: 'current_t' }]
         }
     ]
 
-    const columnGroupFrequency: GridColumnGroupingModel = [
+    const columnGroupVoltage: GridColumnGroupingModel = [
         {
-            groupId: 'Frequency',
-            children: [{ field: 'frequency_r' }, { field: 'frequency_s' }, { field: 'frequency_t' }]
+            groupId: 'Total Harmonic Distortion Voltage (THDv)',
+            children: [{ field: 'voltage_r' }, { field: 'voltage_s' }, { field: 'voltage_t' }]
         }
     ]
-
-    const rowsTHD = totalHarmonicDistortions.map((thd) => {
-        return {
-            id: thd.id,
-            createdAt: new Date(thd.created_at).toLocaleString(),
-            voltage_r: thd.voltage_r,
-            voltage_s: thd.voltage_s,
-            voltage_t: thd.voltage_t,
-        }
-    });
 
     const rowsCurrent = thdCurrents.map((current) => {
         return {
@@ -77,13 +51,13 @@ export default function MetricTHDIHD({
         }
     });
 
-    const rowsFrequency = thdFrequencies.map((frequency) => {
+    const rowsVoltage = thdVoltages.map((voltage) => {
         return {
-            id: frequency.id,
-            createdAt: new Date(frequency.created_at).toLocaleString(),
-            frequency_r: frequency.frequency_r,
-            frequency_s: frequency.frequency_s,
-            frequency_t: frequency.frequency_t,
+            id: voltage.id,
+            createdAt: new Date(voltage.created_at).toLocaleString(),
+            voltage_r: voltage.voltage_r,
+            voltage_s: voltage.voltage_s,
+            voltage_t: voltage.voltage_t,
         }
     });
 
@@ -104,19 +78,6 @@ export default function MetricTHDIHD({
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                         <DataGrid
-                            columnGroupingModel={columnGroupTHD}
-                            rows={rowsTHD}
-                            columns={columnsTHD}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: { page: 0, pageSize: 5 },
-                                },
-                            }}
-                            pageSizeOptions={[5, 10]}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <DataGrid
                             columnGroupingModel={columnGroupCurrent}
                             rows={rowsCurrent}
                             columns={columnsCurrent}
@@ -128,11 +89,11 @@ export default function MetricTHDIHD({
                             pageSizeOptions={[5, 10]}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} md={6}>
                         <DataGrid
-                            columnGroupingModel={columnGroupFrequency}
-                            rows={rowsFrequency}
-                            columns={columnsFrequency}
+                            columnGroupingModel={columnGroupVoltage}
+                            rows={rowsVoltage}
+                            columns={columnsVoltage}
                             initialState={{
                                 pagination: {
                                     paginationModel: { page: 0, pageSize: 5 },

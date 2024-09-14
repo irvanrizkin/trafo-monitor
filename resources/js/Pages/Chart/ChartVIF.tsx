@@ -1,5 +1,5 @@
 import {ChartVIFProps} from "@/types/chart";
-import {Box, Container, Grid, Paper, Typography} from "@mui/material";
+import {Box, Container, Grid, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
 import GoogleMapReact from "google-map-react";
 import {ChartData} from "chart.js";
 import {Line} from "react-chartjs-2";
@@ -7,6 +7,20 @@ import 'chart.js/auto';
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import {
+    rstinLineChart,
+    rstinLineChartString,
+    rstLineChart,
+    rstLineChartString,
+    singleLineChart,
+    singleLineChartString
+} from "@/helpers/generator/chart-generator";
+import timeMinuteString from "@/helpers/converter/date-time";
+import AggregationRST from "@/Components/Chart/AggregationRST";
+import AggregationSingle from "@/Components/Chart/AggregationSingle";
+import AggregationRSTIN from "@/Components/Chart/AggregationRSTIN";
+import calculateMetrics from "@/helpers/analysis/calculate-metric";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function ChartVIF({
                                      trafo,
@@ -14,111 +28,49 @@ export default function ChartVIF({
                                      voltages,
                                      currents,
                                      frequencies,
-                                     avgVoltageR,
-                                     avgVoltageS,
-                                     avgVoltageT,
-                                     avgCurrentR,
-                                     avgCurrentS,
-                                     avgCurrentT,
-                                     avgCurrentIN,
-                                     maxFrequency,
-                                     avgFrequency,
-                                     minFrequency,
                                  }: ChartVIFProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
+    const theme = useTheme()
+    const onlyMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-    const metricAvgVoltage: ChartData<"line", number[], number> = {
-        labels: voltages.map(voltage => voltage.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: voltages.map(voltage => voltage.voltage_r),
-                fill: false,
-                borderColor: 'rgb(255, 0, 92)',
-                tension: 0.1
-            },
-            {
-                label: 'S',
-                data: voltages.map(voltage => voltage.voltage_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: voltages.map(voltage => voltage.voltage_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            }
-        ]
-    }
+    const metricAvgVoltage = rstLineChartString(
+        {
+            labels: voltages.map(voltage => timeMinuteString(new Date(voltage.created_at))),
+            rData: voltages.map(voltage => voltage.voltage_r),
+            sData: voltages.map(voltage => voltage.voltage_s),
+            tData: voltages.map(voltage => voltage.voltage_t),
+        }
+    );
 
-    const metricAvgCurrent: ChartData<"line", number[], number> = {
-        labels: currents.map(current => current.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: currents.map(current => current.current_r),
-                fill: false,
-                borderColor: 'rgb(255, 0, 92)',
-                tension: 0.1
-            },
-            {
-                label: 'S',
-                data: currents.map(current => current.current_s),
-                fill: false,
-                borderColor: 'rgb(255, 246, 0)',
-                tension: 0.1
-            },
-            {
-                label: 'T',
-                data: currents.map(current => current.current_t),
-                fill: false,
-                borderColor: 'rgb(38, 0, 27)',
-                tension: 0.1
-            },
-            {
-                label: 'IN',
-                data: currents.map(current => current.current_in),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            },
-        ]
-    }
+    const voltageRAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_r));
+    const voltageSAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_s));
+    const voltageTAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_t));
+    const { voltage_r = 0, voltage_s = 0, voltage_t = 0 } = voltages[voltages.length - 1] || {};
 
-    const metricAvgFrequency: ChartData<"line", number[], number> = {
-        labels: frequencies.map(frequency => frequency.hour),
-        datasets: [
-            {
-                label: 'R',
-                data: frequencies.map(frequency => frequency.frequency_r),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            },
-        ]
-    }
+    const metricAvgCurrent = rstinLineChartString(
+        {
+            labels: currents.map(current => timeMinuteString(new Date(current.created_at))),
+            rData: currents.map(current => current.current_r),
+            sData: currents.map(current => current.current_s),
+            tData: currents.map(current => current.current_t),
+            inData: currents.map(current => current.current_in),
+        }
+    );
 
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
+    const currentRAggregation = calculateMetrics(currents.map(current => current.current_r));
+    const currentSAggregation = calculateMetrics(currents.map(current => current.current_s));
+    const currentTAggregation = calculateMetrics(currents.map(current => current.current_t));
+    const currentInAggregation = calculateMetrics(currents.map(current => current.current_in));
+    const { current_r = 0, current_s = 0, current_t = 0, current_in = 0 } = currents[currents.length - 1] || {};
 
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
+    const metricAvgFrequency = singleLineChartString({
+        labels: frequencies.map(frequency => timeMinuteString(new Date(frequency.created_at))),
+        data: frequencies.map(frequency => frequency.frequency_r),
+        label: 'Frequency',
+    });
+
+    const frequencyAggregation = calculateMetrics(frequencies.map(frequency => frequency.frequency_r));
+    const { frequency_r = 0 } = frequencies[frequencies.length - 1] || {};
 
     return (
         <>
@@ -143,16 +95,25 @@ export default function ChartVIF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Voltage</Typography>
+                            <Typography variant={"h6"}>Voltage (V)</Typography>
                             <Line data={metricAvgVoltage}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgVoltageR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgVoltageS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgVoltageT + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRST
+                                    rMax={voltageRAggregation.max}
+                                    sMax={voltageSAggregation.max}
+                                    tMax={voltageTAggregation.max}
+                                    rMin={voltageRAggregation.min}
+                                    sMin={voltageSAggregation.min}
+                                    tMin={voltageTAggregation.min}
+                                    rAvg={voltageRAggregation.avg}
+                                    sAvg={voltageSAggregation.avg}
+                                    tAvg={voltageTAggregation.avg}
+                                    rLatest={voltage_r}
+                                    sLatest={voltage_s}
+                                    tLatest={voltage_t}
+                                />
+                            </Container>
                         </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
                         <Box
                             sx={{px: 2}}
                             display="flex"
@@ -160,43 +121,61 @@ export default function ChartVIF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Current</Typography>
-                            <Line data={metricAvgCurrent}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>R : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>S : {Math.round((avgCurrentS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>T : {Math.round((avgCurrentT + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>IN : {Math.round((avgCurrentIN + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box
-                            sx={{px: 2}}
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="end"
-                            flexDirection="column"
-                        >
-                            <Typography variant={"h6"}>Frequency</Typography>
+                            <Typography variant={"h6"}>Frequency (f)</Typography>
                             <Line data={metricAvgFrequency}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxFrequency + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgFrequency + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minFrequency + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Frequency"}
+                                    max={frequencyAggregation.max}
+                                    avg={frequencyAggregation.avg}
+                                    min={frequencyAggregation.min}
+                                    latest={frequency_r}
+                                />
+                            </Container>
                         </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Box
+                            sx={{px: 2}}
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="end"
+                            flexDirection="column"
+                        >
+                            <Typography variant={"h6"}>Current (I)</Typography>
+                            <Line data={metricAvgCurrent}/>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRSTIN
+                                    rMax={currentRAggregation.max}
+                                    sMax={currentSAggregation.max}
+                                    tMax={currentTAggregation.max}
+                                    inMax={currentInAggregation.max}
+                                    rMin={currentRAggregation.min}
+                                    sMin={currentSAggregation.min}
+                                    tMin={currentTAggregation.min}
+                                    inMin={currentInAggregation.min}
+                                    rAvg={currentRAggregation.avg}
+                                    sAvg={currentSAggregation.avg}
+                                    tAvg={currentTAggregation.avg}
+                                    inAvg={currentInAggregation.avg}
+                                    rLatest={current_r}
+                                    sLatest={current_s}
+                                    tLatest={current_t}
+                                    inLatest={current_in}
+                                />
+                            </Container>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <GoogleMap
+                            lat={Number(trafo.latitude)}
+                            lng={Number(trafo.longitude)}
+                            title={trafo.name}
+                            height={'700px'}
+                        />
                     </Grid>
                 </Grid>
-                <Box sx={{ height: '35vh', width: '100%' }}>
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: mapApiKey }}
-                        defaultCenter={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                        yesIWantToUseGoogleMapApiInternals
-                        onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                    />
-                </Box>
             </Container>
         </>
     )

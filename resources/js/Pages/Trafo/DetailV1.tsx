@@ -20,16 +20,18 @@ import {
 import {useEffect, useState} from "react";
 import {TrafoDetailPropsV1} from "@/types";
 import GoogleMapReact from "google-map-react";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
     const dataCategories = [
         {id: 'vif', name: 'Data 1 : V, I , dan F'},
         {id: 'pqspf', name: 'Data 2 : P, Q, S dan PF'},
-        {id: 'thd-ihd', name: 'Data 3 : THD dan IHD ( BAR CHART)'},
-        {id: 'ihd', name: 'Data 4 : IHD (BAR CHART)'},
-        {id: 'pka', name: 'Data 5 : ESTIMASI  P LOSS, K FAKTOR, DAN ARUS TRIPLEN'},
-        {id: 'analisis', name: 'Data 6 : ANALISIS'},
+        {id: 'thd-ihd', name: 'Data 3 : TOTAL HARMONICS DISTORTION'},
+        {id: 'ihd', name: 'Data 4 : INDIVIDUAL HARMONICS DISTORTION'},
+        {id: 'tpo', name: 'Data 5 : T, P, LV MINYAK, DAN AMBIENT TEMPERATURE'},
+        {id: 'pka', name: 'Data 6 : ESTIMASI P LOSS, K FACTOR, TRIPLEN HARMONICS'},
+        {id: 'analisis', name: 'Data 7 : ANALISIS'},
     ]
     const [dateState, setDateState] = useState('');
     const [tableCategoryState, setTableCategoryState] = useState('');
@@ -60,25 +62,6 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
         }
     }, [chartCategoryState, route, trafo.id, dateState]);
 
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
-
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
-
     return (
         <>
             <AppBar>
@@ -92,24 +75,12 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
                 <Box sx={{ my: 4 }}>
                     <Grid container spacing={2} px={2}>
                         <Grid item xs={12} md={6}>
-                            <Box
-                                sx={{
-                                    width: '100%',
-                                    height: '650px',
-                                    display: 'flex'
-                                }}
-                                component="map"
-                            >
-                                <GoogleMapReact
-                                    bootstrapURLKeys={{ key: mapApiKey }}
-                                    defaultCenter={defaultProps.center}
-                                    defaultZoom={defaultProps.zoom}
-                                    yesIWantToUseGoogleMapApiInternals
-                                    onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                                >
-
-                                </GoogleMapReact>
-                            </Box>
+                            <GoogleMap
+                                lat={Number(trafo.latitude)}
+                                lng={Number(trafo.longitude)}
+                                title={trafo.name}
+                                height={'650px'}
+                            />
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <Typography variant="h4" gutterBottom fontWeight={"bold"}>

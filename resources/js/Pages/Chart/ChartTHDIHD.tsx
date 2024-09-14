@@ -1,112 +1,49 @@
 import {ChartTHDIHDProps} from "@/types/chart";
 import {ChartData} from "chart.js";
 import {Box, Container, Grid, Paper, Typography} from "@mui/material";
-import {Bar} from "react-chartjs-2";
+import {Bar, Line} from "react-chartjs-2";
 import GoogleMapReact from "google-map-react";
 import 'chart.js/auto';
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import {rstBarChart, rstBarChartString, rstLineChart} from "@/helpers/generator/chart-generator";
+import timeMinuteString from "@/helpers/converter/date-time";
+import calculateMetrics from "@/helpers/analysis/calculate-metric";
+import AggregationRST from "@/Components/Chart/AggregationRST";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function ChartTHDIHD({
                                         trafo,
                                         date,
-                                        totalHarmonicDistortions,
+                                        thdVoltages,
                                         thdCurrents,
-                                        thdFrequencies,
-                                        avgVoltageR,
-                                        avgVoltageS,
-                                        avgVoltageT,
-                                        avgCurrentR,
-                                        avgCurrentS,
-                                        avgCurrentT,
-                                        avgFrequencyR,
-                                        avgFrequencyS,
-                                        avgFrequencyT
                                     }: ChartTHDIHDProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const metricAvgTHD: ChartData<"bar", number[], number> = {
-        labels: totalHarmonicDistortions.map(thd => thd.hour),
-        datasets: [
-            {
-                label: 'VR',
-                data: totalHarmonicDistortions.map(thd => thd.voltage_r),
-                backgroundColor: 'rgb(255, 0, 92)',
-            },
-            {
-                label: 'VS',
-                data: totalHarmonicDistortions.map(thd => thd.voltage_s),
-                backgroundColor: 'rgb(255, 246, 0)',
-            },
-            {
-                label: 'VT',
-                data: totalHarmonicDistortions.map(thd => thd.voltage_t),
-                backgroundColor: 'rgb(38, 0, 27)',
-            }
-        ]
-    }
+    const metricVoltages = rstBarChartString({
+        labels: thdVoltages.map(voltage => timeMinuteString(new Date(voltage.created_at))),
+        rData: thdVoltages.map(voltage => voltage.voltage_r),
+        sData: thdVoltages.map(voltage => voltage.voltage_s),
+        tData: thdVoltages.map(voltage => voltage.voltage_t),
+    });
 
-    const metricAvgCurrent: ChartData<"bar", number[], number> = {
-        labels: thdCurrents.map(current => current.hour),
-        datasets: [
-            {
-                label: 'IR',
-                data: thdCurrents.map(current => current.current_r),
-                backgroundColor: 'rgb(255, 0, 92)',
-            },
-            {
-                label: 'IS',
-                data: thdCurrents.map(current => current.current_s),
-                backgroundColor: 'rgb(255, 246, 0)',
-            },
-            {
-                label: 'IT',
-                data: thdCurrents.map(current => current.current_t),
-                backgroundColor: 'rgb(38, 0, 27)',
-            }
-        ]
-    }
+    const voltageRAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_r));
+    const voltageSAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_s));
+    const voltageTAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_t));
+    const { voltage_r = 0, voltage_s = 0, voltage_t = 0 } = thdVoltages[thdVoltages.length - 1] || {};
 
-    const metricAvgFrequency: ChartData<"bar", number[], number> = {
-        labels: thdFrequencies.map(frequency => frequency.hour),
-        datasets: [
-            {
-                label: 'FR',
-                data: thdFrequencies.map(frequency => frequency.frequency_r),
-                backgroundColor: 'rgb(255, 0, 92)',
-            },
-            {
-                label: 'FS',
-                data: thdFrequencies.map(frequency => frequency.frequency_s),
-                backgroundColor: 'rgb(255, 246, 0)',
-            },
-            {
-                label: 'FT',
-                data: thdFrequencies.map(frequency => frequency.frequency_t),
-                backgroundColor: 'rgb(38, 0, 27)',
-            }
-        ]
-    }
+    const metricCurrents = rstBarChartString({
+        labels: thdCurrents.map(current => timeMinuteString(new Date(current.created_at))),
+        rData: thdCurrents.map(current => current.current_r),
+        sData: thdCurrents.map(current => current.current_s),
+        tData: thdCurrents.map(current => current.current_t),
+    });
 
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
-
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
+    const currentRAggregation = calculateMetrics(thdCurrents.map(current => current.current_r));
+    const currentSAggregation = calculateMetrics(thdCurrents.map(current => current.current_s));
+    const currentTAggregation = calculateMetrics(thdCurrents.map(current => current.current_t));
+    const { current_r = 0, current_s = 0, current_t = 0 } = thdCurrents[thdCurrents.length - 1] || {};
 
     return (
         <>
@@ -131,13 +68,24 @@ export default function ChartTHDIHD({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>THD</Typography>
-                            <Bar data={metricAvgTHD}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>VR : {Math.round((avgVoltageR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>VS : {Math.round((avgVoltageS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>VT : {Math.round((avgVoltageT + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Typography variant={"h6"}>Total Harmonics Distortion Voltage (THDv)</Typography>
+                            <Bar data={metricVoltages}/>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRST
+                                    rMax={voltageRAggregation.max}
+                                    sMax={voltageSAggregation.max}
+                                    tMax={voltageTAggregation.max}
+                                    rMin={voltageRAggregation.min}
+                                    sMin={voltageSAggregation.min}
+                                    tMin={voltageTAggregation.min}
+                                    rAvg={voltageRAggregation.avg}
+                                    sAvg={voltageSAggregation.avg}
+                                    tAvg={voltageTAggregation.avg}
+                                    rLatest={voltage_r}
+                                    sLatest={voltage_s}
+                                    tLatest={voltage_t}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -148,42 +96,35 @@ export default function ChartTHDIHD({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Current</Typography>
-                            <Bar data={metricAvgCurrent}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>IR : {Math.round((avgCurrentR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>IS : {Math.round((avgCurrentS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>IT : {Math.round((avgCurrentT + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Typography variant={"h6"}>Total Harmonics Distortion Current (THDi)</Typography>
+                            <Bar data={metricCurrents}/>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationRST
+                                    rMax={currentRAggregation.max}
+                                    sMax={currentSAggregation.max}
+                                    tMax={currentTAggregation.max}
+                                    rMin={currentRAggregation.min}
+                                    sMin={currentSAggregation.min}
+                                    tMin={currentTAggregation.min}
+                                    rAvg={currentRAggregation.avg}
+                                    sAvg={currentSAggregation.avg}
+                                    tAvg={currentTAggregation.avg}
+                                    rLatest={current_r}
+                                    sLatest={current_s}
+                                    tLatest={current_t}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box
-                            sx={{px: 2}}
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="end"
-                            flexDirection="column"
-                        >
-                            <Typography variant={"h6"}>Frequency</Typography>
-                            <Bar data={metricAvgFrequency}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>FR : {Math.round((avgFrequencyR + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>FS : {Math.round((avgFrequencyS + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>FT : {Math.round((avgFrequencyT + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
-                        </Box>
+                        <GoogleMap
+                            lat={Number(trafo.latitude)}
+                            lng={Number(trafo.longitude)}
+                            title={trafo.name}
+                            height={'700px'}
+                        />
                     </Grid>
                 </Grid>
-                <Box sx={{ height: '35vh', width: '100%' }}>
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: mapApiKey }}
-                        defaultCenter={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                        yesIWantToUseGoogleMapApiInternals
-                        onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                    />
-                </Box>
             </Container>
         </>
     )

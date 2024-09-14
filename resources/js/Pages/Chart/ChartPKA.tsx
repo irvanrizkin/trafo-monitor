@@ -7,6 +7,14 @@ import 'chart.js/auto';
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
+import datasetGenerator from "@/helpers/generator/dataset-generator";
+import {blue} from "@mui/material/colors";
+import {singleLineChart, singleLineChartString} from "@/helpers/generator/chart-generator";
+import timeMinuteString from "@/helpers/converter/date-time";
+import calculateMetrics from "@/helpers/analysis/calculate-metric";
+import AggregationRST from "@/Components/Chart/AggregationRST";
+import AggregationSingle from "@/Components/Chart/AggregationSingle";
+import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function ChartPKA({
                                      trafo,
@@ -14,75 +22,35 @@ export default function ChartPKA({
                                      powerLosses,
                                      kFactors,
                                      triplenCurrents,
-                                     maxPowerLoss,
-                                     avgPowerLoss,
-                                     minPowerLoss,
-                                     maxKFactor,
-                                     avgKFactor,
-                                     minKFactor,
-                                     maxTriplenCurrent,
-                                     avgTriplenCurrent,
-                                     minTriplenCurrent,
                                  }: ChartPKAProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const metricAvgPowerLoss: ChartData<"line", number[], number> = {
-        labels: powerLosses.map(powerLoss => powerLoss.hour),
-        datasets: [
-            {
-                label: 'Power Loss',
-                data: powerLosses.map(powerLoss => powerLoss.power_loss),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }
-        ]
-    }
+    const metricAvgPowerLoss = singleLineChartString({
+        labels: powerLosses.map(powerLoss => timeMinuteString(new Date(powerLoss.created_at))),
+        data: powerLosses.map(powerLoss => powerLoss.power_loss),
+        label: 'Power Loss',
+    });
 
-    const metricAvgKFactor: ChartData<"line", number[], number> = {
-        labels: kFactors.map(kFactor => kFactor.hour),
-        datasets: [
-            {
-                label: 'K Factor',
-                data: kFactors.map(kFactor => kFactor.k_factor),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }
-        ]
-    }
+    const powerLossAggregation = calculateMetrics(powerLosses.map(powerLoss => powerLoss.power_loss));
+    const { power_loss = 0 } = powerLosses[powerLosses.length - 1] || {};
 
-    const metricAvgTriplenCurrent: ChartData<"line", number[], number> = {
-        labels: triplenCurrents.map(triplenCurrent => triplenCurrent.hour),
-        datasets: [
-            {
-                label: 'Triplen Current',
-                data: triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }
-        ]
-    }
+    const metricAvgKFactor = singleLineChartString({
+        labels: kFactors.map(kFactor => timeMinuteString(new Date(kFactor.created_at))),
+        data: kFactors.map(kFactor => kFactor.k_factor),
+        label: 'K Factor',
+    });
 
-    const renderMarker = (map: any, maps: any) => {
-        return new maps.Marker({
-            position: {
-                lat: Number(trafo.latitude),
-                lng: Number(trafo.longitude),
-            },
-            map,
-            title: 'test marker'
-        });
-    }
+    const kFactorAggregation = calculateMetrics(kFactors.map(kFactor => kFactor.k_factor));
+    const { k_factor = 0 } = kFactors[kFactors.length - 1] || {};
 
-    const defaultProps = {
-        center: {
-            lat: Number(trafo.latitude),
-            lng: Number(trafo.longitude),
-        },
-        zoom: 15,
-    }
+    const metricAvgTriplenCurrent = singleLineChartString({
+        labels: triplenCurrents.map(triplenCurrent => timeMinuteString(new Date(triplenCurrent.created_at))),
+        data: triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current),
+        label: 'Triplen Current',
+    });
+
+    const triplenCurrentAggregation = calculateMetrics(triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current));
+    const { triplen_current = 0 } = triplenCurrents[triplenCurrents.length - 1] || {};
 
     return (
         <>
@@ -109,14 +77,16 @@ export default function ChartPKA({
                         >
                             <Typography variant={"h6"}>Power Loss</Typography>
                             <Line data={metricAvgPowerLoss}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxPowerLoss + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgPowerLoss + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minPowerLoss + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Power Loss"}
+                                    max={powerLossAggregation.max}
+                                    avg={powerLossAggregation.avg}
+                                    min={powerLossAggregation.min}
+                                    latest={power_loss}
+                                />
+                            </Container>
                         </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
                         <Box
                             sx={{px: 2}}
                             display="flex"
@@ -124,42 +94,49 @@ export default function ChartPKA({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Current</Typography>
-                            <Line data={metricAvgKFactor}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxKFactor + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgKFactor + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minKFactor + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box
-                            sx={{px: 2}}
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="end"
-                            flexDirection="column"
-                        >
-                            <Typography variant={"h6"}>Frequency</Typography>
+                            <Typography variant={"h6"}>Triplen Current</Typography>
                             <Line data={metricAvgTriplenCurrent}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((maxTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((avgTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((minTriplenCurrent + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Triplen Current"}
+                                    max={triplenCurrentAggregation.max}
+                                    avg={triplenCurrentAggregation.avg}
+                                    min={triplenCurrentAggregation.min}
+                                    latest={triplen_current}
+                                />
+                            </Container>
                         </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Box
+                            sx={{px: 2}}
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="end"
+                            flexDirection="column"
+                        >
+                            <Typography variant={"h6"}>K Factor</Typography>
+                            <Line data={metricAvgKFactor}/>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"K Factor"}
+                                    max={kFactorAggregation.max}
+                                    avg={kFactorAggregation.avg}
+                                    min={kFactorAggregation.min}
+                                    latest={k_factor}
+                                />
+                            </Container>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <GoogleMap
+                            lat={Number(trafo.latitude)}
+                            lng={Number(trafo.longitude)}
+                            title={trafo.name}
+                            height={'700px'}
+                        />
                     </Grid>
                 </Grid>
-                <Box sx={{ height: '35vh', width: '100%' }}>
-                    <GoogleMapReact
-                        bootstrapURLKeys={{ key: mapApiKey }}
-                        defaultCenter={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                        yesIWantToUseGoogleMapApiInternals
-                        onGoogleApiLoaded={({ map, maps }) => renderMarker(map, maps)}
-                    />
-                </Box>
             </Container>
         </>
     );

@@ -28,19 +28,19 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
     const columnsFrequency: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'frequency_r', headerName: 'Frequency'},
+        { field: 'frequency_r', headerName: 'Frequency (f)'},
     ]
 
     const columnGroupVoltage: GridColumnGroupingModel = [
         {
-            groupId: 'Voltage',
+            groupId: 'Voltage (V)',
             children: [{ field: 'voltage_r' }, { field: 'voltage_s' }, { field: 'voltage_t' }]
         }
     ]
 
     const columnGroupCurrent: GridColumnGroupingModel = [
         {
-            groupId: 'Current',
+            groupId: 'Current (I)',
             children: [{ field: 'current_r' }, { field: 'current_s' }, { field: 'current_t' }, { field: 'current_in' }]
         }
     ]

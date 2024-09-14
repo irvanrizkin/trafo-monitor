@@ -7,6 +7,7 @@ use App\Models\Current;
 use App\Models\Frequency;
 use App\Models\IHD;
 use App\Models\IHDCurrent;
+use App\Models\IHDVoltage;
 use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
 use App\Models\Metric;
@@ -17,10 +18,12 @@ use App\Models\ReactivePower;
 use App\Models\THD;
 use App\Models\THDCurrent;
 use App\Models\THDFrequency;
+use App\Models\THDVoltage;
 use App\Models\TotalHarmonicDistortion;
 use App\Models\Trafo;
 use App\Models\TriplenCurrent;
 use App\Models\Voltage;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -67,156 +70,48 @@ class ChartController extends Controller
 
     public function getChartVIF($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        $oneHourAgo = Carbon::now()->subHour();
 
-        $voltages = Voltage::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(voltage_r) as voltage_r,
-            AVG(voltage_s) as voltage_s,
-            AVG(voltage_t) as voltage_t'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $voltages = Voltage::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $voltagesRaw = Voltage::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $avgVoltageR = $voltagesRaw->avg('voltage_r');
-        $avgVoltageS = $voltagesRaw->avg('voltage_s');
-        $avgVoltageT = $voltagesRaw->avg('voltage_t');
-
-        $currents = Current::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(current_r) as current_r,
-            AVG(current_s) as current_s,
-            AVG(current_t) as current_t,
-            AVG(current_in) as current_in'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $currents = Current::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $currentsRaw = Current::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
+        $frequencies = Frequency::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
-        $avgCurrentR = $currentsRaw->avg('current_r');
-        $avgCurrentS = $currentsRaw->avg('current_s');
-        $avgCurrentT = $currentsRaw->avg('current_t');
-        $avgCurrentIN = $currentsRaw->avg('current_in');
-
-        $frequencies = Frequency::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(frequency_r) as frequency_r,
-            AVG(frequency_s) as frequency_s,
-            AVG(frequency_t) as frequency_t'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->get();
-
-        $frequenciesRaw = Frequency::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $maxFrequency = $frequenciesRaw->max('frequency_r');
-        $avgFrequency = $frequenciesRaw->avg('frequency_r');
-        $minFrequency = $frequenciesRaw->min('frequency_r');
 
         return Inertia::render('Chart/ChartVIF', [
             'trafo' => $trafo,
             'voltages' => $voltages,
             'currents' => $currents,
             'frequencies' => $frequencies,
-            'avgVoltageR' => $avgVoltageR,
-            'avgVoltageS' => $avgVoltageS,
-            'avgVoltageT' => $avgVoltageT,
-            'avgCurrentR' => $avgCurrentR,
-            'avgCurrentS' => $avgCurrentS,
-            'avgCurrentT' => $avgCurrentT,
-            'avgCurrentIN' => $avgCurrentIN,
-            'maxFrequency' => $maxFrequency,
-            'avgFrequency' => $avgFrequency,
-            'minFrequency' => $minFrequency,
             'date' => $date,
         ]);
     }
 
     public function getChartPQSPF($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        $oneHourAgo = Carbon::now()->subHour();
 
-        $powers = Power::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(power_r) as power_r,
-            AVG(power_s) as power_s,
-            AVG(power_t) as power_t'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $powers = Power::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $powersRaw = Power::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $avgPowerR = $powersRaw->avg('power_r');
-        $avgPowerS = $powersRaw->avg('power_s');
-        $avgPowerT = $powersRaw->avg('power_t');
-
-        $reactivePowers = ReactivePower::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(reactive_power_r) as reactive_power_r,
-            AVG(reactive_power_s) as reactive_power_s,
-            AVG(reactive_power_t) as reactive_power_t'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $reactivePowers = ReactivePower::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $reactivePowersRaw = ReactivePower::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $avgReactivePowerR = $reactivePowersRaw->avg('reactive_power_r');
-        $avgReactivePowerS = $reactivePowersRaw->avg('reactive_power_s');
-        $avgReactivePowerT = $reactivePowersRaw->avg('reactive_power_t');
-
-        $apparentPowers = ApparentPower::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(apparent_power_r) as apparent_power_r,
-            AVG(apparent_power_s) as apparent_power_s,
-            AVG(apparent_power_t) as apparent_power_t'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $apparentPowers = ApparentPower::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $apparentPowersRaw = ApparentPower::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
+        $powerFactors = PowerFactor::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
-        $avgApparentPowerR = $apparentPowersRaw->avg('apparent_power_r');
-        $avgApparentPowerS = $apparentPowersRaw->avg('apparent_power_s');
-        $avgApparentPowerT = $apparentPowersRaw->avg('apparent_power_t');
-
-        $powerFactors = PowerFactor::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(power_factor_r) as power_factor_r,
-            AVG(power_factor_s) as power_factor_s,
-            AVG(power_factor_t) as power_factor_t'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->get();
-
-        $powerFactorsRaw = PowerFactor::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $avgPowerFactorR = $powerFactorsRaw->avg('power_factor_r');
-        $avgPowerFactorS = $powerFactorsRaw->avg('power_factor_s');
-        $avgPowerFactorT = $powerFactorsRaw->avg('power_factor_t');
 
         return Inertia::render('Chart/ChartPQSPF', [
             'trafo' => $trafo,
@@ -224,112 +119,76 @@ class ChartController extends Controller
             'reactivePowers' => $reactivePowers,
             'apparentPowers' => $apparentPowers,
             'powerFactors' => $powerFactors,
-            'avgPowerR' => $avgPowerR,
-            'avgPowerS' => $avgPowerS,
-            'avgPowerT' => $avgPowerT,
-            'avgReactivePowerR' => $avgReactivePowerR,
-            'avgReactivePowerS' => $avgReactivePowerS,
-            'avgReactivePowerT' => $avgReactivePowerT,
-            'avgApparentPowerR' => $avgApparentPowerR,
-            'avgApparentPowerS' => $avgApparentPowerS,
-            'avgApparentPowerT' => $avgApparentPowerT,
-            'avgPowerFactorR' => $avgPowerFactorR,
-            'avgPowerFactorS' => $avgPowerFactorS,
-            'avgPowerFactorT' => $avgPowerFactorT,
             'date' => $date,
         ]);
     }
 
     public function getChartTHDIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $thd = THD::where('trafo_id', $trafoId)->latest()->first();
+        $oneHourAgo = Carbon::now()->subHour();
 
-        return Inertia::render('Chart/ChartHD', [
+        $thdCurrents = THDCurrent::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
+            ->get();
+
+        $thdVoltages = THDVoltage::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
+            ->get();
+
+        return Inertia::render('Chart/ChartTHDIHD', [
             'trafo' => $trafo,
             'date' => $date,
             'title' => 'Chart THD',
-            'harmonicDistortions' => $thd,
+            'thdCurrents' => $thdCurrents,
+            'thdVoltages' => $thdVoltages,
         ]);
     }
 
     public function getChartIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $ihd = IHD::where('trafo_id', $trafoId)->latest()->first();
+        $ihd = IHD::where('trafo_id', $trafoId)->latest()->get();
+        $ihdVoltages = IHDVoltage::where('trafo_id', $trafoId)->latest()->get();
 
-        return Inertia::render('Chart/ChartHD', [
+        return Inertia::render('Chart/ChartIHD', [
             'trafo' => $trafo,
             'date' => $date,
             'title' => 'Chart IHD',
-            'harmonicDistortions' => $ihd,
+            'ihdCurrents' => $ihd,
+            'ihdVoltages' => $ihdVoltages,
+        ]);
+    }
+
+    public function getChartTPO($trafoId, $date) {
+        $trafo = Trafo::find($trafoId);
+
+        return Inertia::render('Chart/ChartTPO', [
+            'trafo' => $trafo,
+            'date' => $date,
         ]);
     }
 
     public function getChartPKA($trafoId, $date)
     {
         $trafo = Trafo::find($trafoId);
+        $oneHourAgo = Carbon::now()->subHour();
 
-        $powerLosses = PowerLoss::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(power_loss) as power_loss'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $powerLosses = PowerLoss::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $powerLossesRaw = PowerLoss::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $maxPowerLoss = $powerLossesRaw->max('power_loss');
-        $avgPowerLoss = $powerLossesRaw->avg('power_loss');
-        $minPowerLoss = $powerLossesRaw->min('power_loss');
-
-        $kFactors = KFactor::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(k_factor) as k_factor'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
+        $kFactors = KFactor::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
 
-        $kFactorsRaw = KFactor::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
+        $triplenCurrents = TriplenCurrent::where('trafo_id', $trafoId)
+            ->where('created_at', '>=', $oneHourAgo)
             ->get();
-        $maxKFactor = $kFactorsRaw->max('k_factor');
-        $avgKFactor = $kFactorsRaw->avg('k_factor');
-        $minKFactor = $kFactorsRaw->min('k_factor');
-
-        $triplenCurrents = TriplenCurrent::selectRaw('DATE(created_at) as date, HOUR(created_at) as hour,
-            AVG(triplen_current) as triplen_current'
-        )
-            ->where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->groupBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at), HOUR(created_at)'))
-            ->get();
-
-        $triplenCurrentsRaw = TriplenCurrent::where('trafo_id', $trafoId)
-            ->whereDate('created_at', $date)
-            ->get();
-        $maxTriplenCurrent = $triplenCurrentsRaw->max('triplen_current');
-        $avgTriplenCurrent = $triplenCurrentsRaw->avg('triplen_current');
-        $minTriplenCurrent = $triplenCurrentsRaw->min('triplen_current');
 
         return Inertia::render('Chart/ChartPKA', [
             'trafo' => $trafo,
             'powerLosses' => $powerLosses,
             'kFactors' => $kFactors,
             'triplenCurrents' => $triplenCurrents,
-            'maxPowerLoss' => $maxPowerLoss,
-            'avgPowerLoss' => $avgPowerLoss,
-            'minPowerLoss' => $minPowerLoss,
-            'maxKFactor' => $maxKFactor,
-            'avgKFactor' => $avgKFactor,
-            'minKFactor' => $minKFactor,
-            'maxTriplenCurrent' => $maxTriplenCurrent,
-            'avgTriplenCurrent' => $avgTriplenCurrent,
-            'minTriplenCurrent' => $minTriplenCurrent,
             'date' => $date,
         ]);
     }

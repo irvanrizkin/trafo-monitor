@@ -31,6 +31,12 @@ export default function MetricHD({
                     <Table size='medium'>
                         <TableHead>
                             <TableRow>
+                                <TableCell align="center" colSpan={1}>
+                                    Country
+                                </TableCell>
+                                <TableCell align="center" colSpan={3}>
+                                    Details
+                                </TableCell>
                                 <TableCell>Orde</TableCell>
                                 <TableCell align="right">R</TableCell>
                                 <TableCell align="right">S</TableCell>
