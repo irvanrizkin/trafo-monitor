@@ -7,6 +7,7 @@ import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import {singleLineChart} from "@/helpers/generator/chart-generator";
+import AggregationSingle from "@/Components/Chart/AggregationSingle";
 
 export default function ChartTPO({
                                        trafo,
@@ -62,7 +63,7 @@ export default function ChartTPO({
     return (
         <>
             <AppBarTriple
-                startText={'Chart PQSPF'}
+                startText={'Chart TPO'}
                 middleText={trafo.name + ' - ' + trafo.address}
                 endText={date}
             />
@@ -87,11 +88,15 @@ export default function ChartTPO({
                         >
                             <Typography variant={"h6"}>Temperature (°C)</Typography>
                             <Line data={metricTemperature}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Temperature"}
+                                    max={0}
+                                    avg={0}
+                                    min={0}
+                                    latest={0}
+                                />
+                            </Container>
                         </Box>
                         <Box
                             sx={{px: 2, mt: 3}}
@@ -102,11 +107,15 @@ export default function ChartTPO({
                         >
                             <Typography variant={"h6"}>Pressure (p)</Typography>
                             <Line data={metricPressure}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Pressure"}
+                                    max={0}
+                                    avg={0}
+                                    min={0}
+                                    latest={0}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -122,11 +131,15 @@ export default function ChartTPO({
                         >
                             <Typography variant={"h6"}>Oil Level</Typography>
                             <Line data={metricOilLevel}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Oil Level"}
+                                    max={0}
+                                    avg={0}
+                                    min={0}
+                                    latest={0}
+                                />
+                            </Container>
                         </Box>
                         <Box
                             sx={{px: 2, mt: 3}}
@@ -137,11 +150,15 @@ export default function ChartTPO({
                         >
                             <Typography variant={"h6"}>Ambient Temperature (°C)</Typography>
                             <Line data={metricAmbientTemperature}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Ambient Temp"}
+                                    max={0}
+                                    avg={0}
+                                    min={0}
+                                    latest={0}
+                                />
+                            </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
