@@ -11,6 +11,9 @@ import datasetGenerator from "@/helpers/generator/dataset-generator";
 import {blue} from "@mui/material/colors";
 import {singleLineChart, singleLineChartString} from "@/helpers/generator/chart-generator";
 import timeMinuteString from "@/helpers/converter/date-time";
+import calculateMetrics from "@/helpers/analysis/calculate-metric";
+import AggregationRST from "@/Components/Chart/AggregationRST";
+import AggregationSingle from "@/Components/Chart/AggregationSingle";
 
 export default function ChartPKA({
                                      trafo,
@@ -18,15 +21,6 @@ export default function ChartPKA({
                                      powerLosses,
                                      kFactors,
                                      triplenCurrents,
-                                     maxPowerLoss,
-                                     avgPowerLoss,
-                                     minPowerLoss,
-                                     maxKFactor,
-                                     avgKFactor,
-                                     minKFactor,
-                                     maxTriplenCurrent,
-                                     avgTriplenCurrent,
-                                     minTriplenCurrent,
                                  }: ChartPKAProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
@@ -36,17 +30,26 @@ export default function ChartPKA({
         label: 'Power Loss',
     });
 
+    const powerLossAggregation = calculateMetrics(powerLosses.map(powerLoss => powerLoss.power_loss));
+    const { power_loss = 0 } = powerLosses[powerLosses.length - 1] || {};
+
     const metricAvgKFactor = singleLineChartString({
         labels: kFactors.map(kFactor => timeMinuteString(new Date(kFactor.created_at))),
         data: kFactors.map(kFactor => kFactor.k_factor),
         label: 'K Factor',
     });
 
+    const kFactorAggregation = calculateMetrics(kFactors.map(kFactor => kFactor.k_factor));
+    const { k_factor = 0 } = kFactors[kFactors.length - 1] || {};
+
     const metricAvgTriplenCurrent = singleLineChartString({
         labels: triplenCurrents.map(triplenCurrent => timeMinuteString(new Date(triplenCurrent.created_at))),
         data: triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current),
         label: 'Triplen Current',
     });
+
+    const triplenCurrentAggregation = calculateMetrics(triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current));
+    const { triplen_current = 0 } = triplenCurrents[triplenCurrents.length - 1] || {};
 
     const renderMarker = (map: any, maps: any) => {
         return new maps.Marker({
@@ -92,11 +95,15 @@ export default function ChartPKA({
                         >
                             <Typography variant={"h6"}>Power Loss</Typography>
                             <Line data={metricAvgPowerLoss}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <Container sx={{ p: 2 }}>
+                                <AggregationSingle
+                                    property={"Power Loss"}
+                                    max={powerLossAggregation.max}
+                                    avg={powerLossAggregation.avg}
+                                    min={powerLossAggregation.min}
+                                    latest={power_loss}
+                                />
+                            </Container>
                         </Box>
                         <Box
                             sx={{px: 2}}
@@ -107,11 +114,13 @@ export default function ChartPKA({
                         >
                             <Typography variant={"h6"}>Triplen Current</Typography>
                             <Line data={metricAvgTriplenCurrent}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <AggregationSingle
+                                property={"Triplen Current"}
+                                max={triplenCurrentAggregation.max}
+                                avg={triplenCurrentAggregation.avg}
+                                min={triplenCurrentAggregation.min}
+                                latest={triplen_current}
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -124,11 +133,13 @@ export default function ChartPKA({
                         >
                             <Typography variant={"h6"}>K Factor</Typography>
                             <Line data={metricAvgKFactor}/>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography>Max : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Avg : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                                <Typography>Min : {Math.round((0 + Number.EPSILON) * 100) / 100}</Typography>
-                            </Paper>
+                            <AggregationSingle
+                                property={"K Factor"}
+                                max={kFactorAggregation.max}
+                                avg={kFactorAggregation.avg}
+                                min={kFactorAggregation.min}
+                                latest={k_factor}
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
