@@ -4,17 +4,17 @@ import TrafoCard from "@/Components/Trafo/TrafoCard";
 import GoogleMapReact from "google-map-react";
 import {router} from "@inertiajs/react";
 import CustomMarker from "@/Components/Map/CustomMarker";
+import defaultCenter from "@/helpers/map/default-center";
 
 export default function Dashboard({ trafos }: DashboardPropsV1) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const defaultProps = {
-        center: {
-            lat: Number(trafos[0].latitude),
-            lng: Number(trafos[0].longitude),
-        },
+    const defaultProps = defaultCenter({
+        lat: Number(trafos[0].latitude) ?? -7.973640723121185,
+        lng: Number(trafos[0].longitude) ?? 112.63782050691506,
         zoom: 9,
-    }
+        isTrafoEmpty: trafos.length === 0,
+    })
 
     const logout = () => {
         router.post('logout');
