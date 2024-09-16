@@ -68,7 +68,7 @@ class ChartController extends Controller
         ]);
     }
 
-    public function getChartVIF($trafoId, $date) {
+    public function getChartVIF($trafoId, $date = "null") {
         $trafo = Trafo::find($trafoId);
         $oneHourAgo = Carbon::now()->subHour();
 

@@ -42,7 +42,7 @@ Route::prefix('v2')->middleware(['auth'])->group(function () {
     });
 
     Route::prefix('chart')->group(function () {
-        Route::get('/{trafoId}', [ChartV2Controller::class, 'getChartData'])
+        Route::get('/{trafoId}', [ChartController::class, 'getChartVIF'])
             ->name('v2.chart.data');
     });
 });
