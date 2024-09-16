@@ -82,19 +82,19 @@ Route::prefix('metric')->middleware(['auth'])->group(function () {
 Route::prefix('chart')->middleware(['auth'])->group(function () {
    Route::get('/{trafoid}/{date}', [ChartController::class, 'getChartData'])
        ->name('chart.data');
-    Route::get('/{trafoid}/{date}/vif', [ChartController::class, 'getChartVIF'])
+    Route::get('/vif/{trafoid}/{date}', [ChartController::class, 'getChartVIF'])
         ->name('chart.vif');
-    Route::get('/{trafoid}/{date}/pqspf', [ChartController::class, 'getChartPQSPF'])
+    Route::get('/pqspf/{trafoid}/{date}', [ChartController::class, 'getChartPQSPF'])
         ->name('chart.pqspf');
-    Route::get('/{trafoid}/{date}/thd-ihd', [ChartController::class, 'getChartTHDIHD'])
+    Route::get('/thd-ihd/{trafoid}/{date}', [ChartController::class, 'getChartTHDIHD'])
         ->name('chart.thd-ihd');
-    Route::get('/{trafoid}/{date}/ihd', [ChartController::class, 'getChartIHD'])
+    Route::get('/ihd/{trafoid}/{date}', [ChartController::class, 'getChartIHD'])
         ->name('chart.ihd');
-    Route::get('/{trafoid}/{date}/tpo', [ChartController::class, 'getChartTPO'])
+    Route::get('/tpo/{trafoid}/{date}', [ChartController::class, 'getChartTPO'])
         ->name('chart.tpo');
-    Route::get('/{trafoid}/{date}/pka', [ChartController::class, 'getChartPKA'])
+    Route::get('/pka/{trafoid}/{date}', [ChartController::class, 'getChartPKA'])
         ->name('chart.pka');
-    Route::get('/{trafoid}/{date}/analisis', [ChartController::class, 'getChartAnalysis'])
+    Route::get('/analisis/{trafoid}/{date}', [ChartController::class, 'getChartAnalysis'])
         ->name('chart.analisis');
 });
 
