@@ -80,7 +80,7 @@ Route::prefix('metric')->middleware(['auth'])->group(function () {
 });
 
 Route::prefix('chart')->middleware(['auth'])->group(function () {
-   Route::get('/{trafoid}/{date}', [ChartController::class, 'getChartVIF'])
+   Route::get('/{trafoid}/{date}', [ChartController::class, 'getChartData'])
        ->name('chart.data');
     Route::get('/vif/{trafoid}/{date}', [ChartController::class, 'getChartVIF'])
         ->name('chart.vif');
