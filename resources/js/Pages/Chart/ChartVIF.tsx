@@ -168,12 +168,12 @@ export default function ChartVIF({
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <GoogleMap
-                            lat={Number(trafo.latitude)}
-                            lng={Number(trafo.longitude)}
-                            title={trafo.name}
-                            height={'700px'}
-                        />
+                        {/*<GoogleMap*/}
+                        {/*    lat={Number(trafo.latitude)}*/}
+                        {/*    lng={Number(trafo.longitude)}*/}
+                        {/*    title={trafo.name}*/}
+                        {/*    height={'700px'}*/}
+                        {/*/>*/}
                     </Grid>
                 </Grid>
             </Container>
