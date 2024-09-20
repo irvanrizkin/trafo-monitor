@@ -68,7 +68,7 @@ export default function ChartTPO({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Temperature (°C)</Typography>
+                            <Typography variant={"h6"}>Oil Temperature (°C)</Typography>
                             <Line data={metricTemperature}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
