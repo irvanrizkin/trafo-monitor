@@ -87,7 +87,7 @@ export default function ChartTPO({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Pressure (p)</Typography>
+                            <Typography variant={"h6"}>Pressure (BAR)</Typography>
                             <Line data={metricPressure}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle

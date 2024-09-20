@@ -121,7 +121,7 @@ export default function ChartVIF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Frequency (f)</Typography>
+                            <Typography variant={"h6"}>Frequency (Hz)</Typography>
                             <Line data={metricAvgFrequency}/>
 
                             <Container sx={{ p: 2 }}>
