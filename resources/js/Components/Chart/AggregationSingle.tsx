@@ -10,7 +10,7 @@ export default function AggregationSingle({
                                           }: AggregationSingleProps) {
     return (
         <TableContainer component={Paper}>
-            <Table>
+            <Table size="small">
                 {/* Table Header */}
                 <TableHead>
                     <TableRow>
