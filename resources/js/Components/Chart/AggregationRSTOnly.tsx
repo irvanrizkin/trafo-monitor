@@ -14,7 +14,7 @@ export default function AggregationRSTOnly({
                                        }: AggregationRSTOnlyProps) {
     return (
         <TableContainer component={Paper}>
-            <Table>
+            <Table size="small">
                 {/* Table Header */}
                 <TableHead>
                     <TableRow>

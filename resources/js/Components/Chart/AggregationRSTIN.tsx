@@ -21,7 +21,7 @@ export default function AggregationRSTIN({
                                          }: AggregationRSTINProps) {
     return (
         <TableContainer component={Paper}>
-            <Table>
+            <Table size="small">
                 {/* Table Header */}
                 <TableHead>
                     <TableRow>
