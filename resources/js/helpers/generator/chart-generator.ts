@@ -19,17 +19,17 @@ export function rstLineChart({
             datasetGenerator({
                 label: 'R',
                 data: rData,
-                borderColor: red[500],
+                color: red[500],
             }),
             datasetGenerator({
                 label: 'S',
                 data: sData,
-                borderColor: amber[500],
+                color: amber[500],
             }),
             datasetGenerator({
                 label: 'T',
                 data: tData,
-                borderColor: grey[900],
+                color: grey[900],
             }),
         ]
     }
@@ -52,17 +52,17 @@ export function rstLineChartString({
             datasetGenerator({
                 label: 'R',
                 data: rData,
-                borderColor: red[500],
+                color: red[500],
             }),
             datasetGenerator({
                 label: 'S',
                 data: sData,
-                borderColor: amber[500],
+                color: amber[500],
             }),
             datasetGenerator({
                 label: 'T',
                 data: tData,
-                borderColor: grey[900],
+                color: grey[900],
             }),
         ]
     }
@@ -87,22 +87,22 @@ export function rstinLineChart({
             datasetGenerator({
                 label: 'R',
                 data: rData,
-                borderColor: red[500],
+                color: red[500],
             }),
             datasetGenerator({
                 label: 'S',
                 data: sData,
-                borderColor: amber[500],
+                color: amber[500],
             }),
             datasetGenerator({
                 label: 'T',
                 data: tData,
-                borderColor: grey[900],
+                color: grey[900],
             }),
             datasetGenerator({
                 label: 'IN',
                 data: inData,
-                borderColor: blue[500],
+                color: blue[500],
             }),
         ]
     }
@@ -127,22 +127,22 @@ export function rstinLineChartString({
             datasetGenerator({
                 label: 'R',
                 data: rData,
-                borderColor: red[500],
+                color: red[500],
             }),
             datasetGenerator({
                 label: 'S',
                 data: sData,
-                borderColor: amber[500],
+                color: amber[500],
             }),
             datasetGenerator({
                 label: 'T',
                 data: tData,
-                borderColor: grey[900],
+                color: grey[900],
             }),
             datasetGenerator({
                 label: 'IN',
                 data: inData,
-                borderColor: blue[500],
+                color: blue[500],
             }),
         ]
     }
@@ -229,7 +229,7 @@ export function singleLineChart({
             datasetGenerator({
                 label: label,
                 data: data,
-                borderColor: blue[500],
+                color: blue[500],
             }),
         ]
     }
@@ -250,7 +250,7 @@ export function singleLineChartString({
             datasetGenerator({
                 label: label,
                 data: data,
-                borderColor: blue[500],
+                color: blue[500],
             }),
         ]
     }
