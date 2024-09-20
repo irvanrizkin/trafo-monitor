@@ -3,16 +3,17 @@ import {ChartDataset} from "chart.js";
 export default function datasetGenerator({
                                              label,
                                              data,
-                                             borderColor,
+                                             color,
                                          }: {
     label: string,
     data: number[],
-    borderColor: string
+    color: string
 }): ChartDataset<"line", number[]> {
     return {
         label: label,
         data: data,
-        borderColor: borderColor,
+        borderColor: color,
+        backgroundColor: color,
         fill: false,
         tension: 0.1
     }
