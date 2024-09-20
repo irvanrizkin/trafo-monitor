@@ -28,7 +28,7 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
     const columnsFrequency: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'frequency_r', headerName: 'Frequency (f)'},
+        { field: 'frequency_r', headerName: 'Frequency (Hz)', width: 120},
     ]
 
     const columnGroupVoltage: GridColumnGroupingModel = [
@@ -142,7 +142,7 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                     <Grid item xs={12}>
                         <GaugeGroup
                             gauges={[frequency]}
-                            labels={['F']}
+                            labels={['Frequency']}
                         />
                     </Grid>
                     <Grid item xs={12}>

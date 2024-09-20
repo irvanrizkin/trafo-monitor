@@ -98,7 +98,7 @@ export default function ChartPQSPF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Power (P)</Typography>
+                            <Typography variant={"h6"}>Active Power (W)</Typography>
                             <Line data={metricAvgPower}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
@@ -124,7 +124,7 @@ export default function ChartPQSPF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Reactive Power (Q)</Typography>
+                            <Typography variant={"h6"}>Reactive Power (VA)</Typography>
                             <Line data={metricAvgReactivePower}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST

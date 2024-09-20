@@ -16,7 +16,7 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
     const columnsPressure: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'pressure', headerName: 'Pressure (p)'},
+        { field: 'pressure', headerName: 'Pressure (BAR)', width: 120},
     ]
 
     const columnsOilLevel: GridColDef[] = [
