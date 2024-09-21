@@ -10,13 +10,13 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
     const columnsTemperature: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'temperature', headerName: 'Temperature (°C)', width: 200},
+        { field: 'temperature', headerName: 'Oil Temperature (°C)', width: 200},
     ]
 
     const columnsPressure: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'pressure', headerName: 'Pressure (p)'},
+        { field: 'pressure', headerName: 'Pressure (BAR)', width: 120},
     ]
 
     const columnsOilLevel: GridColDef[] = [
@@ -49,7 +49,7 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
                     <Grid item xs={12} md={6}>
                         <GaugeGroup
                             gauges={[[0]]}
-                            labels={['Temperature']}
+                            labels={['Oil Temp']}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>

@@ -12,6 +12,8 @@ import timeMinuteString from "@/helpers/converter/date-time";
 import calculateMetrics from "@/helpers/analysis/calculate-metric";
 import AggregationRST from "@/Components/Chart/AggregationRST";
 import GoogleMap from "@/Components/Map/GoogleMap";
+import getCreatedAt from "@/helpers/analysis/get-createdat";
+import {MetricTHDCurrent, MetricTHDVoltage} from "@/types/metric";
 
 export default function ChartTHDIHD({
                                         trafo,
@@ -31,6 +33,9 @@ export default function ChartTHDIHD({
     const voltageRAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_r));
     const voltageSAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_s));
     const voltageTAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_t));
+    const voltageRCreatedAt = getCreatedAt<MetricTHDVoltage>(thdVoltages, 'voltage_r', 'created_at');
+    const voltageSCreatedAt = getCreatedAt<MetricTHDVoltage>(thdVoltages, 'voltage_s', 'created_at');
+    const voltageTCreatedAt = getCreatedAt<MetricTHDVoltage>(thdVoltages, 'voltage_t', 'created_at');
     const { voltage_r = 0, voltage_s = 0, voltage_t = 0 } = thdVoltages[thdVoltages.length - 1] || {};
 
     const metricCurrents = rstBarChartString({
@@ -43,6 +48,9 @@ export default function ChartTHDIHD({
     const currentRAggregation = calculateMetrics(thdCurrents.map(current => current.current_r));
     const currentSAggregation = calculateMetrics(thdCurrents.map(current => current.current_s));
     const currentTAggregation = calculateMetrics(thdCurrents.map(current => current.current_t));
+    const currentRCreatedAt = getCreatedAt<MetricTHDCurrent>(thdCurrents, 'current_r', 'created_at');
+    const currentSCreatedAt = getCreatedAt<MetricTHDCurrent>(thdCurrents, 'current_s', 'created_at');
+    const currentTCreatedAt = getCreatedAt<MetricTHDCurrent>(thdCurrents, 'current_t', 'created_at');
     const { current_r = 0, current_s = 0, current_t = 0 } = thdCurrents[thdCurrents.length - 1] || {};
 
     return (
@@ -84,6 +92,12 @@ export default function ChartTHDIHD({
                                     rLatest={voltage_r}
                                     sLatest={voltage_s}
                                     tLatest={voltage_t}
+                                    maxRTime={timeMinuteString(new Date(voltageRCreatedAt.max))}
+                                    maxSTime={timeMinuteString(new Date(voltageSCreatedAt.max))}
+                                    maxTTime={timeMinuteString(new Date(voltageTCreatedAt.max))}
+                                    minRTime={timeMinuteString(new Date(voltageRCreatedAt.min))}
+                                    minSTime={timeMinuteString(new Date(voltageSCreatedAt.min))}
+                                    minTTime={timeMinuteString(new Date(voltageTCreatedAt.min))}
                                 />
                             </Container>
                         </Box>
@@ -112,6 +126,12 @@ export default function ChartTHDIHD({
                                     rLatest={current_r}
                                     sLatest={current_s}
                                     tLatest={current_t}
+                                    maxRTime={timeMinuteString(new Date(currentRCreatedAt.max))}
+                                    maxSTime={timeMinuteString(new Date(currentSCreatedAt.max))}
+                                    maxTTime={timeMinuteString(new Date(currentTCreatedAt.max))}
+                                    minRTime={timeMinuteString(new Date(currentRCreatedAt.min))}
+                                    minSTime={timeMinuteString(new Date(currentSCreatedAt.min))}
+                                    minTTime={timeMinuteString(new Date(currentTCreatedAt.min))}
                                 />
                             </Container>
                         </Box>

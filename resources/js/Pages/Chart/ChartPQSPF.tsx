@@ -12,6 +12,8 @@ import timeMinuteString from "@/helpers/converter/date-time";
 import calculateMetrics from "@/helpers/analysis/calculate-metric";
 import AggregationRST from "@/Components/Chart/AggregationRST";
 import GoogleMap from "@/Components/Map/GoogleMap";
+import getCreatedAt from "@/helpers/analysis/get-createdat";
+import {MetricApparentPower, MetricPower, MetricPowerFactor, MetricReactivePower} from "@/types/metric";
 
 export default function ChartPQSPF({
                                        trafo,
@@ -37,6 +39,9 @@ export default function ChartPQSPF({
     const powerRAggregation = calculateMetrics(powers.map(power => power.power_r));
     const powerSAggregation = calculateMetrics(powers.map(power => power.power_s));
     const powerTAggregation = calculateMetrics(powers.map(power => power.power_t));
+    const powerRCreatedAt = getCreatedAt<MetricPower>(powers, 'power_r', 'created_at');
+    const powerSCreatedAt = getCreatedAt<MetricPower>(powers, 'power_s', 'created_at');
+    const powerTCreatedAt = getCreatedAt<MetricPower>(powers, 'power_t', 'created_at');
     const { power_r = 0, power_s = 0, power_t = 0 } = powers[powers.length - 1] || {};
 
     const metricAvgReactivePower = rstLineChartString({
@@ -49,6 +54,9 @@ export default function ChartPQSPF({
     const reactivePowerRAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_r));
     const reactivePowerSAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_s));
     const reactivePowerTAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_t));
+    const reactivePowerRCreatedAt = getCreatedAt<MetricReactivePower>(reactivePowers, 'reactive_power_r', 'created_at');
+    const reactivePowerSCreatedAt = getCreatedAt<MetricReactivePower>(reactivePowers, 'reactive_power_s', 'created_at');
+    const reactivePowerTCreatedAt = getCreatedAt<MetricReactivePower>(reactivePowers, 'reactive_power_t', 'created_at');
     const { reactive_power_r = 0, reactive_power_s = 0, reactive_power_t = 0 } = reactivePowers[reactivePowers.length - 1] || {};
 
     const metricAvgApparentPower = rstLineChartString({
@@ -61,6 +69,9 @@ export default function ChartPQSPF({
     const apparentPowerRAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_r));
     const apparentPowerSAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_s));
     const apparentPowerTAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_t));
+    const apparentPowerRCreatedAt = getCreatedAt<MetricApparentPower>(apparentPowers, 'apparent_power_r', 'created_at');
+    const apparentPowerSCreatedAt = getCreatedAt<MetricApparentPower>(apparentPowers, 'apparent_power_s', 'created_at');
+    const apparentPowerTCreatedAt = getCreatedAt<MetricApparentPower>(apparentPowers, 'apparent_power_t', 'created_at');
     const { apparent_power_r = 0, apparent_power_s = 0, apparent_power_t = 0 } = apparentPowers[apparentPowers.length - 1] || {};
 
     const metricAvgPowerFactor = rstLineChartString({
@@ -73,6 +84,9 @@ export default function ChartPQSPF({
     const powerFactorRAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_r));
     const powerFactorSAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_s));
     const powerFactorTAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_t));
+    const powerFactorRCreatedAt = getCreatedAt<MetricPowerFactor>(powerFactors, 'power_factor_r', 'created_at');
+    const powerFactorSCreatedAt = getCreatedAt<MetricPowerFactor>(powerFactors, 'power_factor_s', 'created_at');
+    const powerFactorTCreatedAt = getCreatedAt<MetricPowerFactor>(powerFactors, 'power_factor_t', 'created_at');
     const { power_factor_r = 0, power_factor_s = 0, power_factor_t = 0 } = powerFactors[powerFactors.length - 1] || {};
 
     return (
@@ -98,7 +112,7 @@ export default function ChartPQSPF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Power (P)</Typography>
+                            <Typography variant={"h6"}>Active Power (W)</Typography>
                             <Line data={metricAvgPower}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
@@ -114,6 +128,12 @@ export default function ChartPQSPF({
                                     rLatest={power_r}
                                     sLatest={power_s}
                                     tLatest={power_t}
+                                    maxRTime={timeMinuteString(new Date(powerRCreatedAt.max))}
+                                    maxSTime={timeMinuteString(new Date(powerSCreatedAt.max))}
+                                    maxTTime={timeMinuteString(new Date(powerTCreatedAt.max))}
+                                    minRTime={timeMinuteString(new Date(powerRCreatedAt.min))}
+                                    minSTime={timeMinuteString(new Date(powerSCreatedAt.min))}
+                                    minTTime={timeMinuteString(new Date(powerTCreatedAt.min))}
                                 />
                             </Container>
                         </Box>
@@ -124,7 +144,7 @@ export default function ChartPQSPF({
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Reactive Power (Q)</Typography>
+                            <Typography variant={"h6"}>Reactive Power (VA)</Typography>
                             <Line data={metricAvgReactivePower}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
@@ -140,6 +160,12 @@ export default function ChartPQSPF({
                                     rLatest={reactive_power_r}
                                     sLatest={reactive_power_s}
                                     tLatest={reactive_power_t}
+                                    maxRTime={timeMinuteString(new Date(reactivePowerRCreatedAt.max))}
+                                    maxSTime={timeMinuteString(new Date(reactivePowerSCreatedAt.max))}
+                                    maxTTime={timeMinuteString(new Date(reactivePowerTCreatedAt.max))}
+                                    minRTime={timeMinuteString(new Date(reactivePowerRCreatedAt.min))}
+                                    minSTime={timeMinuteString(new Date(reactivePowerSCreatedAt.min))}
+                                    minTTime={timeMinuteString(new Date(reactivePowerTCreatedAt.min))}
                                 />
                             </Container>
                         </Box>
@@ -168,6 +194,12 @@ export default function ChartPQSPF({
                                     rLatest={apparent_power_r}
                                     sLatest={apparent_power_s}
                                     tLatest={apparent_power_t}
+                                    maxRTime={timeMinuteString(new Date(apparentPowerRCreatedAt.max))}
+                                    maxSTime={timeMinuteString(new Date(apparentPowerSCreatedAt.max))}
+                                    maxTTime={timeMinuteString(new Date(apparentPowerTCreatedAt.max))}
+                                    minRTime={timeMinuteString(new Date(apparentPowerRCreatedAt.min))}
+                                    minSTime={timeMinuteString(new Date(apparentPowerSCreatedAt.min))}
+                                    minTTime={timeMinuteString(new Date(apparentPowerTCreatedAt.min))}
                                 />
                             </Container>
                         </Box>
@@ -194,6 +226,12 @@ export default function ChartPQSPF({
                                     rLatest={power_factor_r}
                                     sLatest={power_factor_s}
                                     tLatest={power_factor_t}
+                                    maxRTime={timeMinuteString(new Date(powerFactorRCreatedAt.max))}
+                                    maxSTime={timeMinuteString(new Date(powerFactorSCreatedAt.max))}
+                                    maxTTime={timeMinuteString(new Date(powerFactorTCreatedAt.max))}
+                                    minRTime={timeMinuteString(new Date(powerFactorRCreatedAt.min))}
+                                    minSTime={timeMinuteString(new Date(powerFactorSCreatedAt.min))}
+                                    minTTime={timeMinuteString(new Date(powerFactorTCreatedAt.min))}
                                 />
                             </Container>
                         </Box>

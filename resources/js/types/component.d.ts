@@ -40,6 +40,12 @@ export type AggregationRSTProps = Props & {
     rLatest: number;
     sLatest: number;
     tLatest: number;
+    maxRTime: string;
+    maxSTime: string;
+    maxTTime: string;
+    minRTime: string;
+    minSTime: string;
+    minTTime: string;
 }
 
 export type AggregationRSTOnlyProps = Props & {
@@ -71,6 +77,14 @@ export type AggregationRSTINProps = Props & {
     sLatest: number;
     tLatest: number;
     inLatest: number;
+    maxRTime: string;
+    maxSTime: string;
+    maxTTime: string;
+    maxInTime: string;
+    minRTime: string;
+    minSTime: string;
+    minTTime: string;
+    minInTime: string;
 }
 
 export type AggregationSingleProps = Props & {
@@ -79,6 +93,8 @@ export type AggregationSingleProps = Props & {
     min: number;
     avg: number;
     latest: number;
+    maxTime: string;
+    minTime: string;
 }
 
 export type GoogleMapProps = Props & {

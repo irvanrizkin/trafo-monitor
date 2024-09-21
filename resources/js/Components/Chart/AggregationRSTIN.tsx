@@ -18,10 +18,18 @@ export default function AggregationRSTIN({
                                              sLatest,
                                              tLatest,
                                              inLatest,
+                                             maxRTime,
+                                             maxSTime,
+                                             maxTTime,
+                                             maxInTime,
+                                             minRTime,
+                                             minSTime,
+                                             minTTime,
+                                             minInTime
                                          }: AggregationRSTINProps) {
     return (
         <TableContainer component={Paper}>
-            <Table>
+            <Table size="small">
                 {/* Table Header */}
                 <TableHead>
                     <TableRow>
@@ -41,6 +49,13 @@ export default function AggregationRSTIN({
                         <TableCell>{inMax}</TableCell>
                     </TableRow>
                     <TableRow>
+                        <TableCell>MAX TIME</TableCell>
+                        <TableCell>{maxRTime}</TableCell>
+                        <TableCell>{maxSTime}</TableCell>
+                        <TableCell>{maxTTime}</TableCell>
+                        <TableCell>{maxInTime}</TableCell>
+                    </TableRow>
+                    <TableRow>
                         <TableCell>AVG</TableCell>
                         <TableCell>{Math.round((rAvg + Number.EPSILON) * 100) / 100}</TableCell>
                         <TableCell>{Math.round((sAvg + Number.EPSILON) * 100) / 100}</TableCell>
@@ -53,6 +68,13 @@ export default function AggregationRSTIN({
                         <TableCell>{sMin}</TableCell>
                         <TableCell>{tMin}</TableCell>
                         <TableCell>{inMin}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>MIN TIME</TableCell>
+                        <TableCell>{minRTime}</TableCell>
+                        <TableCell>{minSTime}</TableCell>
+                        <TableCell>{minTTime}</TableCell>
+                        <TableCell>{minInTime}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>LATEST</TableCell>

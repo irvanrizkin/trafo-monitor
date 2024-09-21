@@ -6,24 +6,18 @@ use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\Frequency;
 use App\Models\IHD;
-use App\Models\IHDCurrent;
 use App\Models\IHDVoltage;
-use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
 use App\Models\Metric;
 use App\Models\Power;
 use App\Models\PowerFactor;
 use App\Models\PowerLoss;
 use App\Models\ReactivePower;
-use App\Models\THD;
 use App\Models\THDCurrent;
-use App\Models\THDFrequency;
 use App\Models\THDVoltage;
-use App\Models\TotalHarmonicDistortion;
 use App\Models\Trafo;
 use App\Models\TriplenCurrent;
 use App\Models\Voltage;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -70,18 +64,20 @@ class ChartController extends Controller
 
     public function getChartVIF($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $oneHourAgo = Carbon::now()->subHour();
 
         $voltages = Voltage::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         $currents = Current::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         $frequencies = Frequency::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         return Inertia::render('Chart/ChartVIF', [
@@ -95,22 +91,25 @@ class ChartController extends Controller
 
     public function getChartPQSPF($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $oneHourAgo = Carbon::now()->subHour();
 
         $powers = Power::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         $reactivePowers = ReactivePower::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         $apparentPowers = ApparentPower::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         $powerFactors = PowerFactor::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         return Inertia::render('Chart/ChartPQSPF', [
@@ -125,14 +124,15 @@ class ChartController extends Controller
 
     public function getChartTHDIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
-        $oneHourAgo = Carbon::now()->subHour();
 
         $thdCurrents = THDCurrent::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         $thdVoltages = THDVoltage::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         return Inertia::render('Chart/ChartTHDIHD', [
@@ -170,18 +170,20 @@ class ChartController extends Controller
     public function getChartPKA($trafoId, $date)
     {
         $trafo = Trafo::find($trafoId);
-        $oneHourAgo = Carbon::now()->subHour();
 
         $powerLosses = PowerLoss::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         $kFactors = KFactor::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         $triplenCurrents = TriplenCurrent::where('trafo_id', $trafoId)
-            ->where('created_at', '>=', $oneHourAgo)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
             ->get();
 
         return Inertia::render('Chart/ChartPKA', [
