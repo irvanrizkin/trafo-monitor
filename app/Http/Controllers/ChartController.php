@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AmbientTemperature;
 use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\Frequency;
@@ -9,10 +10,13 @@ use App\Models\IHD;
 use App\Models\IHDVoltage;
 use App\Models\KFactor;
 use App\Models\Metric;
+use App\Models\OilLevel;
 use App\Models\Power;
 use App\Models\PowerFactor;
 use App\Models\PowerLoss;
+use App\Models\Pressure;
 use App\Models\ReactivePower;
+use App\Models\Temperature;
 use App\Models\THDCurrent;
 use App\Models\THDVoltage;
 use App\Models\Trafo;
@@ -160,10 +164,31 @@ class ChartController extends Controller
 
     public function getChartTPO($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        $temperatures = Temperature::where('trafo_id', $trafoId)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
+            ->get();
+        $pressures = Pressure::where('trafo_id', $trafoId)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
+            ->get();
+        $oilLevels = OilLevel::where('trafo_id', $trafoId)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
+            ->get();
+        $ambientTemperatures = AmbientTemperature::where('trafo_id', $trafoId)
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
+            ->get();
 
         return Inertia::render('Chart/ChartTPO', [
             'trafo' => $trafo,
             'date' => $date,
+            'title' => 'Chart TPO',
+            'temperatures' => $temperatures,
+            'pressures' => $pressures,
+            'oilLevels' => $oilLevels,
+            'ambientTemperatures' => $ambientTemperatures,
         ]);
     }
 
