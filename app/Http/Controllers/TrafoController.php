@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Temperature;
 use App\Models\Trafo;
 use App\Models\Voltage;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class TrafoController extends Controller
 {
     public function showWithDates($id) {
         $trafo = Trafo::find($id);
-        $dates = Voltage::selectRaw('DATE(created_at) as date')
+        $dates = Temperature::selectRaw('DATE(created_at) as date')
             ->where('trafo_id', $id)
             ->groupBy(DB::raw('DATE(created_at)'))
             ->get();
