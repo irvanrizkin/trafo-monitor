@@ -7,6 +7,8 @@ export default function AggregationSingle({
                                               min,
                                               avg,
                                               latest,
+                                              maxTime,
+                                              minTime
                                           }: AggregationSingleProps) {
     return (
         <TableContainer component={Paper}>
@@ -24,12 +26,20 @@ export default function AggregationSingle({
                         <TableCell>{max}</TableCell>
                     </TableRow>
                     <TableRow>
+                        <TableCell>MAX TIME</TableCell>
+                        <TableCell>{maxTime}</TableCell>
+                    </TableRow>
+                    <TableRow>
                         <TableCell>AVG</TableCell>
                         <TableCell>{Math.round((avg + Number.EPSILON) * 100) / 100}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>MIN</TableCell>
                         <TableCell>{min}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>MIN TIME</TableCell>
+                        <TableCell>{minTime}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>LATEST</TableCell>

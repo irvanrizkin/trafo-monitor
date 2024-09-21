@@ -77,6 +77,8 @@ export default function ChartTPO({
                                     avg={0}
                                     min={0}
                                     latest={0}
+                                    maxTime={''}
+                                    minTime={''}
                                 />
                             </Container>
                         </Box>
@@ -96,6 +98,8 @@ export default function ChartTPO({
                                     avg={0}
                                     min={0}
                                     latest={0}
+                                    maxTime={''}
+                                    minTime={''}
                                 />
                             </Container>
                         </Box>
@@ -120,6 +124,8 @@ export default function ChartTPO({
                                     avg={0}
                                     min={0}
                                     latest={0}
+                                    maxTime={''}
+                                    minTime={''}
                                 />
                             </Container>
                         </Box>
@@ -139,6 +145,8 @@ export default function ChartTPO({
                                     avg={0}
                                     min={0}
                                     latest={0}
+                                    maxTime={''}
+                                    minTime={''}
                                 />
                             </Container>
                         </Box>

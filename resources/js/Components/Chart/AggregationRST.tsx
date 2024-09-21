@@ -14,6 +14,12 @@ export default function AggregationRST({
                                            rLatest,
                                            sLatest,
                                            tLatest,
+                                           maxRTime,
+                                           maxSTime,
+                                           maxTTime,
+                                           minRTime,
+                                           minSTime,
+                                           minTTime
                                        }: AggregationRSTProps) {
     return (
         <TableContainer component={Paper}>
@@ -35,6 +41,12 @@ export default function AggregationRST({
                         <TableCell>{tMax}</TableCell>
                     </TableRow>
                     <TableRow>
+                        <TableCell>MAX TIME</TableCell>
+                        <TableCell>{maxRTime}</TableCell>
+                        <TableCell>{maxSTime}</TableCell>
+                        <TableCell>{maxTTime}</TableCell>
+                    </TableRow>
+                    <TableRow>
                         <TableCell>AVG</TableCell>
                         <TableCell>{Math.round((rAvg + Number.EPSILON) * 100) / 100}</TableCell>
                         <TableCell>{Math.round((sAvg + Number.EPSILON) * 100) / 100}</TableCell>
@@ -45,6 +57,12 @@ export default function AggregationRST({
                         <TableCell>{rMin}</TableCell>
                         <TableCell>{sMin}</TableCell>
                         <TableCell>{tMin}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>MIN TIME</TableCell>
+                        <TableCell>{minRTime}</TableCell>
+                        <TableCell>{minSTime}</TableCell>
+                        <TableCell>{minTTime}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>LATEST</TableCell>
