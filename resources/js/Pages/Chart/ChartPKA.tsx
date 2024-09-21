@@ -15,6 +15,8 @@ import calculateMetrics from "@/helpers/analysis/calculate-metric";
 import AggregationRST from "@/Components/Chart/AggregationRST";
 import AggregationSingle from "@/Components/Chart/AggregationSingle";
 import GoogleMap from "@/Components/Map/GoogleMap";
+import getCreatedAt from "@/helpers/analysis/get-createdat";
+import {MetricKFactor, MetricPowerLoss, MetricTriplenCurrent} from "@/types/metric";
 
 export default function ChartPKA({
                                      trafo,
@@ -32,6 +34,7 @@ export default function ChartPKA({
     });
 
     const powerLossAggregation = calculateMetrics(powerLosses.map(powerLoss => powerLoss.power_loss));
+    const powerLossCreatedAt = getCreatedAt<MetricPowerLoss>(powerLosses, 'power_loss', 'created_at');
     const { power_loss = 0 } = powerLosses[powerLosses.length - 1] || {};
 
     const metricAvgKFactor = singleLineChartString({
@@ -41,6 +44,7 @@ export default function ChartPKA({
     });
 
     const kFactorAggregation = calculateMetrics(kFactors.map(kFactor => kFactor.k_factor));
+    const kFactorCreatedAt = getCreatedAt<MetricKFactor>(kFactors, 'k_factor', 'created_at');
     const { k_factor = 0 } = kFactors[kFactors.length - 1] || {};
 
     const metricAvgTriplenCurrent = singleLineChartString({
@@ -50,6 +54,7 @@ export default function ChartPKA({
     });
 
     const triplenCurrentAggregation = calculateMetrics(triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current));
+    const triplenCurrentCreatedAt = getCreatedAt<MetricTriplenCurrent>(triplenCurrents, 'triplen_current', 'created_at');
     const { triplen_current = 0 } = triplenCurrents[triplenCurrents.length - 1] || {};
 
     return (
@@ -84,6 +89,8 @@ export default function ChartPKA({
                                     avg={powerLossAggregation.avg}
                                     min={powerLossAggregation.min}
                                     latest={power_loss}
+                                    maxTime={timeMinuteString(new Date(powerLossCreatedAt.max))}
+                                    minTime={timeMinuteString(new Date(powerLossCreatedAt.min))}
                                 />
                             </Container>
                         </Box>
@@ -103,6 +110,8 @@ export default function ChartPKA({
                                     avg={triplenCurrentAggregation.avg}
                                     min={triplenCurrentAggregation.min}
                                     latest={triplen_current}
+                                    maxTime={timeMinuteString(new Date(triplenCurrentCreatedAt.max))}
+                                    minTime={timeMinuteString(new Date(triplenCurrentCreatedAt.min))}
                                 />
                             </Container>
                         </Box>
@@ -124,6 +133,8 @@ export default function ChartPKA({
                                     avg={kFactorAggregation.avg}
                                     min={kFactorAggregation.min}
                                     latest={k_factor}
+                                    maxTime={timeMinuteString(new Date(kFactorCreatedAt.max))}
+                                    minTime={timeMinuteString(new Date(kFactorCreatedAt.min))}
                                 />
                             </Container>
                         </Box>
