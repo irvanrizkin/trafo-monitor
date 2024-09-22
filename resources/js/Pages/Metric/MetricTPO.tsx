@@ -5,6 +5,7 @@ import ShowChartIcon from "@mui/icons-material/ShowChart";
 import { MetricTPOProps } from "@/types/metric";
 import { Container, Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {amber, green, red} from "@mui/material/colors";
 
 export default function MetricTPO({
     trafo,
@@ -75,6 +76,19 @@ export default function MetricTPO({
     const oilLevel = [...oilLevels.map((oilLevel) => oilLevel.oil_level)];
     const ambientTemperature = [...ambientTemperatures.map((ambientTemperature) => ambientTemperature.ambient_temperature)];
 
+    const overrideOilLevel = (value: number) => {
+        if (value === 9) {
+            return green[300];
+        }
+        if (value >= 6 && value <= 8) {
+            return amber[300];
+        }
+        if (value >= 1 && value <= 5) {
+            return red[300];
+        }
+        return red[300];
+    }
+
     return (
         <>
             <AppBarTriple
@@ -129,6 +143,8 @@ export default function MetricTPO({
                     <Grid item xs={12} md={6}>
                         <GaugeGroup
                             gauges={[oilLevel]}
+                            isOverride={true}
+                            overrideColor={overrideOilLevel}
                             labels={['Oil Level']}
                         />
                     </Grid>
