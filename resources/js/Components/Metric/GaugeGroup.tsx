@@ -45,7 +45,9 @@ export default function GaugeGroup({
         }}
     >
         {gauges.map((gauge, index) => (
-            <Stack key={index}>
+            <Stack key={index} sx={{
+                alignItems: 'center',
+            }}>
                 <Typography align='center'>{labels[index]}</Typography>
                 <Gauge
                     width={100}
