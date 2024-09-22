@@ -71,13 +71,13 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
                     <Grid item xs={12} md={6}>
                         <GaugeGroup
                             gauges={[powerLoss]}
-                            labels={['PL']}
+                            labels={['Power Loss']}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <GaugeGroup
                             gauges={[kFactor]}
-                            labels={['KF']}
+                            labels={['K Factor']}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -107,7 +107,7 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
                     <Grid item xs={12}>
                         <GaugeGroup
                             gauges={[triplenCurrent]}
-                            labels={['TC']}
+                            labels={['Triplen Current']}
                         />
                     </Grid>
                     <Grid item xs={12}>

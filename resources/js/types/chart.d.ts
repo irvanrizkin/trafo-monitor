@@ -1,12 +1,13 @@
 import {PageProps, TrafoV1} from "@/types/index";
 import {
+    AmbientTemperature,
     Metric, MetricApparentPower,
     MetricCurrent,
     MetricFrequency,
     MetricHD, MetricKFactor, MetricPower, MetricPowerFactor, MetricPowerLoss, MetricReactivePower,
     MetricTHDCurrent,
     MetricTHDVoltage, MetricTriplenCurrent,
-    MetricVoltage
+    MetricVoltage, OilLevel, Pressure, Temperature
 } from "@/types/metric";
 
 export interface AveragedMetric {
@@ -173,6 +174,10 @@ export type ChartIHDProps = PageProps & {
 export type ChartTPOProps = PageProps & {
     trafo: TrafoV1;
     date: string;
+    temperatures: Temperature[],
+    pressures: Pressure[],
+    oilLevels: OilLevel[],
+    ambientTemperatures: AmbientTemperature[],
 }
 
 export type ChartPKAProps = PageProps & {

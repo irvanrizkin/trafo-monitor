@@ -122,6 +122,22 @@ export interface MetricHD extends Metric {
     h21: Order;
 }
 
+export interface Temperature extends Metric {
+    temperature: number;
+}
+
+export interface Pressure extends Metric {
+    pressure: number;
+}
+
+export interface OilLevel extends Metric {
+    oil_level: number;
+}
+
+export interface AmbientTemperature extends Metric {
+    ambient_temperature: number;
+}
+
 export type MetricVIFProps = PageProps & {
     trafo: TrafoV1;
     date: string;
@@ -156,6 +172,10 @@ export type MetricIHDProps = PageProps & {
 export type MetricTPOProps = PageProps & {
     trafo: TrafoV1;
     date: string;
+    temperatures: Temperature[];
+    pressures: Pressure[];
+    oilLevels: OilLevel[];
+    ambientTemperatures: AmbientTemperature[];
 }
 
 export type MetricPKAProps = PageProps & {

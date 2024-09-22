@@ -3,7 +3,13 @@ import {Gauge, gaugeClasses} from "@mui/x-charts";
 import {Stack, Typography} from "@mui/material";
 import { amber, green, red, yellow } from "@mui/material/colors";
 
-export default function GaugeGroup({gauges, labels}: GaugeGroupProps) {
+export default function GaugeGroup({
+                                       gauges,
+                                       labels,
+                                       isOverride = false,
+                                       upperSafeThreshold = 51,
+                                       lowerSafeThreshold = 49,
+                                   }: GaugeGroupProps) {
     function colorPercentage({
         minValue,
         value,
@@ -21,6 +27,13 @@ export default function GaugeGroup({gauges, labels}: GaugeGroupProps) {
             return amber[300];
         }
         return red[300];
+    }
+
+    function colorThreshold(value: number) {
+        if (value >= lowerSafeThreshold && value <= upperSafeThreshold) {
+            return green[300];
+        }
+        return amber[300];
     }
 
     return <Stack
@@ -42,7 +55,7 @@ export default function GaugeGroup({gauges, labels}: GaugeGroupProps) {
                     valueMax={Math.max(...gauge)}
                     sx={(theme) => ({
                         [`& .${gaugeClasses.valueArc}`]: {
-                          fill: colorPercentage({
+                          fill: isOverride ? colorThreshold(gauge[gauge.length - 1] || 0) : colorPercentage({
                             minValue: Math.min(...gauge),
                             value: gauge[gauge.length - 1],
                             maxValue: Math.max(...gauge),
