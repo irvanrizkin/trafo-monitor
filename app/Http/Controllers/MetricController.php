@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AmbientTemperature;
 use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\Frequency;
@@ -11,10 +12,13 @@ use App\Models\IHDVoltage;
 use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
 use App\Models\Metric;
+use App\Models\OilLevel;
 use App\Models\Power;
 use App\Models\PowerFactor;
 use App\Models\PowerLoss;
+use App\Models\Pressure;
 use App\Models\ReactivePower;
+use App\Models\Temperature;
 use App\Models\THD;
 use App\Models\THDCurrent;
 use App\Models\THDFrequency;
@@ -105,10 +109,20 @@ class MetricController extends Controller
 
     public function getMetricTPO($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        $temperatures = Temperature::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
+        $pressures = Pressure::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
+        $oilLevels = OilLevel::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
+        $ambientTemperatures = AmbientTemperature::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
 
         return Inertia::render('Metric/MetricTPO', [
             'trafo' => $trafo,
             'date' => $date,
+            'title' => 'Metric TPO',
+            'chartRoute' => 'chart.tpo',
+            'temperatures' => $temperatures,
+            'pressures' => $pressures,
+            'oilLevels' => $oilLevels,
+            'ambientTemperatures' => $ambientTemperatures
         ]);
     }
 

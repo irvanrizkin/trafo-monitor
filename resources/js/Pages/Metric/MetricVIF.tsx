@@ -143,6 +143,9 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                         <GaugeGroup
                             gauges={[frequency]}
                             labels={['Frequency']}
+                            isOverride={true}
+                            upperSafeThreshold={50.5}
+                            lowerSafeThreshold={49.5}
                         />
                     </Grid>
                     <Grid item xs={12}>

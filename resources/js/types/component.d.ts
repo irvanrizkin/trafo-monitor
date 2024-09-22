@@ -24,7 +24,10 @@ export type OrderTableBodyProps = Props & {
 
 export type GaugeGroupProps = Props & {
     gauges: number[][]
-    labels: string[]
+    labels: string[],
+    isOverride?: boolean,
+    upperSafeThreshold?: number,
+    lowerSafeThreshold?: number,
 }
 
 export type AggregationRSTProps = Props & {

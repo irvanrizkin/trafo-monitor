@@ -6,7 +6,14 @@ import { MetricTPOProps } from "@/types/metric";
 import { Container, Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-export default function MetricTPO({trafo, date}: MetricTPOProps) {
+export default function MetricTPO({
+    trafo,
+    date,
+    temperatures,
+    pressures,
+    oilLevels,
+    ambientTemperatures,
+                                  }: MetricTPOProps) {
     const columnsTemperature: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
@@ -31,6 +38,43 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
         { field: 'ambient_temperature', headerName: 'Ambient Temperature (°C)', width: 200},
     ]
 
+    const rowsTemperature = temperatures.map((temperature) => {
+        return {
+            id: temperature.id,
+            createdAt: new Date(temperature.created_at).toLocaleString(),
+            temperature: temperature.temperature,
+        }
+    });
+
+    const rowsPressure = pressures.map((pressure) => {
+        return {
+            id: pressure.id,
+            createdAt: new Date(pressure.created_at).toLocaleString(),
+            pressure: pressure.pressure,
+        }
+    });
+
+    const rowsOilLevel = oilLevels.map((oilLevel) => {
+        return {
+            id: oilLevel.id,
+            createdAt: new Date(oilLevel.created_at).toLocaleString(),
+            oil_level: oilLevel.oil_level,
+        }
+    });
+
+    const rowsAmbientTemperature = ambientTemperatures.map((ambientTemperature) => {
+        return {
+            id: ambientTemperature.id,
+            createdAt: new Date(ambientTemperature.created_at).toLocaleString(),
+            ambient_temperature: ambientTemperature.ambient_temperature,
+        }
+    });
+
+    const temperature = [...temperatures.map((temperature) => temperature.temperature)];
+    const pressure = [...pressures.map((pressure) => pressure.pressure)];
+    const oilLevel = [...oilLevels.map((oilLevel) => oilLevel.oil_level)];
+    const ambientTemperature = [...ambientTemperatures.map((ambientTemperature) => ambientTemperature.ambient_temperature)];
+
     return (
         <>
             <AppBarTriple
@@ -48,19 +92,19 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                         <GaugeGroup
-                            gauges={[[0]]}
+                            gauges={[temperature]}
                             labels={['Oil Temp']}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <GaugeGroup
-                            gauges={[[0]]}
+                            gauges={[pressure]}
                             labels={['Pressure']}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <DataGrid
-                            rows={[]}
+                            rows={rowsTemperature}
                             columns={columnsTemperature}
                             initialState={{
                                 pagination: {
@@ -72,7 +116,7 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <DataGrid
-                            rows={[]}
+                            rows={rowsPressure}
                             columns={columnsPressure}
                             initialState={{
                                 pagination: {
@@ -84,19 +128,19 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <GaugeGroup
-                            gauges={[[0]]}
+                            gauges={[oilLevel]}
                             labels={['Oil Level']}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <GaugeGroup
-                            gauges={[[0]]}
+                            gauges={[ambientTemperature]}
                             labels={['Ambient Temp']}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <DataGrid
-                            rows={[]}
+                            rows={rowsOilLevel}
                             columns={columnsOilLevel}
                             initialState={{
                                 pagination: {
@@ -108,7 +152,7 @@ export default function MetricTPO({trafo, date}: MetricTPOProps) {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <DataGrid
-                            rows={[]}
+                            rows={rowsAmbientTemperature}
                             columns={columnsAmbientTemperature}
                             initialState={{
                                 pagination: {

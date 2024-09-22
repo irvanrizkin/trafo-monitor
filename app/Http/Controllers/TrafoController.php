@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Temperature;
 use App\Models\Trafo;
 use App\Models\Voltage;
 use Illuminate\Http\Request;
