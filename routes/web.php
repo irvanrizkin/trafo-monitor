@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Chart\ChartVIFController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChartV2Controller;
 use App\Http\Controllers\DashboardController;
@@ -9,9 +10,7 @@ use App\Http\Controllers\ParameterV2Controller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrafoController;
 use App\Http\Controllers\TrafoV2Controller;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -82,7 +81,7 @@ Route::prefix('metric')->middleware(['auth'])->group(function () {
 Route::prefix('chart')->middleware(['auth'])->group(function () {
    Route::get('/{trafoid}/{date}', [ChartController::class, 'getChartData'])
        ->name('chart.data');
-    Route::get('/{trafoid}/{date}/vif', [ChartController::class, 'getChartVIF'])
+    Route::get('/{trafoid}/{date}/vif', ChartVIFController::class)
         ->name('chart.vif');
     Route::get('/{trafoid}/{date}/pqspf', [ChartController::class, 'getChartPQSPF'])
         ->name('chart.pqspf');
