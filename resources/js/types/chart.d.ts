@@ -94,6 +94,10 @@ export type ChartTPOProps = PageProps & {
     pressures: Pressure[],
     oilLevels: OilLevel[],
     ambientTemperatures: AmbientTemperature[],
+    temperatureMetrics: AggregationResult;
+    pressureMetrics: AggregationResult;
+    oilLevelMetrics: AggregationResult;
+    ambientTemperatureMetrics: AggregationResult;
 }
 
 export type ChartPKAProps = PageProps & {

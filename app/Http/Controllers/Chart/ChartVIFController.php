@@ -22,7 +22,6 @@ class ChartVIFController extends Controller
 
         $aggregator = new Aggregator();
 
-        // Voltages
         $voltages = Voltage::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
