@@ -22,12 +22,22 @@ export default function ChartPQSPF({
                                        reactivePowers,
                                        apparentPowers,
                                        powerFactors,
+                                       powerRMetrics,
+                                       powerSMetrics,
+                                       powerTMetrics,
+                                       reactivePowerRMetrics,
+                                       reactivePowerSMetrics,
+                                       reactivePowerTMetrics,
+                                       apparentPowerRMetrics,
+                                       apparentPowerSMetrics,
+                                       apparentPowerTMetrics,
+                                       powerFactorRMetrics,
+                                       powerFactorSMetrics,
+                                       powerFactorTMetrics,
                                    }: ChartPQSPFProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
     const theme = useTheme()
     const onlyMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
-
-    console.log(powers.length);
 
     const metricAvgPower = rstLineChartString({
         labels: powers.map(power => timeMinuteString(new Date(power.created_at))),
@@ -35,13 +45,6 @@ export default function ChartPQSPF({
         sData: powers.map(power => power.power_s),
         tData: powers.map(power => power.power_t),
     });
-
-    const powerRAggregation = calculateMetrics(powers.map(power => power.power_r));
-    const powerSAggregation = calculateMetrics(powers.map(power => power.power_s));
-    const powerTAggregation = calculateMetrics(powers.map(power => power.power_t));
-    const powerRCreatedAt = getCreatedAt<MetricPower>(powers, 'power_r', 'created_at');
-    const powerSCreatedAt = getCreatedAt<MetricPower>(powers, 'power_s', 'created_at');
-    const powerTCreatedAt = getCreatedAt<MetricPower>(powers, 'power_t', 'created_at');
     const { power_r = 0, power_s = 0, power_t = 0 } = powers[powers.length - 1] || {};
 
     const metricAvgReactivePower = rstLineChartString({
@@ -50,13 +53,6 @@ export default function ChartPQSPF({
         sData: reactivePowers.map(reactivePower => reactivePower.reactive_power_s),
         tData: reactivePowers.map(reactivePower => reactivePower.reactive_power_t),
     });
-
-    const reactivePowerRAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_r));
-    const reactivePowerSAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_s));
-    const reactivePowerTAggregation = calculateMetrics(reactivePowers.map(reactivePower => reactivePower.reactive_power_t));
-    const reactivePowerRCreatedAt = getCreatedAt<MetricReactivePower>(reactivePowers, 'reactive_power_r', 'created_at');
-    const reactivePowerSCreatedAt = getCreatedAt<MetricReactivePower>(reactivePowers, 'reactive_power_s', 'created_at');
-    const reactivePowerTCreatedAt = getCreatedAt<MetricReactivePower>(reactivePowers, 'reactive_power_t', 'created_at');
     const { reactive_power_r = 0, reactive_power_s = 0, reactive_power_t = 0 } = reactivePowers[reactivePowers.length - 1] || {};
 
     const metricAvgApparentPower = rstLineChartString({
@@ -65,13 +61,6 @@ export default function ChartPQSPF({
         sData: apparentPowers.map(apparentPower => apparentPower.apparent_power_s),
         tData: apparentPowers.map(apparentPower => apparentPower.apparent_power_t),
     });
-
-    const apparentPowerRAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_r));
-    const apparentPowerSAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_s));
-    const apparentPowerTAggregation = calculateMetrics(apparentPowers.map(apparentPower => apparentPower.apparent_power_t));
-    const apparentPowerRCreatedAt = getCreatedAt<MetricApparentPower>(apparentPowers, 'apparent_power_r', 'created_at');
-    const apparentPowerSCreatedAt = getCreatedAt<MetricApparentPower>(apparentPowers, 'apparent_power_s', 'created_at');
-    const apparentPowerTCreatedAt = getCreatedAt<MetricApparentPower>(apparentPowers, 'apparent_power_t', 'created_at');
     const { apparent_power_r = 0, apparent_power_s = 0, apparent_power_t = 0 } = apparentPowers[apparentPowers.length - 1] || {};
 
     const metricAvgPowerFactor = rstLineChartString({
@@ -80,25 +69,18 @@ export default function ChartPQSPF({
         sData: powerFactors.map(powerFactor => powerFactor.power_factor_s),
         tData: powerFactors.map(powerFactor => powerFactor.power_factor_t),
     });
-
-    const powerFactorRAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_r));
-    const powerFactorSAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_s));
-    const powerFactorTAggregation = calculateMetrics(powerFactors.map(powerFactor => powerFactor.power_factor_t));
-    const powerFactorRCreatedAt = getCreatedAt<MetricPowerFactor>(powerFactors, 'power_factor_r', 'created_at');
-    const powerFactorSCreatedAt = getCreatedAt<MetricPowerFactor>(powerFactors, 'power_factor_s', 'created_at');
-    const powerFactorTCreatedAt = getCreatedAt<MetricPowerFactor>(powerFactors, 'power_factor_t', 'created_at');
     const { power_factor_r = 0, power_factor_s = 0, power_factor_t = 0 } = powerFactors[powerFactors.length - 1] || {};
 
     return (
         <>
             <AppBarTriple
                 startText={'Chart PQSPF'}
-                middleText={trafo.name + ' - ' + trafo.address}
+                middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref
-                    href={route('trafo.show', [trafo.id])}
+                    href={route('trafo.show', [trafo?.id ?? 0])}
                     text={'Back to Detail'}
                     icon={<ShowAssignmentIcon />}
                     sx={{ mt: 2 }}
@@ -116,24 +98,24 @@ export default function ChartPQSPF({
                             <Line data={metricAvgPower}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
-                                    rMax={powerRAggregation.max}
-                                    sMax={powerSAggregation.max}
-                                    tMax={powerTAggregation.max}
-                                    rMin={powerRAggregation.min}
-                                    sMin={powerSAggregation.min}
-                                    tMin={powerTAggregation.min}
-                                    rAvg={powerRAggregation.avg}
-                                    sAvg={powerSAggregation.avg}
-                                    tAvg={powerTAggregation.avg}
+                                    rMax={powerRMetrics.max}
+                                    sMax={powerSMetrics.max}
+                                    tMax={powerTMetrics.max}
+                                    rMin={powerRMetrics.min}
+                                    sMin={powerSMetrics.min}
+                                    tMin={powerTMetrics.min}
+                                    rAvg={powerRMetrics.avg}
+                                    sAvg={powerSMetrics.avg}
+                                    tAvg={powerTMetrics.avg}
                                     rLatest={power_r}
                                     sLatest={power_s}
                                     tLatest={power_t}
-                                    maxRTime={timeMinuteString(new Date(powerRCreatedAt.max))}
-                                    maxSTime={timeMinuteString(new Date(powerSCreatedAt.max))}
-                                    maxTTime={timeMinuteString(new Date(powerTCreatedAt.max))}
-                                    minRTime={timeMinuteString(new Date(powerRCreatedAt.min))}
-                                    minSTime={timeMinuteString(new Date(powerSCreatedAt.min))}
-                                    minTTime={timeMinuteString(new Date(powerTCreatedAt.min))}
+                                    maxRTime={timeMinuteString(new Date(powerRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(powerSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(powerTMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(powerRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(powerSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(powerTMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -148,24 +130,24 @@ export default function ChartPQSPF({
                             <Line data={metricAvgReactivePower}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
-                                    rMax={reactivePowerRAggregation.max}
-                                    sMax={reactivePowerSAggregation.max}
-                                    tMax={reactivePowerTAggregation.max}
-                                    rMin={reactivePowerRAggregation.min}
-                                    sMin={reactivePowerSAggregation.min}
-                                    tMin={reactivePowerTAggregation.min}
-                                    rAvg={reactivePowerRAggregation.avg}
-                                    sAvg={reactivePowerSAggregation.avg}
-                                    tAvg={reactivePowerTAggregation.avg}
+                                    rMax={reactivePowerRMetrics.max}
+                                    sMax={reactivePowerSMetrics.max}
+                                    tMax={reactivePowerTMetrics.max}
+                                    rMin={reactivePowerRMetrics.min}
+                                    sMin={reactivePowerSMetrics.min}
+                                    tMin={reactivePowerTMetrics.min}
+                                    rAvg={reactivePowerRMetrics.avg}
+                                    sAvg={reactivePowerSMetrics.avg}
+                                    tAvg={reactivePowerTMetrics.avg}
                                     rLatest={reactive_power_r}
                                     sLatest={reactive_power_s}
                                     tLatest={reactive_power_t}
-                                    maxRTime={timeMinuteString(new Date(reactivePowerRCreatedAt.max))}
-                                    maxSTime={timeMinuteString(new Date(reactivePowerSCreatedAt.max))}
-                                    maxTTime={timeMinuteString(new Date(reactivePowerTCreatedAt.max))}
-                                    minRTime={timeMinuteString(new Date(reactivePowerRCreatedAt.min))}
-                                    minSTime={timeMinuteString(new Date(reactivePowerSCreatedAt.min))}
-                                    minTTime={timeMinuteString(new Date(reactivePowerTCreatedAt.min))}
+                                    maxRTime={timeMinuteString(new Date(reactivePowerRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(reactivePowerSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(reactivePowerTMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(reactivePowerRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(reactivePowerSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(reactivePowerTMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -182,24 +164,24 @@ export default function ChartPQSPF({
                             <Line data={metricAvgApparentPower}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
-                                    rMax={apparentPowerRAggregation.max}
-                                    sMax={apparentPowerSAggregation.max}
-                                    tMax={apparentPowerTAggregation.max}
-                                    rMin={apparentPowerRAggregation.min}
-                                    sMin={apparentPowerSAggregation.min}
-                                    tMin={apparentPowerTAggregation.min}
-                                    rAvg={apparentPowerRAggregation.avg}
-                                    sAvg={apparentPowerSAggregation.avg}
-                                    tAvg={apparentPowerTAggregation.avg}
+                                    rMax={apparentPowerRMetrics.max}
+                                    sMax={apparentPowerSMetrics.max}
+                                    tMax={apparentPowerTMetrics.max}
+                                    rMin={apparentPowerRMetrics.min}
+                                    sMin={apparentPowerSMetrics.min}
+                                    tMin={apparentPowerTMetrics.min}
+                                    rAvg={apparentPowerRMetrics.avg}
+                                    sAvg={apparentPowerSMetrics.avg}
+                                    tAvg={apparentPowerTMetrics.avg}
                                     rLatest={apparent_power_r}
                                     sLatest={apparent_power_s}
                                     tLatest={apparent_power_t}
-                                    maxRTime={timeMinuteString(new Date(apparentPowerRCreatedAt.max))}
-                                    maxSTime={timeMinuteString(new Date(apparentPowerSCreatedAt.max))}
-                                    maxTTime={timeMinuteString(new Date(apparentPowerTCreatedAt.max))}
-                                    minRTime={timeMinuteString(new Date(apparentPowerRCreatedAt.min))}
-                                    minSTime={timeMinuteString(new Date(apparentPowerSCreatedAt.min))}
-                                    minTTime={timeMinuteString(new Date(apparentPowerTCreatedAt.min))}
+                                    maxRTime={timeMinuteString(new Date(apparentPowerRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(apparentPowerSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(apparentPowerTMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(apparentPowerRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(apparentPowerSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(apparentPowerTMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -214,33 +196,33 @@ export default function ChartPQSPF({
                             <Line data={metricAvgPowerFactor}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
-                                    rMax={powerFactorRAggregation.max}
-                                    sMax={powerFactorSAggregation.max}
-                                    tMax={powerFactorTAggregation.max}
-                                    rMin={powerFactorRAggregation.min}
-                                    sMin={powerFactorSAggregation.min}
-                                    tMin={powerFactorTAggregation.min}
-                                    rAvg={powerFactorRAggregation.avg}
-                                    sAvg={powerFactorSAggregation.avg}
-                                    tAvg={powerFactorTAggregation.avg}
+                                    rMax={powerFactorRMetrics.max}
+                                    sMax={powerFactorSMetrics.max}
+                                    tMax={powerFactorTMetrics.max}
+                                    rMin={powerFactorRMetrics.min}
+                                    sMin={powerFactorSMetrics.min}
+                                    tMin={powerFactorTMetrics.min}
+                                    rAvg={powerFactorRMetrics.avg}
+                                    sAvg={powerFactorSMetrics.avg}
+                                    tAvg={powerFactorTMetrics.avg}
                                     rLatest={power_factor_r}
                                     sLatest={power_factor_s}
                                     tLatest={power_factor_t}
-                                    maxRTime={timeMinuteString(new Date(powerFactorRCreatedAt.max))}
-                                    maxSTime={timeMinuteString(new Date(powerFactorSCreatedAt.max))}
-                                    maxTTime={timeMinuteString(new Date(powerFactorTCreatedAt.max))}
-                                    minRTime={timeMinuteString(new Date(powerFactorRCreatedAt.min))}
-                                    minSTime={timeMinuteString(new Date(powerFactorSCreatedAt.min))}
-                                    minTTime={timeMinuteString(new Date(powerFactorTCreatedAt.min))}
+                                    maxRTime={timeMinuteString(new Date(powerFactorRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(powerFactorSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(powerFactorTMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(powerFactorRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(powerFactorSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(powerFactorTMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <GoogleMap
-                            lat={Number(trafo.latitude)}
-                            lng={Number(trafo.longitude)}
-                            title={trafo.name}
+                            lat={Number(trafo?.latitude ?? 0)}
+                            lng={Number(trafo?.longitude ?? 0)}
+                            title={trafo?.name ?? ''}
                             height={'700px'}
                         />
                     </Grid>

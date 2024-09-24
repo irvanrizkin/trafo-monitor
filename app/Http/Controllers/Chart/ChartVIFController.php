@@ -22,15 +22,15 @@ class ChartVIFController extends Controller
 
         $aggregator = new Aggregator();
 
-        $voltages = Voltage::where('trafo_id', $trafoId)
+        $voltages = Voltage::where('trafo_id', 4)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
-        $currents = Current::where('trafo_id', $trafoId)
+        $currents = Current::where('trafo_id', 4)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
-        $frequencies = Frequency::where('trafo_id', $trafoId)
+        $frequencies = Frequency::where('trafo_id', 4)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();

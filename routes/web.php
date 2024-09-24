@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Chart\ChartPKAController;
+use App\Http\Controllers\Chart\ChartPQSPFController;
 use App\Http\Controllers\Chart\ChartTHDController;
 use App\Http\Controllers\Chart\ChartTPOController;
 use App\Http\Controllers\Chart\ChartVIFController;
@@ -86,7 +87,7 @@ Route::prefix('chart')->middleware(['auth'])->group(function () {
        ->name('chart.data');
     Route::get('/{trafoid}/{date}/vif', ChartVIFController::class)
         ->name('chart.vif');
-    Route::get('/{trafoid}/{date}/pqspf', [ChartController::class, 'getChartPQSPF'])
+    Route::get('/{trafoid}/{date}/pqspf', ChartPQSPFController::class)
         ->name('chart.pqspf');
     Route::get('/{trafoid}/{date}/thd-ihd', ChartTHDController::class)
         ->name('chart.thd-ihd');

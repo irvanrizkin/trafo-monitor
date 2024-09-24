@@ -65,6 +65,18 @@ export type ChartPQSPFProps = PageProps & {
     reactivePowers: MetricReactivePower[];
     apparentPowers: MetricApparentPower[];
     powerFactors: MetricPowerFactor[];
+    powerRMetrics: AggregationResult;
+    powerSMetrics: AggregationResult;
+    powerTMetrics: AggregationResult;
+    reactivePowerRMetrics: AggregationResult;
+    reactivePowerSMetrics: AggregationResult;
+    reactivePowerTMetrics: AggregationResult;
+    apparentPowerRMetrics: AggregationResult;
+    apparentPowerSMetrics: AggregationResult;
+    apparentPowerTMetrics: AggregationResult;
+    powerFactorRMetrics: AggregationResult;
+    powerFactorSMetrics: AggregationResult;
+    powerFactorTMetrics: AggregationResult;
 }
 
 export type ChartTHDIHDProps = PageProps & {
