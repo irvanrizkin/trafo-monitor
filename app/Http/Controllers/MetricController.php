@@ -109,8 +109,8 @@ class MetricController extends Controller
         if (!$trafo) {
             return redirect()->route('not-found');
         }
-        $ihd = IHD::where('trafo_id', 9)->latest()->get();
-        $ihdVoltage = IHDVoltage::where('trafo_id', 9)->latest()->get();
+        $ihd = IHD::where('trafo_id', $trafoId)->latest()->get();
+        $ihdVoltage = IHDVoltage::where('trafo_id', $trafoId)->latest()->get();
 
         return Inertia::render('Metric/MetricIHD', [
             'trafo' => $trafo,

@@ -52,6 +52,9 @@ class ChartController extends Controller
 
     public function getChartIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $ihd = IHD::where('trafo_id', $trafoId)->latest()->get();
         $ihdVoltages = IHDVoltage::where('trafo_id', $trafoId)->latest()->get();
 
