@@ -26,8 +26,7 @@ export type GaugeGroupProps = Props & {
     gauges: number[][]
     labels: string[],
     isOverride?: boolean,
-    upperSafeThreshold?: number,
-    lowerSafeThreshold?: number,
+    overrideColor?: (value: number) => string,
 }
 
 export type AggregationRSTProps = Props & {

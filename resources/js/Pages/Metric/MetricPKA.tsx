@@ -22,7 +22,7 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
     const columnsTriplenCurrent: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'triplen_current', headerName: 'Triplen Current', width: 150},
+        { field: 'triplen_current', headerName: 'Triplen Harmonics', width: 150},
     ]
 
     const rowsPowerLoss = powerLosses.map((powerLoss) => {
@@ -107,7 +107,7 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
                     <Grid item xs={12}>
                         <GaugeGroup
                             gauges={[triplenCurrent]}
-                            labels={['Triplen Current']}
+                            labels={['Triplen Harmonics']}
                         />
                     </Grid>
                     <Grid item xs={12}>

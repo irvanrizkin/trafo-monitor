@@ -10,100 +10,18 @@ import {
     MetricVoltage, OilLevel, Pressure, Temperature
 } from "@/types/metric";
 
-export interface AveragedMetric {
-    date: string;
-    hour: number;
-}
-
 export interface Order {
     r: number;
     s: number;
     t: number;
 }
 
-export interface AveragedMetricVoltage extends AveragedMetric {
-    voltage_r: number;
-    voltage_s: number;
-    voltage_t: number;
-}
-
-export interface AveragedMetricCurrent extends AveragedMetric {
-    current_r: number;
-    current_s: number;
-    current_t: number;
-    current_in: number;
-}
-
-export interface AveragedMetricFrequency extends AveragedMetric {
-    frequency_r: number;
-    frequency_s: number;
-    frequency_t: number;
-}
-
-export interface AveragedMetricPower extends AveragedMetric {
-    power_r: number;
-    power_s: number;
-    power_t: number;
-}
-
-export interface AveragedMetricReactivePower extends AveragedMetric {
-    reactive_power_r: number;
-    reactive_power_s: number;
-    reactive_power_t: number;
-}
-
-export interface AveragedMetricApparentPower extends AveragedMetric {
-    apparent_power_r: number;
-    apparent_power_s: number;
-    apparent_power_t: number;
-}
-
-export interface AveragedMetricPowerFactor extends AveragedMetric {
-    power_factor_r: number;
-    power_factor_s: number;
-    power_factor_t: number;
-}
-
-export interface AveragedMetricPowerLoss extends AveragedMetric {
-    power_loss: number;
-}
-
-export interface AveragedMetricKFactor extends AveragedMetric {
-    k_factor: number;
-}
-
-export interface AveragedMetricTriplenCurrent extends AveragedMetric {
-    triplen_current: number;
-}
-
-export interface AveragedMetricTHDVoltage extends AveragedMetric {
-    voltage_r: number;
-    voltage_s: number;
-    voltage_t: number;
-}
-
-export interface AveragedMetricTHDCurrent extends AveragedMetric {
-    current_r: number;
-    current_s: number;
-    current_t: number;
-}
-
-export interface AveragedMetricTHDFrequency extends AveragedMetric {
-    frequency_r: number;
-    frequency_s: number;
-    frequency_t: number;
-}
-
-export interface AveragedMetricIndividualHarmonicDistortion extends AveragedMetric {
-    voltage_r: number;
-    voltage_s: number;
-    voltage_t: number;
-}
-
-export interface AveragedMetricTHDCurrent extends AveragedMetric {
-    current_r: number;
-    current_s: number;
-    current_t: number;
+export interface AggregationResult {
+    max: number;
+    avg: number;
+    min: number;
+    timeOfMax: string;
+    timeOfMin: string;
 }
 
 export interface ChartMetricHD extends Metric {
@@ -130,17 +48,15 @@ export type ChartVIFProps = PageProps & {
     voltages: MetricVoltage[];
     currents: MetricCurrent[];
     frequencies: MetricFrequency[];
-    avgVoltageR: number;
-    avgVoltageS: number;
-    avgVoltageT: number;
-    avgCurrentR: number;
-    avgCurrentS: number;
-    avgCurrentT: number;
-    avgCurrentIN: number;
-    maxFrequency: number;
-    avgFrequency: number;
-    minFrequency: number;
-}
+    voltageRMetrics: AggregationResult;
+    voltageSMetrics: AggregationResult;
+    voltageTMetrics: AggregationResult;
+    currentRMetrics: AggregationResult;
+    currentSMetrics: AggregationResult;
+    currentTMetrics: AggregationResult;
+    currentInMetrics: AggregationResult;
+    frequencyMetrics: AggregationResult;
+};
 
 export type ChartPQSPFProps = PageProps & {
     trafo: TrafoV1;
@@ -149,6 +65,18 @@ export type ChartPQSPFProps = PageProps & {
     reactivePowers: MetricReactivePower[];
     apparentPowers: MetricApparentPower[];
     powerFactors: MetricPowerFactor[];
+    powerRMetrics: AggregationResult;
+    powerSMetrics: AggregationResult;
+    powerTMetrics: AggregationResult;
+    reactivePowerRMetrics: AggregationResult;
+    reactivePowerSMetrics: AggregationResult;
+    reactivePowerTMetrics: AggregationResult;
+    apparentPowerRMetrics: AggregationResult;
+    apparentPowerSMetrics: AggregationResult;
+    apparentPowerTMetrics: AggregationResult;
+    powerFactorRMetrics: AggregationResult;
+    powerFactorSMetrics: AggregationResult;
+    powerFactorTMetrics: AggregationResult;
 }
 
 export type ChartTHDIHDProps = PageProps & {
@@ -156,6 +84,12 @@ export type ChartTHDIHDProps = PageProps & {
     date: string;
     thdVoltages: MetricTHDVoltage[];
     thdCurrents: MetricTHDCurrent[];
+    thdVoltageRMetrics: AggregationResult;
+    thdVoltageSMetrics: AggregationResult;
+    thdVoltageTMetrics: AggregationResult;
+    thdCurrentRMetrics: AggregationResult;
+    thdCurrentSMetrics: AggregationResult;
+    thdCurrentTMetrics: AggregationResult;
 }
 
 export type ChartIHDProps = PageProps & {
@@ -178,6 +112,10 @@ export type ChartTPOProps = PageProps & {
     pressures: Pressure[],
     oilLevels: OilLevel[],
     ambientTemperatures: AmbientTemperature[],
+    temperatureMetrics: AggregationResult;
+    pressureMetrics: AggregationResult;
+    oilLevelMetrics: AggregationResult;
+    ambientTemperatureMetrics: AggregationResult;
 }
 
 export type ChartPKAProps = PageProps & {
@@ -186,6 +124,9 @@ export type ChartPKAProps = PageProps & {
     powerLosses: MetricPowerLoss[];
     kFactors: MetricKFactor[];
     triplenCurrents: MetricTriplenCurrent[];
+    powerLossMetrics: AggregationResult;
+    kFactorMetrics: AggregationResult;
+    triplenCurrentMetrics: AggregationResult;
 }
 
 export type ChartHDProps = PageProps & {

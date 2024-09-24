@@ -20,6 +20,12 @@ export default function ChartTHDIHD({
                                         date,
                                         thdVoltages,
                                         thdCurrents,
+                                        thdVoltageRMetrics,
+                                        thdVoltageSMetrics,
+                                        thdVoltageTMetrics,
+                                        thdCurrentRMetrics,
+                                        thdCurrentSMetrics,
+                                        thdCurrentTMetrics
                                     }: ChartTHDIHDProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
@@ -29,13 +35,6 @@ export default function ChartTHDIHD({
         sData: thdVoltages.map(voltage => voltage.voltage_s),
         tData: thdVoltages.map(voltage => voltage.voltage_t),
     });
-
-    const voltageRAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_r));
-    const voltageSAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_s));
-    const voltageTAggregation = calculateMetrics(thdVoltages.map(voltage => voltage.voltage_t));
-    const voltageRCreatedAt = getCreatedAt<MetricTHDVoltage>(thdVoltages, 'voltage_r', 'created_at');
-    const voltageSCreatedAt = getCreatedAt<MetricTHDVoltage>(thdVoltages, 'voltage_s', 'created_at');
-    const voltageTCreatedAt = getCreatedAt<MetricTHDVoltage>(thdVoltages, 'voltage_t', 'created_at');
     const { voltage_r = 0, voltage_s = 0, voltage_t = 0 } = thdVoltages[thdVoltages.length - 1] || {};
 
     const metricCurrents = rstBarChartString({
@@ -44,25 +43,18 @@ export default function ChartTHDIHD({
         sData: thdCurrents.map(current => current.current_s),
         tData: thdCurrents.map(current => current.current_t),
     });
-
-    const currentRAggregation = calculateMetrics(thdCurrents.map(current => current.current_r));
-    const currentSAggregation = calculateMetrics(thdCurrents.map(current => current.current_s));
-    const currentTAggregation = calculateMetrics(thdCurrents.map(current => current.current_t));
-    const currentRCreatedAt = getCreatedAt<MetricTHDCurrent>(thdCurrents, 'current_r', 'created_at');
-    const currentSCreatedAt = getCreatedAt<MetricTHDCurrent>(thdCurrents, 'current_s', 'created_at');
-    const currentTCreatedAt = getCreatedAt<MetricTHDCurrent>(thdCurrents, 'current_t', 'created_at');
     const { current_r = 0, current_s = 0, current_t = 0 } = thdCurrents[thdCurrents.length - 1] || {};
 
     return (
         <>
             <AppBarTriple
-                startText={'Chart THD IHD'}
-                middleText={trafo.name + ' - ' + trafo.address}
+                startText={'Chart THD'}
+                middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref
-                    href={route('trafo.show', [trafo.id])}
+                    href={route('trafo.show', [trafo?.id ?? 0])}
                     text={'Back to Detail'}
                     icon={<ShowAssignmentIcon />}
                     sx={{ mt: 2 }}
@@ -80,24 +72,24 @@ export default function ChartTHDIHD({
                             <Bar data={metricVoltages}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
-                                    rMax={voltageRAggregation.max}
-                                    sMax={voltageSAggregation.max}
-                                    tMax={voltageTAggregation.max}
-                                    rMin={voltageRAggregation.min}
-                                    sMin={voltageSAggregation.min}
-                                    tMin={voltageTAggregation.min}
-                                    rAvg={voltageRAggregation.avg}
-                                    sAvg={voltageSAggregation.avg}
-                                    tAvg={voltageTAggregation.avg}
+                                    rMax={thdVoltageRMetrics.max}
+                                    sMax={thdVoltageSMetrics.max}
+                                    tMax={thdVoltageTMetrics.max}
+                                    rMin={thdVoltageRMetrics.min}
+                                    sMin={thdVoltageSMetrics.min}
+                                    tMin={thdVoltageTMetrics.min}
+                                    rAvg={thdVoltageRMetrics.avg}
+                                    sAvg={thdVoltageSMetrics.avg}
+                                    tAvg={thdVoltageTMetrics.avg}
                                     rLatest={voltage_r}
                                     sLatest={voltage_s}
                                     tLatest={voltage_t}
-                                    maxRTime={timeMinuteString(new Date(voltageRCreatedAt.max))}
-                                    maxSTime={timeMinuteString(new Date(voltageSCreatedAt.max))}
-                                    maxTTime={timeMinuteString(new Date(voltageTCreatedAt.max))}
-                                    minRTime={timeMinuteString(new Date(voltageRCreatedAt.min))}
-                                    minSTime={timeMinuteString(new Date(voltageSCreatedAt.min))}
-                                    minTTime={timeMinuteString(new Date(voltageTCreatedAt.min))}
+                                    maxRTime={timeMinuteString(new Date(thdVoltageRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(thdVoltageSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(thdVoltageTMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(thdVoltageRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(thdVoltageSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(thdVoltageTMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -114,33 +106,33 @@ export default function ChartTHDIHD({
                             <Bar data={metricCurrents}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
-                                    rMax={currentRAggregation.max}
-                                    sMax={currentSAggregation.max}
-                                    tMax={currentTAggregation.max}
-                                    rMin={currentRAggregation.min}
-                                    sMin={currentSAggregation.min}
-                                    tMin={currentTAggregation.min}
-                                    rAvg={currentRAggregation.avg}
-                                    sAvg={currentSAggregation.avg}
-                                    tAvg={currentTAggregation.avg}
+                                    rMax={thdCurrentRMetrics.max}
+                                    sMax={thdCurrentSMetrics.max}
+                                    tMax={thdCurrentTMetrics.max}
+                                    rMin={thdCurrentRMetrics.min}
+                                    sMin={thdCurrentSMetrics.min}
+                                    tMin={thdCurrentTMetrics.min}
+                                    rAvg={thdCurrentRMetrics.avg}
+                                    sAvg={thdCurrentSMetrics.avg}
+                                    tAvg={thdCurrentTMetrics.avg}
                                     rLatest={current_r}
                                     sLatest={current_s}
                                     tLatest={current_t}
-                                    maxRTime={timeMinuteString(new Date(currentRCreatedAt.max))}
-                                    maxSTime={timeMinuteString(new Date(currentSCreatedAt.max))}
-                                    maxTTime={timeMinuteString(new Date(currentTCreatedAt.max))}
-                                    minRTime={timeMinuteString(new Date(currentRCreatedAt.min))}
-                                    minSTime={timeMinuteString(new Date(currentSCreatedAt.min))}
-                                    minTTime={timeMinuteString(new Date(currentTCreatedAt.min))}
+                                    maxRTime={timeMinuteString(new Date(thdCurrentRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(thdCurrentSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(thdCurrentTMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(thdCurrentRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(thdCurrentSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(thdCurrentTMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <GoogleMap
-                            lat={Number(trafo.latitude)}
-                            lng={Number(trafo.longitude)}
-                            title={trafo.name}
+                            lat={Number(trafo?.latitude ?? 0)}
+                            lng={Number(trafo?.longitude ?? 0)}
+                            title={trafo?.name ?? ''}
                             height={'700px'}
                         />
                     </Grid>

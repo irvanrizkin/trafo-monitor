@@ -21,6 +21,10 @@ export default function ChartTPO({
                                      pressures,
                                      oilLevels,
                                      ambientTemperatures,
+                                     temperatureMetrics,
+                                     pressureMetrics,
+                                     oilLevelMetrics,
+                                     ambientTemperatureMetrics
                                    }: ChartTPOProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
     const theme = useTheme()
@@ -31,13 +35,6 @@ export default function ChartTPO({
         data: temperatures.map(temperature => temperature.temperature),
         label: 'Temperature',
     });
-
-    const temperatureAggregation = calculateMetrics(temperatures.map(
-        temperature => temperature.temperature
-    ));
-    const temperatureCreatedAt = getCreatedAt<Temperature>(
-        temperatures, 'temperature', 'created_at'
-    );
     const { temperature = 0 } = temperatures[temperatures.length - 1] || {};
 
     const metricPressure = singleLineChartString({
@@ -45,13 +42,6 @@ export default function ChartTPO({
         data: pressures.map(pressure => pressure.pressure),
         label: 'Pressure',
     });
-
-    const pressureAggregation = calculateMetrics(pressures.map(
-        pressure => pressure.pressure
-    ));
-    const pressureCreatedAt = getCreatedAt<Pressure>(
-        pressures, 'pressure', 'created_at'
-    );
     const { pressure = 0 } = pressures[pressures.length - 1] || {};
 
     const metricOilLevel = singleLineChartString({
@@ -59,13 +49,6 @@ export default function ChartTPO({
         data: oilLevels.map(oilLevel => oilLevel.oil_level),
         label: 'Oil Level',
     });
-
-    const oilLevelAggregation = calculateMetrics(oilLevels.map(
-        oilLevel => oilLevel.oil_level
-    ));
-    const oilLevelCreatedAt = getCreatedAt<OilLevel>(
-        oilLevels, 'oil_level', 'created_at'
-    );
     const { oil_level = 0 } = oilLevels[oilLevels.length - 1] || {};
 
     const metricAmbientTemperature = singleLineChartString({
@@ -73,25 +56,18 @@ export default function ChartTPO({
         data: ambientTemperatures.map(ambientTemperature => ambientTemperature.ambient_temperature),
         label: 'Ambient Temperature',
     });
-
-    const ambientTemperatureAggregation = calculateMetrics(ambientTemperatures.map(
-        ambientTemperature => ambientTemperature.ambient_temperature
-    ));
-    const ambientTemperatureCreatedAt = getCreatedAt<AmbientTemperature>(
-        ambientTemperatures, 'ambient_temperature', 'created_at'
-    );
     const { ambient_temperature = 0 } = ambientTemperatures[ambientTemperatures.length - 1] || {};
 
     return (
         <>
             <AppBarTriple
                 startText={'Chart TPO'}
-                middleText={trafo.name + ' - ' + trafo.address}
+                middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref
-                    href={route('trafo.show', [trafo.id])}
+                    href={route('trafo.show', [trafo?.id ?? 0])}
                     text={'Back to Detail'}
                     icon={<ShowAssignmentIcon />}
                     sx={{ mt: 2 }}
@@ -113,12 +89,12 @@ export default function ChartTPO({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Temperature"}
-                                    max={temperatureAggregation.max}
-                                    avg={temperatureAggregation.avg}
-                                    min={temperatureAggregation.min}
+                                    max={temperatureMetrics.max}
+                                    avg={temperatureMetrics.avg}
+                                    min={temperatureMetrics.min}
                                     latest={temperature}
-                                    maxTime={timeMinuteString(new Date(temperatureCreatedAt.max))}
-                                    minTime={timeMinuteString(new Date(temperatureCreatedAt.min))}
+                                    maxTime={timeMinuteString(new Date(temperatureMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(temperatureMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -134,12 +110,12 @@ export default function ChartTPO({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Pressure"}
-                                    max={pressureAggregation.max}
-                                    avg={pressureAggregation.avg}
-                                    min={pressureAggregation.min}
+                                    max={pressureMetrics.max}
+                                    avg={pressureMetrics.avg}
+                                    min={pressureMetrics.min}
                                     latest={pressure}
-                                    maxTime={timeMinuteString(new Date(pressureCreatedAt.max))}
-                                    minTime={timeMinuteString(new Date(pressureCreatedAt.min))}
+                                    maxTime={timeMinuteString(new Date(pressureMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(pressureMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -160,12 +136,12 @@ export default function ChartTPO({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Oil Level"}
-                                    max={oilLevelAggregation.max}
-                                    avg={oilLevelAggregation.avg}
-                                    min={oilLevelAggregation.min}
+                                    max={oilLevelMetrics.max}
+                                    avg={oilLevelMetrics.avg}
+                                    min={oilLevelMetrics.min}
                                     latest={oil_level}
-                                    maxTime={timeMinuteString(new Date(oilLevelCreatedAt.max))}
-                                    minTime={timeMinuteString(new Date(oilLevelCreatedAt.min))}
+                                    maxTime={timeMinuteString(new Date(oilLevelMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(oilLevelMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -181,21 +157,21 @@ export default function ChartTPO({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Ambient Temp"}
-                                    max={ambientTemperatureAggregation.max}
-                                    avg={ambientTemperatureAggregation.avg}
-                                    min={ambientTemperatureAggregation.min}
+                                    max={ambientTemperatureMetrics.max}
+                                    avg={ambientTemperatureMetrics.avg}
+                                    min={ambientTemperatureMetrics.min}
                                     latest={ambient_temperature}
-                                    maxTime={timeMinuteString(new Date(ambientTemperatureCreatedAt.max))}
-                                    minTime={timeMinuteString(new Date(ambientTemperatureCreatedAt.min))}
+                                    maxTime={timeMinuteString(new Date(ambientTemperatureMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(ambientTemperatureMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <GoogleMap
-                            lat={Number(trafo.latitude)}
-                            lng={Number(trafo.longitude)}
-                            title={trafo.name}
+                            lat={Number(trafo?.latitude ?? 0)}
+                            lng={Number(trafo?.longitude ?? 0)}
+                            title={trafo?.name ?? ''}
                             height={'700px'}
                         />
                     </Grid>

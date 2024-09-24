@@ -30,6 +30,14 @@ export default function ChartVIF({
                                      voltages,
                                      currents,
                                      frequencies,
+                                     voltageRMetrics,
+                                     voltageSMetrics,
+                                     voltageTMetrics,
+                                     currentRMetrics,
+                                     currentSMetrics,
+                                     currentTMetrics,
+                                     currentInMetrics,
+                                     frequencyMetrics,
                                  }: ChartVIFProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
     const theme = useTheme()
@@ -43,13 +51,6 @@ export default function ChartVIF({
             tData: voltages.map(voltage => voltage.voltage_t),
         }
     );
-
-    const voltageRAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_r));
-    const voltageSAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_s));
-    const voltageTAggregation = calculateMetrics(voltages.map(voltage => voltage.voltage_t));
-    const voltageRCreatedAt = getCreatedAt<MetricVoltage>(voltages, 'voltage_r', 'created_at');
-    const voltageSCreatedAt = getCreatedAt<MetricVoltage>(voltages, 'voltage_s', 'created_at');
-    const voltageTCreatedAt = getCreatedAt<MetricVoltage>(voltages, 'voltage_t', 'created_at');
     const { voltage_r = 0, voltage_s = 0, voltage_t = 0 } = voltages[voltages.length - 1] || {};
 
     const metricAvgCurrent = rstinLineChartString(
@@ -61,15 +62,6 @@ export default function ChartVIF({
             inData: currents.map(current => current.current_in),
         }
     );
-
-    const currentRAggregation = calculateMetrics(currents.map(current => current.current_r));
-    const currentSAggregation = calculateMetrics(currents.map(current => current.current_s));
-    const currentTAggregation = calculateMetrics(currents.map(current => current.current_t));
-    const currentInAggregation = calculateMetrics(currents.map(current => current.current_in));
-    const currentRCreatedAt = getCreatedAt<MetricCurrent>(currents, 'current_r', 'created_at');
-    const currentSCreatedAt = getCreatedAt<MetricCurrent>(currents, 'current_s', 'created_at');
-    const currentTCreatedAt = getCreatedAt<MetricCurrent>(currents, 'current_t', 'created_at');
-    const currentInCreatedAt = getCreatedAt<MetricCurrent>(currents, 'current_in', 'created_at');
     const { current_r = 0, current_s = 0, current_t = 0, current_in = 0 } = currents[currents.length - 1] || {};
 
     const metricAvgFrequency = singleLineChartString({
@@ -77,21 +69,18 @@ export default function ChartVIF({
         data: frequencies.map(frequency => frequency.frequency_r),
         label: 'Frequency',
     });
-
-    const frequencyAggregation = calculateMetrics(frequencies.map(frequency => frequency.frequency_r));
-    const frequencyCreatedAt = getCreatedAt<MetricFrequency>(frequencies, 'frequency_r', 'created_at');
     const { frequency_r = 0 } = frequencies[frequencies.length - 1] || {};
 
     return (
         <>
             <AppBarTriple
                 startText={'Chart VIF'}
-                middleText={trafo.name + ' - ' + trafo.address}
+                middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref
-                    href={route('trafo.show', [trafo.id])}
+                    href={route('trafo.show', [trafo?.id ?? 0])}
                     text={'Back to Detail'}
                     icon={<ShowAssignmentIcon />}
                     sx={{ mt: 2 }}
@@ -109,24 +98,24 @@ export default function ChartVIF({
                             <Line data={metricAvgVoltage}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
-                                    rMax={voltageRAggregation.max}
-                                    sMax={voltageSAggregation.max}
-                                    tMax={voltageTAggregation.max}
-                                    rMin={voltageRAggregation.min}
-                                    sMin={voltageSAggregation.min}
-                                    tMin={voltageTAggregation.min}
-                                    rAvg={voltageRAggregation.avg}
-                                    sAvg={voltageSAggregation.avg}
-                                    tAvg={voltageTAggregation.avg}
+                                    rMax={voltageRMetrics.max}
+                                    sMax={voltageSMetrics.max}
+                                    tMax={voltageTMetrics.max}
+                                    rMin={voltageRMetrics.min}
+                                    sMin={voltageSMetrics.min}
+                                    tMin={voltageTMetrics.min}
+                                    rAvg={voltageRMetrics.avg}
+                                    sAvg={voltageSMetrics.avg}
+                                    tAvg={voltageTMetrics.avg}
                                     rLatest={voltage_r}
                                     sLatest={voltage_s}
                                     tLatest={voltage_t}
-                                    maxRTime={timeMinuteString(new Date(voltageRCreatedAt.max))}
-                                    maxSTime={timeMinuteString(new Date(voltageSCreatedAt.max))}
-                                    maxTTime={timeMinuteString(new Date(voltageTCreatedAt.max))}
-                                    minRTime={timeMinuteString(new Date(voltageRCreatedAt.min))}
-                                    minSTime={timeMinuteString(new Date(voltageSCreatedAt.min))}
-                                    minTTime={timeMinuteString(new Date(voltageTCreatedAt.min))}
+                                    maxRTime={timeMinuteString(new Date(voltageRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(voltageSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(voltageTMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(voltageRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(voltageSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(voltageTMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -143,12 +132,12 @@ export default function ChartVIF({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Frequency"}
-                                    max={frequencyAggregation.max}
-                                    avg={frequencyAggregation.avg}
-                                    min={frequencyAggregation.min}
+                                    max={frequencyMetrics.max}
+                                    min={frequencyMetrics.min}
+                                    avg={frequencyMetrics.avg}
+                                    maxTime={timeMinuteString(new Date(frequencyMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(frequencyMetrics.timeOfMin))}
                                     latest={frequency_r}
-                                    maxTime={timeMinuteString(new Date(frequencyCreatedAt.max))}
-                                    minTime={timeMinuteString(new Date(frequencyCreatedAt.min))}
                                 />
                             </Container>
                         </Box>
@@ -165,39 +154,39 @@ export default function ChartVIF({
                             <Line data={metricAvgCurrent}/>
                             <Container sx={{ p: 2 }}>
                                 <AggregationRSTIN
-                                    rMax={currentRAggregation.max}
-                                    sMax={currentSAggregation.max}
-                                    tMax={currentTAggregation.max}
-                                    inMax={currentInAggregation.max}
-                                    rMin={currentRAggregation.min}
-                                    sMin={currentSAggregation.min}
-                                    tMin={currentTAggregation.min}
-                                    inMin={currentInAggregation.min}
-                                    rAvg={currentRAggregation.avg}
-                                    sAvg={currentSAggregation.avg}
-                                    tAvg={currentTAggregation.avg}
-                                    inAvg={currentInAggregation.avg}
+                                    rMax={currentRMetrics.max}
+                                    sMax={currentSMetrics.max}
+                                    tMax={currentTMetrics.max}
+                                    inMax={currentInMetrics.max}
+                                    rMin={currentRMetrics.min}
+                                    sMin={currentSMetrics.min}
+                                    tMin={currentTMetrics.min}
+                                    inMin={currentInMetrics.min}
+                                    rAvg={currentRMetrics.avg}
+                                    sAvg={currentSMetrics.avg}
+                                    tAvg={currentTMetrics.avg}
+                                    inAvg={currentInMetrics.avg}
                                     rLatest={current_r}
                                     sLatest={current_s}
                                     tLatest={current_t}
                                     inLatest={current_in}
-                                    maxRTime={timeMinuteString(new Date(currentRCreatedAt.max))}
-                                    maxSTime={timeMinuteString(new Date(currentSCreatedAt.max))}
-                                    maxTTime={timeMinuteString(new Date(currentTCreatedAt.max))}
-                                    maxInTime={timeMinuteString(new Date(currentInCreatedAt.max))}
-                                    minRTime={timeMinuteString(new Date(currentRCreatedAt.min))}
-                                    minSTime={timeMinuteString(new Date(currentSCreatedAt.min))}
-                                    minTTime={timeMinuteString(new Date(currentTCreatedAt.min))}
-                                    minInTime={timeMinuteString(new Date(currentInCreatedAt.min))}
+                                    maxRTime={timeMinuteString(new Date(currentRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(currentSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(currentTMetrics.timeOfMax))}
+                                    maxInTime={timeMinuteString(new Date(currentInMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(currentRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(currentSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(currentTMetrics.timeOfMin))}
+                                    minInTime={timeMinuteString(new Date(currentInMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <GoogleMap
-                            lat={Number(trafo.latitude)}
-                            lng={Number(trafo.longitude)}
-                            title={trafo.name}
+                            lat={Number(trafo?.latitude ?? 0)}
+                            lng={Number(trafo?.longitude ?? 0)}
+                            title={trafo?.name ?? ''}
                             height={'700px'}
                         />
                     </Grid>
