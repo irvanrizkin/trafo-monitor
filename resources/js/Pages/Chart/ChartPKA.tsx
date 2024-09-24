@@ -24,6 +24,9 @@ export default function ChartPKA({
                                      powerLosses,
                                      kFactors,
                                      triplenCurrents,
+                                     powerLossMetrics,
+                                     kFactorMetrics,
+                                     triplenCurrentMetrics
                                  }: ChartPKAProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
@@ -32,9 +35,6 @@ export default function ChartPKA({
         data: powerLosses.map(powerLoss => powerLoss.power_loss),
         label: 'Power Loss',
     });
-
-    const powerLossAggregation = calculateMetrics(powerLosses.map(powerLoss => powerLoss.power_loss));
-    const powerLossCreatedAt = getCreatedAt<MetricPowerLoss>(powerLosses, 'power_loss', 'created_at');
     const { power_loss = 0 } = powerLosses[powerLosses.length - 1] || {};
 
     const metricAvgKFactor = singleLineChartString({
@@ -42,9 +42,6 @@ export default function ChartPKA({
         data: kFactors.map(kFactor => kFactor.k_factor),
         label: 'K Factor',
     });
-
-    const kFactorAggregation = calculateMetrics(kFactors.map(kFactor => kFactor.k_factor));
-    const kFactorCreatedAt = getCreatedAt<MetricKFactor>(kFactors, 'k_factor', 'created_at');
     const { k_factor = 0 } = kFactors[kFactors.length - 1] || {};
 
     const metricAvgTriplenCurrent = singleLineChartString({
@@ -52,21 +49,18 @@ export default function ChartPKA({
         data: triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current),
         label: 'Triplen Current',
     });
-
-    const triplenCurrentAggregation = calculateMetrics(triplenCurrents.map(triplenCurrent => triplenCurrent.triplen_current));
-    const triplenCurrentCreatedAt = getCreatedAt<MetricTriplenCurrent>(triplenCurrents, 'triplen_current', 'created_at');
     const { triplen_current = 0 } = triplenCurrents[triplenCurrents.length - 1] || {};
 
     return (
         <>
             <AppBarTriple
-                startText={'Chart PKA'}
-                middleText={trafo.name + ' - ' + trafo.address}
+                startText={'Chart VIF'}
+                middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref
-                    href={route('trafo.show', [trafo.id])}
+                    href={route('trafo.show', [trafo?.id ?? 0])}
                     text={'Back to Detail'}
                     icon={<ShowAssignmentIcon />}
                     sx={{ mt: 2 }}
@@ -85,12 +79,12 @@ export default function ChartPKA({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Power Loss"}
-                                    max={powerLossAggregation.max}
-                                    avg={powerLossAggregation.avg}
-                                    min={powerLossAggregation.min}
+                                    max={powerLossMetrics.max}
+                                    avg={powerLossMetrics.avg}
+                                    min={powerLossMetrics.min}
                                     latest={power_loss}
-                                    maxTime={timeMinuteString(new Date(powerLossCreatedAt.max))}
-                                    minTime={timeMinuteString(new Date(powerLossCreatedAt.min))}
+                                    maxTime={timeMinuteString(new Date(powerLossMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(powerLossMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -106,12 +100,12 @@ export default function ChartPKA({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Triplen Current"}
-                                    max={triplenCurrentAggregation.max}
-                                    avg={triplenCurrentAggregation.avg}
-                                    min={triplenCurrentAggregation.min}
+                                    max={triplenCurrentMetrics.max}
+                                    avg={triplenCurrentMetrics.avg}
+                                    min={triplenCurrentMetrics.min}
                                     latest={triplen_current}
-                                    maxTime={timeMinuteString(new Date(triplenCurrentCreatedAt.max))}
-                                    minTime={timeMinuteString(new Date(triplenCurrentCreatedAt.min))}
+                                    maxTime={timeMinuteString(new Date(triplenCurrentMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(triplenCurrentMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -129,21 +123,21 @@ export default function ChartPKA({
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"K Factor"}
-                                    max={kFactorAggregation.max}
-                                    avg={kFactorAggregation.avg}
-                                    min={kFactorAggregation.min}
+                                    max={kFactorMetrics.max}
+                                    avg={kFactorMetrics.avg}
+                                    min={kFactorMetrics.min}
                                     latest={k_factor}
-                                    maxTime={timeMinuteString(new Date(kFactorCreatedAt.max))}
-                                    minTime={timeMinuteString(new Date(kFactorCreatedAt.min))}
+                                    maxTime={timeMinuteString(new Date(kFactorMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(kFactorMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <GoogleMap
-                            lat={Number(trafo.latitude)}
-                            lng={Number(trafo.longitude)}
-                            title={trafo.name}
+                            lat={Number(trafo?.latitude ?? 0)}
+                            lng={Number(trafo?.longitude ?? 0)}
+                            title={trafo?.name ?? ''}
                             height={'700px'}
                         />
                     </Grid>

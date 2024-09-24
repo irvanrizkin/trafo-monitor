@@ -112,6 +112,9 @@ export type ChartPKAProps = PageProps & {
     powerLosses: MetricPowerLoss[];
     kFactors: MetricKFactor[];
     triplenCurrents: MetricTriplenCurrent[];
+    powerLossMetrics: AggregationResult;
+    kFactorMetrics: AggregationResult;
+    triplenCurrentMetrics: AggregationResult;
 }
 
 export type ChartHDProps = PageProps & {
