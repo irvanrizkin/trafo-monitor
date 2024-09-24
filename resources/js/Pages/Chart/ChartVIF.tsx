@@ -110,12 +110,12 @@ export default function ChartVIF({
                                     rLatest={voltage_r}
                                     sLatest={voltage_s}
                                     tLatest={voltage_t}
-                                    maxRTime={voltageRMetrics.timeOfMax}
-                                    maxSTime={voltageSMetrics.timeOfMax}
-                                    maxTTime={voltageTMetrics.timeOfMax}
-                                    minRTime={voltageRMetrics.timeOfMin}
-                                    minSTime={voltageSMetrics.timeOfMin}
-                                    minTTime={voltageTMetrics.timeOfMin}
+                                    maxRTime={timeMinuteString(new Date(voltageRMetrics.timeOfMax))}
+                                    maxSTime={timeMinuteString(new Date(voltageSMetrics.timeOfMax))}
+                                    maxTTime={timeMinuteString(new Date(voltageTMetrics.timeOfMax))}
+                                    minRTime={timeMinuteString(new Date(voltageRMetrics.timeOfMin))}
+                                    minSTime={timeMinuteString(new Date(voltageSMetrics.timeOfMin))}
+                                    minTTime={timeMinuteString(new Date(voltageTMetrics.timeOfMin))}
                                 />
                             </Container>
                         </Box>
@@ -133,10 +133,10 @@ export default function ChartVIF({
                                 <AggregationSingle
                                     property={"Frequency"}
                                     max={frequencyMetrics.max}
-                                    avg={frequencyMetrics.avg}
                                     min={frequencyMetrics.min}
-                                    maxTime={frequencyMetrics.timeOfMax}
-                                    minTime={frequencyMetrics.timeOfMin}
+                                    avg={frequencyMetrics.avg}
+                                    maxTime={timeMinuteString(new Date(frequencyMetrics.timeOfMax))}
+                                    minTime={timeMinuteString(new Date(frequencyMetrics.timeOfMin))}
                                     latest={frequency_r}
                                 />
                             </Container>

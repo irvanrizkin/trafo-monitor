@@ -72,6 +72,12 @@ export type ChartTHDIHDProps = PageProps & {
     date: string;
     thdVoltages: MetricTHDVoltage[];
     thdCurrents: MetricTHDCurrent[];
+    thdVoltageRMetrics: AggregationResult;
+    thdVoltageSMetrics: AggregationResult;
+    thdVoltageTMetrics: AggregationResult;
+    thdCurrentRMetrics: AggregationResult;
+    thdCurrentSMetrics: AggregationResult;
+    thdCurrentTMetrics: AggregationResult;
 }
 
 export type ChartIHDProps = PageProps & {
