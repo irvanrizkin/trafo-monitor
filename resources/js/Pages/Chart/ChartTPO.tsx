@@ -61,7 +61,7 @@ export default function ChartTPO({
     return (
         <>
             <AppBarTriple
-                startText={'Chart VIF'}
+                startText={'Chart TPO'}
                 middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
                 endText={date}
             />

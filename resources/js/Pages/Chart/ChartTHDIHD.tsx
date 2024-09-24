@@ -48,7 +48,7 @@ export default function ChartTHDIHD({
     return (
         <>
             <AppBarTriple
-                startText={'Chart VIF'}
+                startText={'Chart THD'}
                 middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
                 endText={date}
             />

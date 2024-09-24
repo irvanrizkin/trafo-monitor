@@ -54,7 +54,7 @@ export default function ChartPKA({
     return (
         <>
             <AppBarTriple
-                startText={'Chart VIF'}
+                startText={'Chart PKA'}
                 middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
                 endText={date}
             />
