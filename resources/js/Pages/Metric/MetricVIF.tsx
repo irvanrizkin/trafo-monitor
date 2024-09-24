@@ -1,11 +1,11 @@
 import {MetricVIFProps} from "@/types/metric";
-import {Box, Container, Grid, Stack, Typography} from "@mui/material";
+import {Container, Grid} from "@mui/material";
 import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
-import {Gauge, gaugeClasses} from "@mui/x-charts";
 import GaugeGroup from "@/Components/Metric/GaugeGroup";
+import {amber, green} from "@mui/material/colors";
 
 export default function Metric({ trafo, date, voltages, currents, frequencies }: MetricVIFProps) {
     const columnsVoltage: GridColDef[] = [
@@ -86,6 +86,13 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
 
     const frequency = [...frequencies.map(f => f.frequency_r)];
 
+    const overrideFrequency = (value: number) => {
+        if (value > 49.5 || value < 50.5) {
+            return green[300];
+        }
+        return amber[300];
+    }
+
     return (
         <>
             <AppBarTriple
@@ -144,8 +151,7 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                             gauges={[frequency]}
                             labels={['Frequency']}
                             isOverride={true}
-                            upperSafeThreshold={50.5}
-                            lowerSafeThreshold={49.5}
+                            overrideColor={overrideFrequency}
                         />
                     </Grid>
                     <Grid item xs={12}>

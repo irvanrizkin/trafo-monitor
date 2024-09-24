@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Chart\ChartPKAController;
+use App\Http\Controllers\Chart\ChartPQSPFController;
+use App\Http\Controllers\Chart\ChartTHDController;
+use App\Http\Controllers\Chart\ChartTPOController;
+use App\Http\Controllers\Chart\ChartVIFController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChartV2Controller;
 use App\Http\Controllers\DashboardController;
@@ -9,7 +14,6 @@ use App\Http\Controllers\ParameterV2Controller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrafoController;
 use App\Http\Controllers\TrafoV2Controller;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -47,6 +51,10 @@ Route::prefix('v2')->middleware(['auth'])->group(function () {
     });
 });
 
+Route::get('/not-found', function () {
+    return Inertia::render('NotFound');
+})->name('not-found');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
@@ -82,17 +90,17 @@ Route::prefix('metric')->middleware(['auth'])->group(function () {
 Route::prefix('chart')->middleware(['auth'])->group(function () {
    Route::get('/{trafoid}/{date}', [ChartController::class, 'getChartData'])
        ->name('chart.data');
-    Route::get('/{trafoid}/{date}/vif', [ChartController::class, 'getChartVIF'])
+    Route::get('/{trafoid}/{date}/vif', ChartVIFController::class)
         ->name('chart.vif');
-    Route::get('/{trafoid}/{date}/pqspf', [ChartController::class, 'getChartPQSPF'])
+    Route::get('/{trafoid}/{date}/pqspf', ChartPQSPFController::class)
         ->name('chart.pqspf');
-    Route::get('/{trafoid}/{date}/thd-ihd', [ChartController::class, 'getChartTHDIHD'])
+    Route::get('/{trafoid}/{date}/thd-ihd', ChartTHDController::class)
         ->name('chart.thd-ihd');
     Route::get('/{trafoid}/{date}/ihd', [ChartController::class, 'getChartIHD'])
         ->name('chart.ihd');
-    Route::get('/{trafoid}/{date}/tpo', [ChartController::class, 'getChartTPO'])
+    Route::get('/{trafoid}/{date}/tpo', ChartTPOController::class)
         ->name('chart.tpo');
-    Route::get('/{trafoid}/{date}/pka', [ChartController::class, 'getChartPKA'])
+    Route::get('/{trafoid}/{date}/pka', ChartPKAController::class)
         ->name('chart.pka');
     Route::get('/{trafoid}/{date}/analisis', [ChartController::class, 'getChartAnalysis'])
         ->name('chart.analisis');

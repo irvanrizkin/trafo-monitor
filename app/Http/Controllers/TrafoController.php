@@ -13,6 +13,9 @@ class TrafoController extends Controller
 {
     public function showWithDates($id) {
         $trafo = Trafo::find($id);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $dates = Voltage::selectRaw('DATE(created_at) as date')
             ->where('trafo_id', $id)
             ->groupBy(DB::raw('DATE(created_at)'))

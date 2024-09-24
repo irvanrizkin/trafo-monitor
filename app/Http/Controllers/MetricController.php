@@ -34,6 +34,9 @@ class MetricController extends Controller
     public function getMetrics($trafoid, $date)
     {
         $trafo = Trafo::find($trafoid);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $metrics = Metric::where('trafo_id', $trafoid)
             ->whereDate('created_at', $date)
             ->get();
@@ -47,6 +50,9 @@ class MetricController extends Controller
 
     public function getMetricVIF($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $voltages = Voltage::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $currents = Current::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $frequencies = Frequency::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
@@ -62,6 +68,9 @@ class MetricController extends Controller
 
     public function getMetricPQSPF($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $powers = Power::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $reactivePowers = ReactivePower::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $apparentPowers = ApparentPower::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
@@ -79,6 +88,9 @@ class MetricController extends Controller
 
     public function getMetricTHDIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $thdCurrents = THDCurrent::where('trafo_id', $trafoId)->get();
         $thdVoltages = THDVoltage::where('trafo_id', $trafoId)->get();
 
@@ -94,6 +106,9 @@ class MetricController extends Controller
 
     public function getMetricIHD($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $ihd = IHD::where('trafo_id', $trafoId)->latest()->get();
         $ihdVoltage = IHDVoltage::where('trafo_id', $trafoId)->latest()->get();
 
@@ -109,6 +124,9 @@ class MetricController extends Controller
 
     public function getMetricTPO($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $temperatures = Temperature::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $pressures = Pressure::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $oilLevels = OilLevel::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
@@ -128,6 +146,9 @@ class MetricController extends Controller
 
     public function getMetricPKA($trafoId, $date) {
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
         $powerLosses = PowerLoss::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $kFactors = KFactor::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $triplenCurrents = TriplenCurrent::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
