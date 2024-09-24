@@ -21,6 +21,9 @@ class ChartTHDController extends Controller
         $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
 
         $aggregator = new Aggregator();
 

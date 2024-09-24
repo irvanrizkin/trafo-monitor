@@ -19,18 +19,21 @@ class ChartVIFController extends Controller
         $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
 
         $aggregator = new Aggregator();
 
-        $voltages = Voltage::where('trafo_id', 4)
+        $voltages = Voltage::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
-        $currents = Current::where('trafo_id', 4)
+        $currents = Current::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
-        $frequencies = Frequency::where('trafo_id', 4)
+        $frequencies = Frequency::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();

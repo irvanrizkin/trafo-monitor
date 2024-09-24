@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrafoController;
 use App\Http\Controllers\TrafoV2Controller;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -49,6 +50,10 @@ Route::prefix('v2')->middleware(['auth'])->group(function () {
             ->name('v2.chart.data');
     });
 });
+
+Route::get('/not-found', function () {
+    return Inertia::render('NotFound');
+})->name('not-found');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
