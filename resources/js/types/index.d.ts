@@ -47,7 +47,7 @@ export interface MetricV1 {
 }
 
 export interface Date {
-    date: string;
+    date_group: string;
 }
 
 export interface MetricAggregate {
