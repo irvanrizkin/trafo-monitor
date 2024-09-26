@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Temperature;
+use App\Models\DateGroup;
 use App\Models\Trafo;
-use App\Models\Voltage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class TrafoController extends Controller
@@ -16,10 +14,7 @@ class TrafoController extends Controller
         if (!$trafo) {
             return redirect()->route('not-found');
         }
-        $dates = Voltage::selectRaw('DATE(created_at) as date')
-            ->where('trafo_id', $id)
-            ->groupBy(DB::raw('DATE(created_at)'))
-            ->get();
+        $dates = DateGroup::where('trafo_id', $id)->get();
 
         return Inertia::render('Trafo/DetailV1', [
             'trafo' => $trafo,

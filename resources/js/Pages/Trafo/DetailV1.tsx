@@ -1,7 +1,6 @@
 import {
     AppBar,
     Box,
-    Button,
     Container,
     FormControl,
     Grid,
@@ -19,11 +18,9 @@ import {
 } from "@mui/material";
 import {useEffect, useState} from "react";
 import {TrafoDetailPropsV1} from "@/types";
-import GoogleMapReact from "google-map-react";
 import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
-    const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
     const dataCategories = [
         {id: 'vif', name: 'Data 1 : V, I , dan F'},
         {id: 'pqspf', name: 'Data 2 : P, Q, S dan PF'},
@@ -118,7 +115,7 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
                                     onChange={handleChange}
                                 >
                                     {dates.map((date, index) => (
-                                        <MenuItem key={index} value={date.date}>{date.date}</MenuItem>
+                                        <MenuItem key={index} value={date.date_group}>{date.date_group}</MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
