@@ -31,10 +31,12 @@ class ChartTHDController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $thdCurrents = $thdCurrents->reverse()->values();
         $thdVoltages = THDVoltage::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $thdVoltages = $thdVoltages->reverse()->values();
 
         $thdCurrentRMetrics = $aggregator->aggregate($thdCurrents, 'current_r');
         $thdCurrentSMetrics = $aggregator->aggregate($thdCurrents, 'current_s');

@@ -29,14 +29,17 @@ class ChartVIFController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $voltages = $voltages->reverse()->values();
         $currents = Current::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $currents = $currents->reverse()->values();
         $frequencies = Frequency::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $frequencies = $frequencies->reverse()->values();
 
         $voltageRMetrics = $aggregator->aggregate($voltages, 'voltage_r');
         $voltageSMetrics = $aggregator->aggregate($voltages, 'voltage_s');

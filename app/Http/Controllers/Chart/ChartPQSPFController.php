@@ -33,21 +33,25 @@ class ChartPQSPFController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $powers = $powers->reverse()->values();
 
         $reactivePowers = ReactivePower::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $reactivePowers = $reactivePowers->reverse()->values();
 
         $apparentPowers = ApparentPower::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $apparentPowers = $apparentPowers->reverse()->values();
 
         $powerFactors = PowerFactor::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $powerFactors = $powerFactors->reverse()->values();
 
         $powerRMetrics = $aggregator->aggregate($powers, 'power_r');
         $powerSMetrics = $aggregator->aggregate($powers, 'power_s');
