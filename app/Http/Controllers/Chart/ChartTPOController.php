@@ -20,7 +20,6 @@ class ChartTPOController extends Controller
     public function __invoke(Request $request)
     {
         $trafoId = $request->route('trafoid');
-        $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
@@ -33,18 +32,22 @@ class ChartTPOController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $temperatures = $temperatures->reverse()->values();
         $pressures = Pressure::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $pressures = $pressures->reverse()->values();
         $oilLevels = OilLevel::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $oilLevels = $oilLevels->reverse()->values();
         $ambientTemperatures = AmbientTemperature::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $ambientTemperatures = $ambientTemperatures->reverse()->values();
 
         $temperatureMetrics = $aggregator->aggregate($temperatures, 'temperature');
         $pressureMetrics = $aggregator->aggregate($pressures, 'pressure');
@@ -53,7 +56,6 @@ class ChartTPOController extends Controller
 
         return Inertia::render('Chart/ChartTPO', [
             'trafo' => $trafo,
-            'date' => $date,
             'temperatures' => $temperatures,
             'pressures' => $pressures,
             'oilLevels' => $oilLevels,

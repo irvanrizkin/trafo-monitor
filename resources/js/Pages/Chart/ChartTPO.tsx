@@ -16,7 +16,6 @@ import {AmbientTemperature, OilLevel, Pressure, Temperature} from "@/types/metri
 
 export default function ChartTPO({
                                      trafo,
-                                     date,
                                      temperatures,
                                      pressures,
                                      oilLevels,
@@ -63,7 +62,7 @@ export default function ChartTPO({
             <AppBarTriple
                 startText={'Chart TPO'}
                 middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
-                endText={date}
+                endText={"Last 12 Data"}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref

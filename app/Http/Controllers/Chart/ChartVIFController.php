@@ -16,7 +16,6 @@ class ChartVIFController extends Controller
     public function __invoke(Request $request)
     {
         $trafoId = $request->route('trafoid');
-        $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
@@ -29,14 +28,17 @@ class ChartVIFController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $voltages = $voltages->reverse()->values();
         $currents = Current::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $currents = $currents->reverse()->values();
         $frequencies = Frequency::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $frequencies = $frequencies->reverse()->values();
 
         $voltageRMetrics = $aggregator->aggregate($voltages, 'voltage_r');
         $voltageSMetrics = $aggregator->aggregate($voltages, 'voltage_s');
@@ -51,7 +53,6 @@ class ChartVIFController extends Controller
 
         return Inertia::render('Chart/ChartVIF', [
             'trafo' => $trafo,
-            'date' => $date,
             'voltages' => $voltages,
             'currents' => $currents,
             'frequencies' => $frequencies,

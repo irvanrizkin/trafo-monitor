@@ -19,7 +19,6 @@ class ChartPKAController extends Controller
     public function __invoke(Request $request)
     {
         $trafoId = $request->route('trafoid');
-        $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
@@ -32,16 +31,19 @@ class ChartPKAController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $powerLosses = $powerLosses->reverse()->values();
 
         $kFactors = KFactor::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $kFactors = $kFactors->reverse()->values();
 
         $triplenCurrents = TriplenCurrent::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $triplenCurrents = $triplenCurrents->reverse()->values();
 
         $powerLossMetrics = $aggregator->aggregate($powerLosses, 'power_loss');
         $kFactorMetrics = $aggregator->aggregate($kFactors, 'k_factor');
@@ -49,7 +51,6 @@ class ChartPKAController extends Controller
 
         return Inertia::render('Chart/ChartPKA', [
             'trafo' => $trafo,
-            'date' => $date,
             'powerLosses' => $powerLosses,
             'kFactors' => $kFactors,
             'triplenCurrents' => $triplenCurrents,

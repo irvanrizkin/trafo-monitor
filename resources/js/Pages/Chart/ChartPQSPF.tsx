@@ -17,7 +17,6 @@ import {MetricApparentPower, MetricPower, MetricPowerFactor, MetricReactivePower
 
 export default function ChartPQSPF({
                                        trafo,
-                                       date,
                                        powers,
                                        reactivePowers,
                                        apparentPowers,
@@ -76,7 +75,7 @@ export default function ChartPQSPF({
             <AppBarTriple
                 startText={'Chart PQSPF'}
                 middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
-                endText={date}
+                endText={"Last 12 Data"}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref

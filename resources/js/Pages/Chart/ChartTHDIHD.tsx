@@ -17,7 +17,6 @@ import {MetricTHDCurrent, MetricTHDVoltage} from "@/types/metric";
 
 export default function ChartTHDIHD({
                                         trafo,
-                                        date,
                                         thdVoltages,
                                         thdCurrents,
                                         thdVoltageRMetrics,
@@ -50,7 +49,7 @@ export default function ChartTHDIHD({
             <AppBarTriple
                 startText={'Chart THD'}
                 middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
-                endText={date}
+                endText={"Last 12 Data"}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref

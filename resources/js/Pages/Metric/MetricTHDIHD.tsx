@@ -70,7 +70,7 @@ export default function MetricTHDIHD({
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route('chart.thd-ihd', [trafo.id, date])}
+                    href={route('chart.thd-ihd', [trafo.id])}
                     text={'Open Chart'}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}

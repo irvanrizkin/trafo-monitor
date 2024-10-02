@@ -25,7 +25,7 @@ export default function MetricIHD({
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route('chart.ihd', [trafo.id, date])}
+                    href={route('chart.ihd', [trafo.id])}
                     text={'Open Chart'}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}

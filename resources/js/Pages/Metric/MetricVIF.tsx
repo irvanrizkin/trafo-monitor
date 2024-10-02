@@ -102,7 +102,7 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route('chart.vif', [trafo.id, date])}
+                    href={route('chart.vif', [trafo.id])}
                     text={'Open Chart'}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}

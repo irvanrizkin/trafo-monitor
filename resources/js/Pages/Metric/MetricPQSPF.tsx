@@ -133,7 +133,7 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route('chart.pqspf', [trafo.id, date])}
+                    href={route('chart.pqspf', [trafo.id])}
                     text={'Open Chart'}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}
