@@ -16,7 +16,6 @@ class ChartVIFController extends Controller
     public function __invoke(Request $request)
     {
         $trafoId = $request->route('trafoid');
-        $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
@@ -54,7 +53,6 @@ class ChartVIFController extends Controller
 
         return Inertia::render('Chart/ChartVIF', [
             'trafo' => $trafo,
-            'date' => $date,
             'voltages' => $voltages,
             'currents' => $currents,
             'frequencies' => $frequencies,

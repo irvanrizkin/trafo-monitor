@@ -19,7 +19,6 @@ class ChartPKAController extends Controller
     public function __invoke(Request $request)
     {
         $trafoId = $request->route('trafoid');
-        $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
@@ -52,7 +51,6 @@ class ChartPKAController extends Controller
 
         return Inertia::render('Chart/ChartPKA', [
             'trafo' => $trafo,
-            'date' => $date,
             'powerLosses' => $powerLosses,
             'kFactors' => $kFactors,
             'triplenCurrents' => $triplenCurrents,

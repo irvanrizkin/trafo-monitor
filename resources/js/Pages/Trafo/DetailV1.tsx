@@ -55,7 +55,7 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
 
     useEffect(() => {
         if (chartCategoryState) {
-            window.location.href = route(`chart.${chartCategoryState}`, [trafo.id, dateState]);
+            window.location.href = route(`chart.${chartCategoryState}`, [trafo.id]);
         }
     }, [chartCategoryState, route, trafo.id, dateState]);
 

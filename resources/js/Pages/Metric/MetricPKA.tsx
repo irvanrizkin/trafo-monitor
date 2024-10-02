@@ -62,7 +62,7 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route('chart.pka', [trafo.id, date])}
+                    href={route('chart.pka', [trafo.id])}
                     text={'Open Chart'}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}

@@ -20,7 +20,6 @@ class ChartTPOController extends Controller
     public function __invoke(Request $request)
     {
         $trafoId = $request->route('trafoid');
-        $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
@@ -57,7 +56,6 @@ class ChartTPOController extends Controller
 
         return Inertia::render('Chart/ChartTPO', [
             'trafo' => $trafo,
-            'date' => $date,
             'temperatures' => $temperatures,
             'pressures' => $pressures,
             'oilLevels' => $oilLevels,

@@ -15,7 +15,6 @@ import GoogleMap from "@/Components/Map/GoogleMap";
 
 export default function ChartIHD({
                                      trafo,
-                                     date,
                                      ihdVoltages,
                                      ihdCurrents,
                                  }: ChartIHDProps) {
@@ -192,7 +191,7 @@ export default function ChartIHD({
             <AppBarTriple
                 startText={'Chart IHD'}
                 middleText={trafo.name + ' - ' + trafo.address}
-                endText={date}
+                endText={"Latest Data"}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref

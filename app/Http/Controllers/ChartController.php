@@ -50,7 +50,7 @@ class ChartController extends Controller
         ]);
     }
 
-    public function getChartIHD($trafoId, $date) {
+    public function getChartIHD($trafoId) {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -60,14 +60,13 @@ class ChartController extends Controller
 
         return Inertia::render('Chart/ChartIHD', [
             'trafo' => $trafo,
-            'date' => $date,
             'title' => 'Chart IHD',
             'ihdCurrents' => $ihd,
             'ihdVoltages' => $ihdVoltages,
         ]);
     }
 
-    public function getChartAnalysis($trafoId, $date) {
+    public function getChartAnalysis($trafoId) {
         return Inertia::render('ComingSoon');
     }
 }

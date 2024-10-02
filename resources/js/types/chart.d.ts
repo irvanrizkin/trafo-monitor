@@ -44,7 +44,6 @@ export interface ChartMetricHD extends Metric {
 
 export type ChartVIFProps = PageProps & {
     trafo: TrafoV1;
-    date: string;
     voltages: MetricVoltage[];
     currents: MetricCurrent[];
     frequencies: MetricFrequency[];
@@ -60,7 +59,6 @@ export type ChartVIFProps = PageProps & {
 
 export type ChartPQSPFProps = PageProps & {
     trafo: TrafoV1;
-    date: string;
     powers: MetricPower[];
     reactivePowers: MetricReactivePower[];
     apparentPowers: MetricApparentPower[];
@@ -81,7 +79,6 @@ export type ChartPQSPFProps = PageProps & {
 
 export type ChartTHDIHDProps = PageProps & {
     trafo: TrafoV1;
-    date: string;
     thdVoltages: MetricTHDVoltage[];
     thdCurrents: MetricTHDCurrent[];
     thdVoltageRMetrics: AggregationResult;
@@ -94,7 +91,6 @@ export type ChartTHDIHDProps = PageProps & {
 
 export type ChartIHDProps = PageProps & {
     trafo: TrafoV1;
-    date: string;
     ihdVoltages: MetricHD[];
     ihdCurrents: MetricHD[];
     avgVoltageR: number;
@@ -107,7 +103,6 @@ export type ChartIHDProps = PageProps & {
 
 export type ChartTPOProps = PageProps & {
     trafo: TrafoV1;
-    date: string;
     temperatures: Temperature[],
     pressures: Pressure[],
     oilLevels: OilLevel[],
@@ -120,7 +115,6 @@ export type ChartTPOProps = PageProps & {
 
 export type ChartPKAProps = PageProps & {
     trafo: TrafoV1;
-    date: string;
     powerLosses: MetricPowerLoss[];
     kFactors: MetricKFactor[];
     triplenCurrents: MetricTriplenCurrent[];
