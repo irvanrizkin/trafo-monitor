@@ -26,7 +26,6 @@ import {MetricCurrent, MetricFrequency, MetricVoltage} from "@/types/metric";
 
 export default function ChartVIF({
                                      trafo,
-                                     date,
                                      voltages,
                                      currents,
                                      frequencies,
@@ -76,7 +75,7 @@ export default function ChartVIF({
             <AppBarTriple
                 startText={'Chart VIF'}
                 middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
-                endText={date}
+                endText={"Last 12 Data"}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref

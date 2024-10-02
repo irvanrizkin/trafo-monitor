@@ -18,7 +18,6 @@ class ChartTHDController extends Controller
     public function __invoke(Request $request)
     {
         $trafoId = $request->route('trafoid');
-        $date = $request->route('date');
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
@@ -31,10 +30,12 @@ class ChartTHDController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $thdCurrents = $thdCurrents->reverse()->values();
         $thdVoltages = THDVoltage::where('trafo_id', $trafoId)
             ->orderBy('created_at', 'desc')
             ->limit(12)
             ->get();
+        $thdVoltages = $thdVoltages->reverse()->values();
 
         $thdCurrentRMetrics = $aggregator->aggregate($thdCurrents, 'current_r');
         $thdCurrentSMetrics = $aggregator->aggregate($thdCurrents, 'current_s');
@@ -46,7 +47,6 @@ class ChartTHDController extends Controller
 
         return Inertia::render('Chart/ChartTHDIHD', [
             'trafo' => $trafo,
-            'date' => $date,
             'thdCurrents' => $thdCurrents,
             'thdVoltages' => $thdVoltages,
             'thdCurrentRMetrics' => $thdCurrentRMetrics,

@@ -20,7 +20,6 @@ import {MetricKFactor, MetricPowerLoss, MetricTriplenCurrent} from "@/types/metr
 
 export default function ChartPKA({
                                      trafo,
-                                     date,
                                      powerLosses,
                                      kFactors,
                                      triplenCurrents,
@@ -56,7 +55,7 @@ export default function ChartPKA({
             <AppBarTriple
                 startText={'Chart PKA'}
                 middleText={trafo ? trafo.name + ' - ' + trafo.address : ''}
-                endText={date}
+                endText={"Last 12 Data"}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref
