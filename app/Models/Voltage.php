@@ -15,5 +15,6 @@ class Voltage extends Model
         'voltage_r',
         'voltage_s',
         'voltage_t',
+        'datetime',
     ];
 }

@@ -34,36 +34,30 @@ class MetricMQTTController extends Controller
         }
         switch ($topic) {
             case 'data1':
-                $lastVoltage = Voltage::where('trafo_id', $trafoId)->latest()->first();
-                $voltage = Voltage::create([
+                $voltage = Voltage::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
                     'voltage_r' => $value,
-                    'voltage_s' => $lastVoltage?->voltage_s ?? 0,
-                    'voltage_t' => $lastVoltage?->voltage_t ?? 0,
-                ]);
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($voltage, 201);
             case 'data2':
-                $lastVoltage = Voltage::where('trafo_id', $trafoId)->latest()->first();
-                $voltage = Voltage::create([
+                $voltage = Voltage::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'voltage_r' => $lastVoltage?->voltage_r ?? 0,
                     'voltage_s' => $value,
-                    'voltage_t' => $lastVoltage?->voltage_t ?? 0,
-                ]);
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($voltage, 201);
             case 'data3':
-                $lastVoltage = Voltage::where('trafo_id', $trafoId)->latest()->first();
-                $voltage = Voltage::create([
+                $voltage = Voltage::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'voltage_r' => $lastVoltage?->voltage_r ?? 0,
-                    'voltage_s' => $lastVoltage?->voltage_s ?? 0,
                     'voltage_t' => $value,
-                ]);
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($voltage, 201);
             case 'data4':
