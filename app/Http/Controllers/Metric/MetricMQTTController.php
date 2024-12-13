@@ -71,51 +71,39 @@ class MetricMQTTController extends Controller
                 $this->insertTodayDate($trafoId);
                 return response()->json($frequency, 201);
             case 'data5':
-                $lastCurrent = Current::where('trafo_id', $trafoId)->latest()->first();
-                $current = Current::create([
+                $current = Current::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
                     'current_r' => $value,
-                    'current_s' => $lastCurrent?->current_s ?? 0,
-                    'current_t' => $lastCurrent?->current_t ?? 0,
-                    'current_in' => $lastCurrent?->current_in ?? 0,
-                ]);
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_r']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
             case 'data6':
-                $lastCurrent = Current::where('trafo_id', $trafoId)->latest()->first();
-                $current = Current::create([
+                $current = Current::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'current_r' => $lastCurrent?->current_r ?? 0,
                     'current_s' => $value,
-                    'current_t' => $lastCurrent?->current_t ?? 0,
-                    'current_in' => $lastCurrent?->current_in ?? 0,
-                ]);
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
             case 'data7':
-                $lastCurrent = Current::where('trafo_id', $trafoId)->latest()->first();
-                $current = Current::create([
+                $current = Current::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'current_r' => $lastCurrent?->current_r ?? 0,
-                    'current_s' => $lastCurrent?->current_s ?? 0,
                     'current_t' => $value,
-                    'current_in' => $lastCurrent?->current_in ?? 0,
-                ]);
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
             case 'data8':
-                $lastCurrent = Current::where('trafo_id', $trafoId)->latest()->first();
-                $current = Current::create([
+                $current = Current::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'current_r' => $lastCurrent?->current_r ?? 0,
-                    'current_s' => $lastCurrent?->current_s ?? 0,
-                    'current_t' => $lastCurrent?->current_t ?? 0,
                     'current_in' => $value,
-                ]);
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_in']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
             case 'data9':
