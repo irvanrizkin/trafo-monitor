@@ -8,6 +8,7 @@ use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\DateGroup;
 use App\Models\Frequency;
+use App\Models\KFactor;
 use App\Models\OilLevel;
 use App\Models\Power;
 use App\Models\PowerFactor;
@@ -280,6 +281,34 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['current_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($thdCurrent, 201);
+            // K Factor
+            case 'data88':
+                $kFactor = KFactor::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'k_factor_r' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['k_factor_r']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($kFactor, 201);
+            case 'data89':
+                $kFactor = KFactor::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'k_factor_s' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['k_factor_s']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($kFactor, 201);
+            case 'data90':
+                $kFactor = KFactor::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'k_factor_t' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['k_factor_t']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($kFactor, 201);        
             default:
                 return response()->json([
                     'message' => 'Invalid topic',

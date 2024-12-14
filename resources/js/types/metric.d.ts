@@ -62,6 +62,9 @@ export interface MetricPowerLoss extends Metric {
 
 export interface MetricKFactor extends Metric {
     k_factor: number;
+    k_factor_r: number;
+    k_factor_s: number;
+    k_factor_t: number;
 }
 
 export interface MetricTriplenCurrent extends Metric {
