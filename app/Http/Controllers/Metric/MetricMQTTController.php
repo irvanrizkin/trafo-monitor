@@ -8,6 +8,7 @@ use App\Models\Current;
 use App\Models\DateGroup;
 use App\Models\Frequency;
 use App\Models\OilLevel;
+use App\Models\PowerFactor;
 use App\Models\Pressure;
 use App\Models\Temperature;
 use App\Models\THDCurrent;
@@ -33,6 +34,7 @@ class MetricMQTTController extends Controller
             ], 400);
         }
         switch ($topic) {
+            // Voltage
             case 'data1':
                 $voltage = Voltage::upsert([
                     'trafo_id' => $trafoId,
@@ -60,7 +62,8 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($voltage, 201);
-            case 'data4':
+            // Frequency
+            case 'data20':
                 $frequency = Frequency::create([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
@@ -70,7 +73,8 @@ class MetricMQTTController extends Controller
                 ]);
                 $this->insertTodayDate($trafoId);
                 return response()->json($frequency, 201);
-            case 'data5':
+            // Current
+            case 'data4':
                 $current = Current::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
@@ -79,7 +83,7 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['current_r']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
-            case 'data6':
+            case 'data5':
                 $current = Current::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
@@ -88,7 +92,7 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['current_s']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
-            case 'data7':
+            case 'data6':
                 $current = Current::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
@@ -97,7 +101,7 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['current_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
-            case 'data8':
+            case 'data7':
                 $current = Current::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
@@ -106,39 +110,33 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['current_in']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
+            case 'data8':
+                $powerFactor = PowerFactor::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'power_factor_r' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['power_factor_r']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($powerFactor, 201);
             case 'data9':
-                $lastTHDVoltage = THDVoltage::where('trafo_id', $trafoId)->latest()->first();
-                $thdVoltage = THDVoltage::create([
+                $powerFactor = PowerFactor::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'voltage_r' => $value,
-                    'voltage_s' => $lastTHDVoltage?->voltage_s ?? 0,
-                    'voltage_t' => $lastTHDVoltage?->voltage_t ?? 0,
-                ]);
+                    'power_factor_s' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['power_factor_s']);
                 $this->insertTodayDate($trafoId);
-                return response()->json($thdVoltage, 201);
+                return response()->json($powerFactor, 201);
             case 'data10':
-                $lastTHDVoltage = THDVoltage::where('trafo_id', $trafoId)->latest()->first();
-                $thdVoltage = THDVoltage::create([
+                $powerFactor = PowerFactor::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'voltage_r' => $lastTHDVoltage?->voltage_r ?? 0,
-                    'voltage_s' => $value,
-                    'voltage_t' => $lastTHDVoltage?->voltage_t ?? 0,
-                ]);
+                    'power_factor_t' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['power_factor_t']);
                 $this->insertTodayDate($trafoId);
-                return response()->json($thdVoltage, 201);
-            case 'data11':
-                $lastTHDVoltage = THDVoltage::where('trafo_id', $trafoId)->latest()->first();
-                $thdVoltage = THDVoltage::create([
-                    'trafo_id' => $trafoId,
-                    'topic_name' => $topic,
-                    'voltage_r' => $lastTHDVoltage?->voltage_r ?? 0,
-                    'voltage_s' => $lastTHDVoltage?->voltage_s ?? 0,
-                    'voltage_t' => $value,
-                ]);
-                $this->insertTodayDate($trafoId);
-                return response()->json($thdVoltage, 201);
+                return response()->json($powerFactor, 201);
             case 'data12':
                 $lastTHDCurrent = THDCurrent::where('trafo_id', $trafoId)->latest()->first();
                 $thdCurrent = THDCurrent::create([
