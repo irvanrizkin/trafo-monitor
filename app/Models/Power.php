@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Power extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'trafo_id',
+        'topic_name',
+        'power_r',
+        'power_s',
+        'power_t',
+        'datetime',
+    ];
 }

@@ -9,6 +9,7 @@ use App\Models\Current;
 use App\Models\DateGroup;
 use App\Models\Frequency;
 use App\Models\OilLevel;
+use App\Models\Power;
 use App\Models\PowerFactor;
 use App\Models\Pressure;
 use App\Models\Temperature;
@@ -167,30 +168,34 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['apparent_power_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($apparentPower, 201);
+            // Active Power
+            case 'data14':
+                $power = Power::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'power_r' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['power_r']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($power, 201);
             case 'data15':
-                $pressure = Pressure::create([
+                $power = Power::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'pressure' => $value,
-                ]);
+                    'power_s' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['power_s']);
                 $this->insertTodayDate($trafoId);
-                return response()->json($pressure, 201);
+                return response()->json($power, 201);
             case 'data16':
-                $temperature = Temperature::create([
+                $power = Power::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'temperature' => $value,
-                ]);
+                    'power_t' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['power_t']);
                 $this->insertTodayDate($trafoId);
-                return response()->json($temperature, 201);
-            case 'data17':
-                $ambientTemp = AmbientTemperature::create([
-                    'trafo_id' => $trafoId,
-                    'topic_name' => $topic,
-                    'ambient_temperature' => $value,
-                ]);
-                $this->insertTodayDate($trafoId);
-                return response()->json($ambientTemp, 201);
+                return response()->json($power, 201);
             case 'data18':
                 $oilLevel = OilLevel::create([
                     'trafo_id' => $trafoId,
