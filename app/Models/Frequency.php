@@ -15,5 +15,6 @@ class Frequency extends Model
         'frequency_r',
         'frequency_s',
         'frequency_t',
+        'datetime'
     ];
 }

@@ -65,17 +65,6 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($voltage, 201);
-            // Frequency
-            case 'data20':
-                $frequency = Frequency::create([
-                    'trafo_id' => $trafoId,
-                    'topic_name' => $topic,
-                    'frequency_r' => $value,
-                    'frequency_s' => $value,
-                    'frequency_t' => $value,
-                ]);
-                $this->insertTodayDate($trafoId);
-                return response()->json($frequency, 201);
             // Current
             case 'data4':
                 $current = Current::upsert([
@@ -197,6 +186,7 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['power_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($power, 201);
+            // Reactive Power
             case 'data17':
                 $reactivePower = ReactivePower::upsert([
                     'trafo_id' => $trafoId,
@@ -224,6 +214,16 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['reactive_power_s']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($reactivePower, 201);
+            // Frequency
+            case 'data20':
+                $frequency = Frequency::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'frequency_r' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['frequency_r']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($frequency, 201);
             default:
                 return response()->json([
                     'message' => 'Invalid topic',
