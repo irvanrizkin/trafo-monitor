@@ -13,5 +13,6 @@ class Pressure extends Model
         'trafo_id',
         'topic_name',
         'pressure',
+        'datetime'
     ];
 }

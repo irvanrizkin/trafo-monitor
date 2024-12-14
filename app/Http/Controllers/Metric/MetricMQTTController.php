@@ -309,6 +309,15 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['k_factor_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($kFactor, 201);
+            case 'data91':
+                $pressure = Pressure::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'pressure' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['pressure']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($pressure, 201);
             case 'data92':
                 $temperature = Temperature::upsert([
                     'trafo_id' => $trafoId,
