@@ -224,6 +224,34 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['frequency_r']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($frequency, 201);
+            // THD Voltage
+            case 'data21':
+                $thdVoltage = THDVoltage::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($thdVoltage, 201);
+            case 'data22':
+                $thdVoltage = THDVoltage::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($thdVoltage, 201);
+            case 'data23':
+                $thdVoltage = THDVoltage::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($thdVoltage, 201);
             default:
                 return response()->json([
                     'message' => 'Invalid topic',
