@@ -13,5 +13,6 @@ class AmbientTemperature extends Model
         'trafo_id',
         'topic_name',
         'ambient_temperature',
+        'datetime'
     ];
 }
