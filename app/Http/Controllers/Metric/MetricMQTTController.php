@@ -12,6 +12,7 @@ use App\Models\OilLevel;
 use App\Models\Power;
 use App\Models\PowerFactor;
 use App\Models\Pressure;
+use App\Models\ReactivePower;
 use App\Models\Temperature;
 use App\Models\THDCurrent;
 use App\Models\THDVoltage;
@@ -196,14 +197,33 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['power_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($power, 201);
-            case 'data18':
-                $oilLevel = OilLevel::create([
+            case 'data17':
+                $reactivePower = ReactivePower::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'ambient_temperature' => $value,
-                ]);
+                    'reactive_power_r' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['reactive_power_r']);
                 $this->insertTodayDate($trafoId);
-                return response()->json($oilLevel, 201);
+                return response()->json($reactivePower, 201);
+            case 'data18':
+                $reactivePower = ReactivePower::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'reactive_power_s' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['reactive_power_s']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($reactivePower, 201);
+            case 'data19':
+                $reactivePower = ReactivePower::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'reactive_power_s' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['reactive_power_s']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($reactivePower, 201);
             default:
                 return response()->json([
                     'message' => 'Invalid topic',
