@@ -336,6 +336,15 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['ambient_temperature']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($ambientTemperature, 201);
+            case 'data94':
+                $oilLevel = OilLevel::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'oil_level' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['oil_level']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($oilLevel, 201);
             default:
                 return response()->json([
                     'message' => 'Invalid topic',
