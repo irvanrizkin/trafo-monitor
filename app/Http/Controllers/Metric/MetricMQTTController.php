@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Metric;
 
 use App\Http\Controllers\Controller;
 use App\Models\AmbientTemperature;
+use App\Models\ApparentPower;
 use App\Models\Current;
 use App\Models\DateGroup;
 use App\Models\Frequency;
@@ -110,6 +111,7 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['current_in']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($current, 201);
+            // Power Factor
             case 'data8':
                 $powerFactor = PowerFactor::upsert([
                     'trafo_id' => $trafoId,
@@ -137,39 +139,34 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['power_factor_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($powerFactor, 201);
+            // Apparent Power
+            case 'data11':
+                $apparentPower = ApparentPower::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'apparent_power_r' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['apparent_power_r']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($apparentPower, 201);
             case 'data12':
-                $lastTHDCurrent = THDCurrent::where('trafo_id', $trafoId)->latest()->first();
-                $thdCurrent = THDCurrent::create([
+                $apparentPower = ApparentPower::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'current_r' => $value,
-                    'current_s' => $lastTHDCurrent?->current_s ?? 0,
-                    'current_t' => $lastTHDCurrent?->current_t ?? 0,
-                ]);
+                    'apparent_power_s' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['apparent_power_s']);
                 $this->insertTodayDate($trafoId);
-                return response()->json($thdCurrent, 201);
+                return response()->json($apparentPower, 201);
             case 'data13':
-                $lastTHDCurrent = THDCurrent::where('trafo_id', $trafoId)->latest()->first();
-                $thdCurrent = THDCurrent::create([
+                $apparentPower = ApparentPower::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'current_r' => $lastTHDCurrent?->current_r ?? 0,
-                    'current_s' => $value,
-                    'current_t' => $lastTHDCurrent?->current_t ?? 0,
-                ]);
+                    'apparent_power_t' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['apparent_power_t']);
                 $this->insertTodayDate($trafoId);
-                return response()->json($thdCurrent, 201);
-            case 'data14':
-                $lastTHDCurrent = THDCurrent::where('trafo_id', $trafoId)->latest()->first();
-                $thdCurrent = THDCurrent::create([
-                    'trafo_id' => $trafoId,
-                    'topic_name' => $topic,
-                    'current_r' => $lastTHDCurrent?->current_r ?? 0,
-                    'current_s' => $lastTHDCurrent?->current_s ?? 0,
-                    'current_t' => $value,
-                ]);
-                $this->insertTodayDate($trafoId);
-                return response()->json($thdCurrent, 201);
+                return response()->json($apparentPower, 201);
             case 'data15':
                 $pressure = Pressure::create([
                     'trafo_id' => $trafoId,
