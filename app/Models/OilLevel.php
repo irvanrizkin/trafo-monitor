@@ -13,5 +13,6 @@ class OilLevel extends Model
         'trafo_id',
         'topic_name',
         'oil_level',
+        'datetime'
     ];
 }

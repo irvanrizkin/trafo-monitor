@@ -15,5 +15,6 @@ class THDCurrent extends Model
         'current_r',
         'current_s',
         'current_t',
+        'datetime'
     ];
 }

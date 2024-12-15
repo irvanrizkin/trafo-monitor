@@ -16,7 +16,9 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
     const columnsKFactor: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'k_factor', headerName: 'K Factor'},
+        { field: 'k_factor_r', headerName: 'R'},
+        { field: 'k_factor_s', headerName: 'S'},
+        { field: 'k_factor_t', headerName: 'T'},
     ]
 
     const columnsTriplenCurrent: GridColDef[] = [
@@ -37,7 +39,9 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
         return {
             id: kFactor.id,
             createdAt: new Date(kFactor.created_at).toLocaleString(),
-            k_factor: kFactor.k_factor,
+            k_factor_r: kFactor.k_factor_r,
+            k_factor_s: kFactor.k_factor_s,
+            k_factor_t: kFactor.k_factor_t,
         }
     });
 

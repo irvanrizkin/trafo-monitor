@@ -13,5 +13,6 @@ class Temperature extends Model
         'trafo_id',
         'topic_name',
         'temperature',
+        'datetime',
     ];
 }

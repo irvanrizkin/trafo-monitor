@@ -77,7 +77,7 @@ Route::prefix('metric')->middleware(['auth'])->group(function () {
         ->name('metric.pqspf');
     Route::get('/{trafoid}/{date}/thd-ihd', [MetricController::class, 'getMetricTHDIHD'])
         ->name('metric.thd-ihd');
-    Route::get('/{trafoid}/{date}/ihd', [MetricController::class, 'getMetricIHD'])
+    Route::get('/{trafoid}/{date}/ihd', [MetricController::class, 'getMetricIHDV2'])
         ->name('metric.ihd');
     Route::get('/{trafoid}/{date}/tpo', [MetricController::class, 'getMetricTPO'])
         ->name('metric.tpo');
@@ -94,7 +94,7 @@ Route::prefix('chart')->middleware(['auth'])->group(function () {
         ->name('chart.pqspf');
     Route::get('/{trafoid}/thd-ihd', ChartTHDController::class)
         ->name('chart.thd-ihd');
-    Route::get('/{trafoid}/ihd', [ChartController::class, 'getChartIHD'])
+    Route::get('/{trafoid}/ihd', [ChartController::class, 'getChartIHDV2'])
         ->name('chart.ihd');
     Route::get('/{trafoid}/tpo', ChartTPOController::class)
         ->name('chart.tpo');

@@ -16,5 +16,6 @@ class Current extends Model
         'current_s',
         'current_t',
         'current_in',
+        'datetime',
     ];
 }

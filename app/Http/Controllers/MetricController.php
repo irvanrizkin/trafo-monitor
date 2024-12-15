@@ -8,7 +8,9 @@ use App\Models\Current;
 use App\Models\Frequency;
 use App\Models\IHD;
 use App\Models\IHDCurrent;
+use App\Models\IHDCurrentV2;
 use App\Models\IHDVoltage;
+use App\Models\IHDVoltageV2;
 use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
 use App\Models\Metric;
@@ -119,6 +121,24 @@ class MetricController extends Controller
             'chartRoute' => 'chart.ihd',
             'ihdCurrents' => $ihd,
             'ihdVoltages' => $ihdVoltage,
+        ]);
+    }
+
+    public function getMetricIHDV2($trafoId, $date) {
+        $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
+        $ihdCurrents = IHDCurrentV2::where('trafo_id', $trafoId)->get();
+        $ihdVoltages = IHDVoltageV2::where('trafo_id', $trafoId)->get();
+
+        return Inertia::render('Metric/MetricIHDV2', [
+            'trafo' => $trafo,
+            'date' => $date,
+            'title' => 'Metric IHD',
+            'chartRoute' => 'chart.ihd-v2',
+            'ihdCurrents' => $ihdCurrents,
+            'ihdVoltages' => $ihdVoltages,
         ]);
     }
 
