@@ -9,6 +9,7 @@ use App\Models\Current;
 use App\Models\DateGroup;
 use App\Models\Frequency;
 use App\Models\IHDCurrentV2;
+use App\Models\IHDVoltageV2;
 use App\Models\KFactor;
 use App\Models\OilLevel;
 use App\Models\Power;
@@ -254,6 +255,279 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($thdVoltage, 201);
+            // IHD Voltage R
+            case 'data24':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h1' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h1']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data25':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h3' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h3']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data26':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h5' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h5']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data27':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h7' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h7']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data28':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h9' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h9']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data29':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h11' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h11']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data30':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h13' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h13']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data31':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h15' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h15']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data32':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h17' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h17']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data33':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_r_h19' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_r_h19']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            // IHD Voltage S
+            case 'data34':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h1' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h1']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data35':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h3' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h3']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data36':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h5' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h5']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data37':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h7' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h7']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data38':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h9' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h9']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data39':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h11' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h11']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data40':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h13' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h13']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data41':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h15' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h15']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data42':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h17' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h17']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data43':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_s_h19' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_s_h19']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            // IHD Voltage T
+            case 'data44':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h1' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h1']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data45':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h3' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h3']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data46':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h5' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h5']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data47':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h7' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h7']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data48':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h9' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h9']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data49':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h11' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h11']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data50':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h13' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h13']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data51':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h15' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h15']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data52':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h17' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h17']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
+            case 'data53':
+                $ihdVoltage = IHDVoltageV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'voltage_t_h19' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['voltage_t_h19']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdVoltage, 201);
             // THD Current
             case 'data54':
                 $thdCurrent = THDCurrent::upsert([
