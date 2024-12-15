@@ -373,6 +373,97 @@ class MetricMQTTController extends Controller
                 ], ['trafo_id', 'topic_name', 'datetime'], ['current_r_h19']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($ihdCurrent, 201);
+            // IHD Current S
+            case 'data68':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h1' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h1']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data69':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h3' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h3']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data70':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h5' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h5']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data71':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h7' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h7']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data72':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h9' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h9']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data73':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h11' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h11']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data74':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h13' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h13']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data75':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h15' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h15']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data76':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h17' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h17']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
+            case 'data77':
+                $ihdCurrent = IHDCurrentV2::upsert([
+                    'trafo_id' => $trafoId,
+                    'topic_name' => $topic,
+                    'current_s_h19' => $value,
+                    'datetime' => Carbon::now()->toDateTimeString(),
+                ], ['trafo_id', 'topic_name', 'datetime'], ['current_s_h19']);
+                $this->insertTodayDate($trafoId);
+                return response()->json($ihdCurrent, 201);
             // K Factor
             case 'data88':
                 $kFactor = KFactor::upsert([
