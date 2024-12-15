@@ -77,7 +77,7 @@ Route::prefix('metric')->middleware(['auth'])->group(function () {
         ->name('metric.pqspf');
     Route::get('/{trafoid}/{date}/thd-ihd', [MetricController::class, 'getMetricTHDIHD'])
         ->name('metric.thd-ihd');
-    Route::get('/{trafoid}/{date}/ihd', [MetricController::class, 'getMetricIHD'])
+    Route::get('/{trafoid}/{date}/ihd', [MetricController::class, 'getMetricIHDV2'])
         ->name('metric.ihd');
     Route::get('/{trafoid}/{date}/tpo', [MetricController::class, 'getMetricTPO'])
         ->name('metric.tpo');

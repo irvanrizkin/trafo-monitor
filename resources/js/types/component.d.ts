@@ -22,6 +22,14 @@ export type OrderTableBodyProps = Props & {
     order: Order;
 }
 
+export type OrderTableBodyV2Props = Props & {
+    key: React.Key;
+    orderName: string;
+    rValue: number;
+    sValue: number;
+    tValue: number;
+}
+
 export type GaugeGroupProps = Props & {
     gauges: number[][]
     labels: string[],

@@ -1,4 +1,4 @@
-import {PageProps, TrafoV1} from "@/types/index";
+import { PageProps, TrafoV1 } from "@/types/index";
 
 export interface Metric {
     id: number;
@@ -125,6 +125,74 @@ export interface MetricHD extends Metric {
     h21: Order;
 }
 
+export interface MetricIHDCurrentV2 extends Metric {
+    current_r_h1: number;
+    current_s_h1: number;
+    current_t_h1: number;
+    current_r_h3: number;
+    current_s_h3: number;
+    current_t_h3: number;
+    current_r_h5: number;
+    current_s_h5: number;
+    current_t_h5: number;
+    current_r_h7: number;
+    current_s_h7: number;
+    current_t_h7: number;
+    current_r_h9: number;
+    current_s_h9: number;
+    current_t_h9: number;
+    current_r_h11: number;
+    current_s_h11: number;
+    current_t_h11: number;
+    current_r_h13: number;
+    current_s_h13: number;
+    current_t_h13: number;
+    current_r_h15: number;
+    current_s_h15: number;
+    current_t_h15: number;
+    current_r_h17: number;
+    current_s_h17: number;
+    current_t_h17: number;
+    current_r_h19: number;
+    current_s_h19: number;
+    current_t_h19: number;
+    datetime: string;
+}
+
+export interface MetricIHDVoltageV2 extends Metric {
+    voltage_r_h1: number;
+    voltage_s_h1: number;
+    voltage_t_h1: number;
+    voltage_r_h3: number;
+    voltage_s_h3: number;
+    voltage_t_h3: number;
+    voltage_r_h5: number;
+    voltage_s_h5: number;
+    voltage_t_h5: number;
+    voltage_r_h7: number;
+    voltage_s_h7: number;
+    voltage_t_h7: number;
+    voltage_r_h9: number;
+    voltage_s_h9: number;
+    voltage_t_h9: number;
+    voltage_r_h11: number;
+    voltage_s_h11: number;
+    voltage_t_h11: number;
+    voltage_r_h13: number;
+    voltage_s_h13: number;
+    voltage_t_h13: number;
+    voltage_r_h15: number;
+    voltage_s_h15: number;
+    voltage_t_h15: number;
+    voltage_r_h17: number;
+    voltage_s_h17: number;
+    voltage_t_h17: number;
+    voltage_r_h19: number;
+    voltage_s_h19: number;
+    voltage_t_h19: number;
+    datetime: string;
+}
+
 export interface Temperature extends Metric {
     temperature: number;
 }
@@ -170,6 +238,13 @@ export type MetricIHDProps = PageProps & {
     date: string;
     ihdCurrents: MetricHD[];
     ihdVoltages: MetricHD[];
+}
+
+export type MetricIHDV2Props = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    ihdCurrents: MetricIHDCurrentV2[];
+    ihdVoltages: MetricIHDVoltageV2[];
 }
 
 export type MetricTPOProps = PageProps & {
