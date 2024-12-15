@@ -4,7 +4,7 @@ import {
     Metric, MetricApparentPower,
     MetricCurrent,
     MetricFrequency,
-    MetricHD, MetricKFactor, MetricPower, MetricPowerFactor, MetricPowerLoss, MetricReactivePower,
+    MetricHD, MetricIHDCurrentV2, MetricIHDVoltageV2, MetricKFactor, MetricPower, MetricPowerFactor, MetricPowerLoss, MetricReactivePower,
     MetricTHDCurrent,
     MetricTHDVoltage, MetricTriplenCurrent,
     MetricVoltage, OilLevel, Pressure, Temperature
@@ -99,6 +99,12 @@ export type ChartIHDProps = PageProps & {
     avgCurrentR: number;
     avgCurrentS: number;
     avgCurrentT: number;
+}
+
+export type ChartIHDPropsV2 = PageProps & {
+    trafo: TrafoV1;
+    ihdVoltages: MetricIHDVoltageV2[];
+    ihdCurrents: MetricIHDCurrentV2[];
 }
 
 export type ChartTPOProps = PageProps & {

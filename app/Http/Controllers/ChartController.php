@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\IHD;
+use App\Models\IHDCurrentV2;
 use App\Models\IHDVoltage;
+use App\Models\IHDVoltageV2;
 use App\Models\Metric;
 use App\Models\Trafo;
 use Illuminate\Http\Request;
@@ -63,6 +65,22 @@ class ChartController extends Controller
             'title' => 'Chart IHD',
             'ihdCurrents' => $ihd,
             'ihdVoltages' => $ihdVoltages,
+        ]);
+    }
+
+    public function getChartIHDV2($trafoId) {
+        $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return redirect()->route('not-found');
+        }
+        $ihdVoltages = IHDVoltageV2::where('trafo_id', $trafoId)->latest()->get();
+        $ihdCurrents = IHDCurrentV2::where('trafo_id', $trafoId)->latest()->get();
+
+        return Inertia::render('Chart/ChartIHDV2', [
+            'trafo' => $trafo,
+            'title' => 'Chart IHD',
+            'ihdVoltages' => $ihdVoltages,
+            'ihdCurrents' => $ihdCurrents,
         ]);
     }
 
