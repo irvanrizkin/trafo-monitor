@@ -212,9 +212,9 @@ class MetricMQTTController extends Controller
                 $reactivePower = ReactivePower::upsert([
                     'trafo_id' => $trafoId,
                     'topic_name' => $topic,
-                    'reactive_power_s' => $value,
+                    'reactive_power_t' => $value,
                     'datetime' => Carbon::now()->toDateTimeString(),
-                ], ['trafo_id', 'topic_name', 'datetime'], ['reactive_power_s']);
+                ], ['trafo_id', 'topic_name', 'datetime'], ['reactive_power_t']);
                 $this->insertTodayDate($trafoId);
                 return response()->json($reactivePower, 201);
             // Frequency
