@@ -21,7 +21,6 @@ return new class extends Migration
                 $table->double("voltage_t_h$i")->default(0);
             }
             $table->timestamps();
-            $table->string('datetime')->unique();
         });
     }
 

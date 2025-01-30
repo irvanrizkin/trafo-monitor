@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('trafo_id');
             $table->string('topic_name');
-            $table->double('frequency_r');
-            $table->double('frequency_s');
-            $table->double('frequency_t');
+            $table->double('frequency_r')->default(0);
+            $table->double('frequency_s')->default(0);
+            $table->double('frequency_t')->default(0);
             $table->timestamps();
         });
     }

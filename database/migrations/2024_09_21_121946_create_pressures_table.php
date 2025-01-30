@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('trafo_id');
             $table->string('topic_name');
-            $table->double('pressure');
+            $table->double('pressure')->default(0);
             $table->timestamps();
         });
     }

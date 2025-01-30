@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('trafo_id');
             $table->string('topic_name');
-            $table->double('reactive_power_r');
-            $table->double('reactive_power_s');
-            $table->double('reactive_power_t');
+            $table->double('reactive_power_r')->default(0);
+            $table->double('reactive_power_s')->default(0);
+            $table->double('reactive_power_t')->default(0);
             $table->timestamps();
         });
     }

@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('trafo_id');
             $table->string('topic_name');
-            $table->double('k_factor');
+            $table->double('k_factor_r');
+            $table->double('k_factor_s');
+            $table->double('k_factor_t');
             $table->timestamps();
         });
     }

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('power_losses', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('trafo_id');
-            $table->string('topic_name');
-            $table->double('power_loss');
+            $table->bigInteger('trafo_id')->default(0);
+            $table->string('topic_name')->default(0);
+            $table->double('power_loss')->default(0);
             $table->timestamps();
         });
     }

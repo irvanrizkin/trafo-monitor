@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('trafo_id');
             $table->string('topic_name');
-            $table->double('voltage_r');
-            $table->double('voltage_s');
-            $table->double('voltage_t');
+            $table->double('voltage_r')->default(0);
+            $table->double('voltage_s')->default(0);
+            $table->double('voltage_t')->default(0);
             $table->timestamps();
         });
     }

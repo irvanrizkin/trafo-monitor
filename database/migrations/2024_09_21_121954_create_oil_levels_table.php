@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('trafo_id');
             $table->string('topic_name');
-            $table->double('oil_level');
+            $table->double('oil_level')->default(0);
             $table->timestamps();
         });
     }

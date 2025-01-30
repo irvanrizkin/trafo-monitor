@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('trafo_id');
             $table->string('topic_name');
-            $table->double('temperature');
+            $table->double('temperature')->default(0);
             $table->timestamps();
         });
     }

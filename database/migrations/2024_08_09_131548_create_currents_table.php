@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('trafo_id');
             $table->string('topic_name');
-            $table->double('current_r');
-            $table->double('current_s');
-            $table->double('current_t');
+            $table->double('current_r')->default(0);
+            $table->double('current_s')->default(0);
+            $table->double('current_t')->default(0);
+            $table->double('current_in')->default(0);
             $table->timestamps();
         });
     }
