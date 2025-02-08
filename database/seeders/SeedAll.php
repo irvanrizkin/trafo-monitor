@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Database\Seeders\ActivePowerSeeder;
 use Database\Seeders\AmbientTemperatureSeeder;
 use Database\Seeders\ApparentPowerSeeder;
