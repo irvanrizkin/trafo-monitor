@@ -254,16 +254,24 @@ class MetricController extends Controller
         if (!$trafo) {
             return redirect()->route('not-found');
         }
-        $powerLosses = PowerLoss::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $kFactors = KFactor::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
-        $triplenCurrents = TriplenCurrent::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
+
+        $pkaMaxValues = MaxValue::where('category', 'pka')->get();
+
+        $latestKFactor = optional($kFactors->sortByDesc('created_at')->first())->k_factor ?? 0;
+
+        $iotData = [
+            'k_factor' => $latestKFactor,
+        ];
+
+        $classifiedData = ThresholdService::classifyData($iotData);
 
         return Inertia::render('Metric/MetricPKA', [
             'trafo' => $trafo,
             'date' => $date,
-            'powerLosses' => $powerLosses,
             'kFactors' => $kFactors,
-            'triplenCurrents' => $triplenCurrents
+            'classifiedData' => $classifiedData,
+            'maxValue' => $pkaMaxValues,
         ]);
     }
 

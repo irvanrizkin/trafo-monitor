@@ -19,6 +19,7 @@ class MaxValueSeeder extends Seeder
             ['rule_name' => 'temperature', 'category' => 'tpo', 'max_value' => 150],
             ['rule_name' => 'ambient_temperature', 'category' => 'tpo', 'max_value' => 100],
             ['rule_name' => 'oil_level', 'category' => 'tpo', 'max_value' => 9],
+            ['rule_name' => 'k_factor', 'category' => 'pka', 'max_value' => 10]
         ];
 
         foreach ($maxValues as $maxValue) {

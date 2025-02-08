@@ -277,9 +277,9 @@ export type MetricTPOProps = PageProps & {
 export type MetricPKAProps = PageProps & {
     trafo: TrafoV1;
     date: string;
-    powerLosses: MetricPowerLoss[];
     kFactors: MetricKFactor[];
-    triplenCurrents: MetricTriplenCurrent[];
+    classifiedData: ClassifiedData;
+    maxValue: MaxValue[];
 }
 
 export type MetricHDProps = PageProps & {

@@ -5,14 +5,15 @@ import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import GaugeGroup from "@/Components/Metric/GaugeGroup";
+import StaticGaugeGroup from "@/Components/Metric/StaticGaugeGroup";
 
-export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCurrents}: MetricPKAProps) {
-    const columnsPowerLoss: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'power_loss', headerName: 'Power Loss'},
-    ]
-
+export default function MetricPKA({
+    trafo,
+    date,
+    kFactors,
+    classifiedData,
+    maxValue,
+}: MetricPKAProps) {
     const columnsKFactor: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
@@ -20,20 +21,6 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
         { field: 'k_factor_s', headerName: 'S'},
         { field: 'k_factor_t', headerName: 'T'},
     ]
-
-    const columnsTriplenCurrent: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'triplen_current', headerName: 'Triplen Harmonics', width: 150},
-    ]
-
-    const rowsPowerLoss = powerLosses.map((powerLoss) => {
-        return {
-            id: powerLoss.id,
-            createdAt: new Date(powerLoss.created_at).toLocaleString(),
-            power_loss: powerLoss.power_loss,
-        }
-    });
 
     const rowsKFactor = kFactors.map((kFactor) => {
         return {
@@ -44,18 +31,6 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
             k_factor_t: kFactor.k_factor_t,
         }
     });
-
-    const rowsTriplenCurrent = triplenCurrents.map((triplenCurrent) => {
-        return {
-            id: triplenCurrent.id,
-            createdAt: new Date(triplenCurrent.created_at).toLocaleString(),
-            triplen_current: triplenCurrent.triplen_current,
-        }
-    });
-
-    const powerLoss = [...powerLosses.map((powerLoss) => powerLoss.power_loss)];
-    const kFactor = [...kFactors.map((kFactor) => kFactor.k_factor)];
-    const triplenCurrent = [...triplenCurrents.map((triplenCurrent) => triplenCurrent.triplen_current)];
 
     return (
         <>
@@ -72,52 +47,22 @@ export default function MetricPKA({trafo, date, powerLosses, kFactors, triplenCu
                     sx={{ mt: 4 }}
                 />
                 <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[powerLoss]}
-                            labels={['Power Loss']}
+                    <Grid item xs={12}>
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.k_factor.value,
+                                    label: 'K Factor',
+                                    status: classifiedData.k_factor.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'k_factor')?.max_value || 0,
+                                }
+                            ]}
                         />
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[kFactor]}
-                            labels={['K Factor']}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <DataGrid
-                            rows={rowsPowerLoss}
-                            columns={columnsPowerLoss}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: { page: 0, pageSize: 5 },
-                                },
-                            }}
-                            pageSizeOptions={[5, 10]}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12}>
                         <DataGrid
                             rows={rowsKFactor}
                             columns={columnsKFactor}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: { page: 0, pageSize: 5 },
-                                },
-                            }}
-                            pageSizeOptions={[5, 10]}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <GaugeGroup
-                            gauges={[triplenCurrent]}
-                            labels={['Triplen Harmonics']}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <DataGrid
-                            rows={rowsTriplenCurrent}
-                            columns={columnsTriplenCurrent}
                             initialState={{
                                 pagination: {
                                     paginationModel: { page: 0, pageSize: 5 },
