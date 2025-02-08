@@ -7,6 +7,13 @@ export interface Metric {
     created_at: string;
 }
 
+export interface ClassifiedData {
+    [key: string]: {
+        value: number;
+        status: string;
+    }
+}
+
 export interface Order {
     r: number;
     s: number;
@@ -270,4 +277,10 @@ export type MetricHDProps = PageProps & {
     title: string;
     chartRoute: string;
     harmonicDistortions: MetricHD;
+}
+
+export type MetricAnalysisProps = PageProps & {
+    trafo: TrafoV1;
+    date: string;
+    classifiedData: ClassifiedData;
 }
