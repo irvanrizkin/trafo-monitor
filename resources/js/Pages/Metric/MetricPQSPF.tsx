@@ -4,10 +4,19 @@ import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
-import {Gauge} from "@mui/x-charts";
 import GaugeGroup from "@/Components/Metric/GaugeGroup";
+import StaticGaugeGroup from "@/Components/Metric/StaticGaugeGroup";
 
-export default function ({ trafo, date, powers, reactivePowers, apparentPowers, powerFactors }: MetricPQSPFProps) {
+export default function ({
+    trafo,
+    date,
+    powers,
+    reactivePowers,
+    apparentPowers,
+    powerFactors,
+    classifiedData,
+    maxValue,
+}: MetricPQSPFProps) {
     const columnsPower: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
@@ -108,22 +117,6 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
         }
     });
 
-    const powerR = [...powers.map(p => p.power_r)];
-    const powerS = [...powers.map(p => p.power_s)];
-    const powerT = [...powers.map(p => p.power_t)];
-
-    const reactivePowerR = [...reactivePowers.map(rp => rp.reactive_power_r)];
-    const reactivePowerS = [...reactivePowers.map(rp => rp.reactive_power_s)];
-    const reactivePowerT = [...reactivePowers.map(rp => rp.reactive_power_t)];
-
-    const apparentPowerR = [...apparentPowers.map(ap => ap.apparent_power_r)];
-    const apparentPowerS = [...apparentPowers.map(ap => ap.apparent_power_s)];
-    const apparentPowerT = [...apparentPowers.map(ap => ap.apparent_power_t)];
-
-    const powerFactorR = [...powerFactors.map(pf => pf.power_factor_r)];
-    const powerFactorS = [...powerFactors.map(pf => pf.power_factor_s)];
-    const powerFactorT = [...powerFactors.map(pf => pf.power_factor_t)];
-
     return (
         <>
             <AppBarTriple
@@ -140,15 +133,51 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
                 />
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[powerR, powerS, powerT]}
-                            labels={['R', 'S', 'T']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.active_power_r.value,
+                                    label: 'R',
+                                    status: classifiedData.active_power_r.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.active_power_s.value,
+                                    label: 'S',
+                                    status: classifiedData.active_power_s.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.active_power_t.value,
+                                    label: 'T',
+                                    status: classifiedData.active_power_t.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[reactivePowerR, reactivePowerS, reactivePowerT]}
-                            labels={['R', 'S', 'T']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.reactive_power_r.value,
+                                    label: 'R',
+                                    status: classifiedData.reactive_power_r.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.reactive_power_s.value,
+                                    label: 'S',
+                                    status: classifiedData.reactive_power_s.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.reactive_power_t.value,
+                                    label: 'T',
+                                    status: classifiedData.reactive_power_t.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -178,15 +207,51 @@ export default function ({ trafo, date, powers, reactivePowers, apparentPowers, 
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[apparentPowerR, apparentPowerS, apparentPowerT]}
-                            labels={['R', 'S', 'T']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.apparent_power_r.value,
+                                    label: 'R',
+                                    status: classifiedData.apparent_power_r.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.apparent_power_s.value,
+                                    label: 'S',
+                                    status: classifiedData.apparent_power_s.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.apparent_power_t.value,
+                                    label: 'T',
+                                    status: classifiedData.apparent_power_t.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power')?.max_value || 0,
+                                },
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[powerFactorR, powerFactorS, powerFactorT]}
-                            labels={['R', 'S', 'T']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.power_factor_r.value,
+                                    label: 'R',
+                                    status: classifiedData.power_factor_r.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power_factor')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.power_factor_s.value,
+                                    label: 'S',
+                                    status: classifiedData.power_factor_s.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power_factor')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.power_factor_t.value,
+                                    label: 'T',
+                                    status: classifiedData.power_factor_t.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'power_factor')?.max_value || 0,
+                                },
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>

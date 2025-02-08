@@ -238,6 +238,8 @@ export type MetricPQSPFProps = PageProps & {
     reactivePowers: MetricReactivePower[];
     apparentPowers: MetricApparentPower[];
     powerFactors: MetricPowerFactor[];
+    classifiedData: ClassifiedData;
+    maxValue: MaxValue[];
 }
 
 export type MetricTHDIHDProps = PageProps & {

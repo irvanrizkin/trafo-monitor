@@ -108,13 +108,50 @@ class MetricController extends Controller
         $apparentPowers = ApparentPower::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $powerFactors = PowerFactor::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
 
+        $pqspfMaxValues = MaxValue::where('category', 'pqspf')->get();
+
+        $latestPowerR = optional($powers->sortByDesc('created_at')->first())->power_r ?? 0;
+        $latestPowerS = optional($powers->sortByDesc('created_at')->first())->power_s ?? 0;
+        $latestPowerT = optional($powers->sortByDesc('created_at')->first())->power_t ?? 0;
+
+        $latestReactivePowerR = optional($reactivePowers->sortByDesc('created_at')->first())->reactive_power_r ?? 0;
+        $latestReactivePowerS = optional($reactivePowers->sortByDesc('created_at')->first())->reactive_power_s ?? 0;
+        $latestReactivePowerT = optional($reactivePowers->sortByDesc('created_at')->first())->reactive_power_t ?? 0;
+
+        $latestApparentPowerR = optional($apparentPowers->sortByDesc('created_at')->first())->apparent_power_r ?? 0;
+        $latestApparentPowerS = optional($apparentPowers->sortByDesc('created_at')->first())->apparent_power_s ?? 0;
+        $latestApparentPowerT = optional($apparentPowers->sortByDesc('created_at')->first())->apparent_power_t ?? 0;
+
+        $latestPowerFactorR = optional($powerFactors->sortByDesc('created_at')->first())->power_factor_r ?? 0;
+        $latestPowerFactorS = optional($powerFactors->sortByDesc('created_at')->first())->power_factor_s ?? 0;
+        $latestPowerFactorT = optional($powerFactors->sortByDesc('created_at')->first())->power_factor_t ?? 0;
+
+        $iotData = [
+            'active_power_r' => $latestPowerR,
+            'active_power_s' => $latestPowerS,
+            'active_power_t' => $latestPowerT,
+            'reactive_power_r' => $latestReactivePowerR,
+            'reactive_power_s' => $latestReactivePowerS,
+            'reactive_power_t' => $latestReactivePowerT,
+            'apparent_power_r' => $latestApparentPowerR,
+            'apparent_power_s' => $latestApparentPowerS,
+            'apparent_power_t' => $latestApparentPowerT,
+            'power_factor_r' => $latestPowerFactorR,
+            'power_factor_s' => $latestPowerFactorS,
+            'power_factor_t' => $latestPowerFactorT,
+        ];
+
+        $classifiedData = ThresholdService::classifyData($iotData);
+
         return Inertia::render('Metric/MetricPQSPF', [
             'trafo' => $trafo,
             'date' => $date,
             'powers' => $powers,
             'reactivePowers' => $reactivePowers,
             'apparentPowers' => $apparentPowers,
-            'powerFactors' => $powerFactors
+            'powerFactors' => $powerFactors,
+            'classifiedData' => $classifiedData,
+            'maxValue' => $pqspfMaxValues,
         ]);
     }
 
