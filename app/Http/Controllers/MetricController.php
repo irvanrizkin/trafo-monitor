@@ -219,6 +219,22 @@ class MetricController extends Controller
         $oilLevels = OilLevel::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $ambientTemperatures = AmbientTemperature::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
 
+        $tpoMaxValues = MaxValue::where('category', 'tpo')->get();
+
+        $latestTemperature = optional($temperatures->sortByDesc('created_at')->first())->temperature ?? 0;
+        $latestPressure = optional($pressures->sortByDesc('created_at')->first())->pressure ?? 0;
+        $latestOilLevel = optional($oilLevels->sortByDesc('created_at')->first())->oil_level ?? 0;
+        $latestAmbientTemperature = optional($ambientTemperatures->sortByDesc('created_at')->first())->ambient_temperature ?? 0;
+
+        $iotData = [
+            'temperature' => $latestTemperature,
+            'pressure' => $latestPressure,
+            'oil_level' => $latestOilLevel,
+            'ambient_temperature' => $latestAmbientTemperature,
+        ];
+
+        $classifiedData = ThresholdService::classifyData($iotData);
+
         return Inertia::render('Metric/MetricTPO', [
             'trafo' => $trafo,
             'date' => $date,
@@ -227,7 +243,9 @@ class MetricController extends Controller
             'temperatures' => $temperatures,
             'pressures' => $pressures,
             'oilLevels' => $oilLevels,
-            'ambientTemperatures' => $ambientTemperatures
+            'ambientTemperatures' => $ambientTemperatures,
+            'classifiedData' => $classifiedData,
+            'maxValue' => $tpoMaxValues,
         ]);
     }
 

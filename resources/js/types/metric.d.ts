@@ -270,6 +270,8 @@ export type MetricTPOProps = PageProps & {
     pressures: Pressure[];
     oilLevels: OilLevel[];
     ambientTemperatures: AmbientTemperature[];
+    classifiedData: ClassifiedData;
+    maxValue: MaxValue[];
 }
 
 export type MetricPKAProps = PageProps & {

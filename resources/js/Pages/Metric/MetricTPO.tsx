@@ -6,6 +6,7 @@ import { MetricTPOProps } from "@/types/metric";
 import { Container, Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {amber, green, red} from "@mui/material/colors";
+import StaticGaugeGroup from "@/Components/Metric/StaticGaugeGroup";
 
 export default function MetricTPO({
     trafo,
@@ -14,7 +15,9 @@ export default function MetricTPO({
     pressures,
     oilLevels,
     ambientTemperatures,
-                                  }: MetricTPOProps) {
+    classifiedData,
+    maxValue,
+}: MetricTPOProps) {
     const columnsTemperature: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
@@ -71,24 +74,6 @@ export default function MetricTPO({
         }
     });
 
-    const temperature = [...temperatures.map((temperature) => temperature.temperature)];
-    const pressure = [...pressures.map((pressure) => pressure.pressure)];
-    const oilLevel = [...oilLevels.map((oilLevel) => oilLevel.oil_level)];
-    const ambientTemperature = [...ambientTemperatures.map((ambientTemperature) => ambientTemperature.ambient_temperature)];
-
-    const overrideOilLevel = (value: number) => {
-        if (value === 9) {
-            return green[300];
-        }
-        if (value >= 6 && value <= 8) {
-            return amber[300];
-        }
-        if (value >= 1 && value <= 5) {
-            return red[300];
-        }
-        return red[300];
-    }
-
     return (
         <>
             <AppBarTriple
@@ -105,15 +90,31 @@ export default function MetricTPO({
                 />
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
+                        {/* <GaugeGroup
                             gauges={[temperature]}
                             labels={['Oil Temp']}
+                        /> */}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.temperature.value,
+                                    label: "Oil Temp",
+                                    status: classifiedData.temperature.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'temperature')?.max_value || 0,
+                                }
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[pressure]}
-                            labels={['Pressure']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.pressure.value,
+                                    label: "Pressure",
+                                    status: classifiedData.pressure.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'pressure')?.max_value || 0,
+                                }
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -141,17 +142,27 @@ export default function MetricTPO({
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[oilLevel]}
-                            isOverride={true}
-                            overrideColor={overrideOilLevel}
-                            labels={['Oil Level']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.oil_level.value,
+                                    label: "Oil Level",
+                                    status: classifiedData.oil_level.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'oil_level')?.max_value || 0,
+                                }
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[ambientTemperature]}
-                            labels={['Ambient Temp']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.ambient_temperature.value,
+                                    label: "Ambient Temp",
+                                    status: classifiedData.ambient_temperature.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'ambient_temperature')?.max_value || 0,
+                                }
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
