@@ -14,6 +14,11 @@ export interface ClassifiedData {
     }
 }
 
+export interface MaxValue {
+    rule_name: string;
+    max_value: number;
+}
+
 export interface Order {
     r: number;
     s: number;
@@ -222,6 +227,8 @@ export type MetricVIFProps = PageProps & {
     voltages: MetricVoltage[];
     currents: MetricCurrent[];
     frequencies: MetricFrequency[];
+    classifiedData: ClassifiedData;
+    maxValue: MaxValue[];
 }
 
 export type MetricPQSPFProps = PageProps & {

@@ -4,10 +4,17 @@ import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
-import GaugeGroup from "@/Components/Metric/GaugeGroup";
-import {amber, green} from "@mui/material/colors";
+import StaticGaugeGroup from "@/Components/Metric/StaticGaugeGroup";
 
-export default function Metric({ trafo, date, voltages, currents, frequencies }: MetricVIFProps) {
+export default function Metric({
+    trafo,
+    date,
+    voltages,
+    currents,
+    frequencies,
+    classifiedData,
+    maxValue,
+}: MetricVIFProps) {
     const columnsVoltage: GridColDef[] = [
         { field: 'id', headerName: 'ID'},
         { field: 'createdAt', headerName: 'Date', width: 200},
@@ -76,23 +83,6 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
         }
     });
 
-    const voltageR = [...voltages.map(v => v.voltage_r)];
-    const voltageS = [...voltages.map(v => v.voltage_s)];
-    const voltageT = [...voltages.map(v => v.voltage_t)];
-
-    const currentR = [...currents.map(c => c.current_r)];
-    const currentS = [...currents.map(c => c.current_s)];
-    const currentT = [...currents.map(c => c.current_t)];
-
-    const frequency = [...frequencies.map(f => f.frequency_r)];
-
-    const overrideFrequency = (value: number) => {
-        if (value > 49.5 || value < 50.5) {
-            return green[300];
-        }
-        return amber[300];
-    }
-
     return (
         <>
             <AppBarTriple
@@ -109,15 +99,57 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                 />
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[voltageR, voltageS, voltageT]}
-                            labels={['R', 'S', 'T']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.voltage_r.value,
+                                    label: 'R',
+                                    status: classifiedData.voltage_r.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'voltage')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.voltage_s.value,
+                                    label: 'S',
+                                    status: classifiedData.voltage_s.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'voltage')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.voltage_t.value,
+                                    label: 'T',
+                                    status: classifiedData.voltage_t.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'voltage')?.max_value || 0,
+                                },
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <GaugeGroup
-                            gauges={[currentR, currentS, currentT]}
-                            labels={['R', 'S', 'T']}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.current_r.value,
+                                    label: 'R',
+                                    status: classifiedData.current_r.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'current')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.current_s.value,
+                                    label: 'S',
+                                    status: classifiedData.current_s.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'current')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.current_t.value,
+                                    label: 'T',
+                                    status: classifiedData.current_t.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'current')?.max_value || 0,
+                                },
+                                {
+                                    value: classifiedData.current_in.value,
+                                    label: 'IN',
+                                    status: classifiedData.current_in.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'current')?.max_value || 0,
+                                },
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -147,11 +179,15 @@ export default function Metric({ trafo, date, voltages, currents, frequencies }:
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <GaugeGroup
-                            gauges={[frequency]}
-                            labels={['Frequency']}
-                            isOverride={true}
-                            overrideColor={overrideFrequency}
+                        <StaticGaugeGroup
+                            gauges={[
+                                {
+                                    value: classifiedData.frequency.value,
+                                    label: 'Frequency',
+                                    status: classifiedData.frequency.status,
+                                    maxValue: maxValue.find(v => v.rule_name === 'frequency')?.max_value || 0,
+                                },
+                            ]}
                         />
                     </Grid>
                     <Grid item xs={12}>

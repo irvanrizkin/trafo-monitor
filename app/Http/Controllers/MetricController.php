@@ -13,6 +13,7 @@ use App\Models\IHDVoltage;
 use App\Models\IHDVoltageV2;
 use App\Models\IndividualHarmonicDistortion;
 use App\Models\KFactor;
+use App\Models\MaxValue;
 use App\Models\Metric;
 use App\Models\OilLevel;
 use App\Models\Power;
@@ -60,12 +61,40 @@ class MetricController extends Controller
         $currents = Current::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
         $frequencies = Frequency::where('trafo_id', $trafoId)->whereDate('created_at', $date)->get();
 
+        $vifMaxValues = MaxValue::where('category', 'vif')->get();
+
+        $latestVoltageR = optional($voltages->sortByDesc('created_at')->first())->voltage_r ?? 0;
+        $latestVoltageS = optional($voltages->sortByDesc('created_at')->first())->voltage_s ?? 0;
+        $latestVoltageT = optional($voltages->sortByDesc('created_at')->first())->voltage_t ?? 0;
+
+        $latestCurrentR = optional($currents->sortByDesc('created_at')->first())->current_r ?? 0;
+        $latestCurrentS = optional($currents->sortByDesc('created_at')->first())->current_s ?? 0;
+        $latestCurrentT = optional($currents->sortByDesc('created_at')->first())->current_t ?? 0;
+        $latestCurrentIN = optional($currents->sortByDesc('created_at')->first())->current_in ?? 0;
+
+        $latestFrequency = optional($frequencies->sortByDesc('created_at')->first())->frequency_r ?? 0;
+
+        $iotData = [
+            'voltage_r' => $latestVoltageR,
+            'voltage_s' => $latestVoltageS,
+            'voltage_t' => $latestVoltageT,
+            'current_r' => $latestCurrentR,
+            'current_s' => $latestCurrentS,
+            'current_t' => $latestCurrentT,
+            'current_in' => $latestCurrentIN,
+            'frequency' => $latestFrequency,
+        ];
+
+        $classifiedData = ThresholdService::classifyData($iotData);
+
         return Inertia::render('Metric/MetricVIF', [
             'trafo' => $trafo,
             'date' => $date,
             'voltages' => $voltages,
             'currents' => $currents,
-            'frequencies' => $frequencies
+            'frequencies' => $frequencies,
+            'classifiedData' => $classifiedData,
+            'maxValue' => $vifMaxValues,
         ]);
     }
 
