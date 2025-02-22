@@ -85,6 +85,8 @@ Route::prefix('metric')->middleware(['auth'])->group(function () {
         ->name('metric.pka');
     Route::get('/{trafoid}/{date}/analisis', [MetricController::class, 'getMetricAnalysis'])
         ->name('metric.analisis');
+    Route::get('/{trafoid}/{date}/export', [MetricController::class, 'exportExcel'])
+        ->name('metric.export');
 });
 
 Route::prefix('chart')->middleware(['auth'])->group(function () {

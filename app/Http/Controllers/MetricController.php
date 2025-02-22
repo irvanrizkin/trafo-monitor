@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MetricExport;
 use App\Models\AmbientTemperature;
 use App\Models\ApparentPower;
 use App\Models\Current;
@@ -32,6 +33,7 @@ use App\Models\TriplenCurrent;
 use App\Models\Voltage;
 use App\Services\ThresholdService;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MetricController extends Controller
 {
@@ -52,7 +54,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function getMetricVIF($trafoId, $date) {
+    public function getMetricVIF($trafoId, $date)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -98,7 +101,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function getMetricPQSPF($trafoId, $date) {
+    public function getMetricPQSPF($trafoId, $date)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -155,7 +159,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function getMetricTHDIHD($trafoId, $date) {
+    public function getMetricTHDIHD($trafoId, $date)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -173,7 +178,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function getMetricIHD($trafoId, $date) {
+    public function getMetricIHD($trafoId, $date)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -191,7 +197,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function getMetricIHDV2($trafoId, $date) {
+    public function getMetricIHDV2($trafoId, $date)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -209,7 +216,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function getMetricTPO($trafoId, $date) {
+    public function getMetricTPO($trafoId, $date)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -249,7 +257,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function getMetricPKA($trafoId, $date) {
+    public function getMetricPKA($trafoId, $date)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -275,7 +284,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function getMetricAnalysis($trafoId, $date) {
+    public function getMetricAnalysis($trafoId, $date)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return redirect()->route('not-found');
@@ -378,7 +388,8 @@ class MetricController extends Controller
         ]);
     }
 
-    public function storeMetricTHD($trafoId) {
+    public function storeMetricTHD($trafoId)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return response()->json([
@@ -412,7 +423,8 @@ class MetricController extends Controller
         ], 201);
     }
 
-    public function storeMetricIHD($trafoId) {
+    public function storeMetricIHD($trafoId)
+    {
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
             return response()->json([
@@ -420,7 +432,7 @@ class MetricController extends Controller
             ], 404);
         }
 
-       $ihd = new IHD();
+        $ihd = new IHD();
         // $ihd = new IHDVoltage();
         $ihd->trafo_id = $trafoId;
         $ihd->topic_name = 'IHD';
@@ -451,5 +463,17 @@ class MetricController extends Controller
         return response()->json([
             'message' => 'Dummy IHD created successfully'
         ], 201);
+    }
+
+    public function exportExcel($trafoId, $date)
+    {
+        $trafo = Trafo::find($trafoId);
+        if (!$trafo) {
+            return response()->json([
+                'message' => 'Trafo not found'
+            ], 404);
+        }
+
+        return Excel::download(new MetricExport($trafoId, $date), "metrics_trafo_{$trafoId}_{$date}.xlsx");
     }
 }

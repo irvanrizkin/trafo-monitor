@@ -1,6 +1,7 @@
 import {
     AppBar,
     Box,
+    Button,
     Container,
     FormControl,
     Grid,
@@ -153,6 +154,10 @@ export default function DetailV1({trafo, dates}: TrafoDetailPropsV1) {
                                     </FormControl>
                                 </Grid>
                             </Grid>
+                            <Typography sx={{ mb: 2, mt: 2 }} variant={"h6"}>Ekspor Data</Typography>
+                            <Button variant="contained" color="primary" disabled={dateState === ''} href={route('metric.export', [trafo.id, dateState])}>
+                                Simpan Sebagai Excel
+                            </Button>
                         </Grid>
                     </Grid>
                 </Box>
