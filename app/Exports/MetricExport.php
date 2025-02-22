@@ -21,6 +21,7 @@ use App\Models\Voltage;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
 class MetricExport implements WithMultipleSheets
@@ -63,7 +64,7 @@ class MetricExport implements WithMultipleSheets
     }
 }
 
-class VoltageSheet implements FromCollection, WithTitle, WithHeadings
+class VoltageSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -99,7 +100,7 @@ class VoltageSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class CurrentSheet implements FromCollection, WithTitle, WithHeadings
+class CurrentSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -136,7 +137,7 @@ class CurrentSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class FrequencySheet implements FromCollection, WithTitle, WithHeadings
+class FrequencySheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -171,7 +172,7 @@ class FrequencySheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class ActivePowerSheet implements FromCollection, WithTitle, WithHeadings
+class ActivePowerSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -207,7 +208,7 @@ class ActivePowerSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class ReactivePowerSheet implements FromCollection, WithTitle, WithHeadings
+class ReactivePowerSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -243,7 +244,7 @@ class ReactivePowerSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class ApparentPowerSheet implements FromCollection, WithTitle, WithHeadings
+class ApparentPowerSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -279,7 +280,7 @@ class ApparentPowerSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class PowerFactorSheet implements FromCollection, WithTitle, WithHeadings
+class PowerFactorSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -315,7 +316,7 @@ class PowerFactorSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class THDCurrentSheet implements FromCollection, WithTitle, WithHeadings
+class THDCurrentSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -351,7 +352,7 @@ class THDCurrentSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class THDVoltageSheet implements FromCollection, WithTitle, WithHeadings
+class THDVoltageSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -387,7 +388,7 @@ class THDVoltageSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class IHDVoltageSheet implements FromCollection, WithTitle, WithHeadings
+class IHDVoltageSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -450,7 +451,7 @@ class IHDVoltageSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class IHDCurrentSheet implements FromCollection, WithTitle, WithHeadings
+class IHDCurrentSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -513,7 +514,7 @@ class IHDCurrentSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class OilTemperatureSheet implements FromCollection, WithTitle, WithHeadings
+class OilTemperatureSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -547,7 +548,7 @@ class OilTemperatureSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class PressureSheet implements FromCollection, WithTitle, WithHeadings
+class PressureSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -581,7 +582,7 @@ class PressureSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class OilLevelSheet implements FromCollection, WithTitle, WithHeadings
+class OilLevelSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -615,7 +616,7 @@ class OilLevelSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class AmbientTemperatureSheet implements FromCollection, WithTitle, WithHeadings
+class AmbientTemperatureSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
@@ -649,7 +650,7 @@ class AmbientTemperatureSheet implements FromCollection, WithTitle, WithHeadings
     }
 }
 
-class KFactorSheet implements FromCollection, WithTitle, WithHeadings
+class KFactorSheet implements FromCollection, WithTitle, WithHeadings, WithStrictNullComparison
 {
     protected $trafoId;
     protected $date;
