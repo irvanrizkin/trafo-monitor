@@ -4,20 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('k_factors', function (Blueprint $table) {
+        Schema::create("k_factors", function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('trafo_id');
-            $table->string('topic_name');
-            $table->double('k_factor_r');
-            $table->double('k_factor_s');
-            $table->double('k_factor_t');
+            $table->bigInteger("trafo_id");
+            $table->string("topic_name");
+            $table->double("k_factor_r")->default(0);
+            $table->double("k_factor_s")->default(0);
+            $table->double("k_factor_t")->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('k_factors');
+        Schema::dropIfExists("k_factors");
     }
 };
