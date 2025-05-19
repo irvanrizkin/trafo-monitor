@@ -4,6 +4,7 @@ import { powerFactorFormatter } from "@/helpers/formatter/powerfactor-formatter"
 import statusFormatterColor from "@/helpers/formatter/status-formatter-color";
 import statusFormatterText from "@/helpers/formatter/status-formatter-text";
 import { MetricAnalysisProps } from "@/types/metric";
+import { Head } from "@inertiajs/react";
 import { Container, Grid } from "@mui/material";
 
 export default function MetricAnalysis(props: MetricAnalysisProps) {
@@ -30,13 +31,14 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
         total_voltage_drop_t: totalVoltageDropT,
     } = classifiedData;
 
-    console.log('classifiedData', classifiedData);
-    
+    console.log("classifiedData", classifiedData);
+
     return (
         <>
+            <Head title={trafo?.name ?? ""} />
             <AppBarTriple
                 startText="Analisis"
-                middleText={trafo.name + ' - ' + trafo.address}
+                middleText={trafo.name + " - " + trafo.address}
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
@@ -44,129 +46,199 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                     <Grid item xs={12}>
                         <AnalyticCard
                             parameter="GIS"
-                            value={classifiedData.gis.value}
-                            detail={statusFormatterText(classifiedData.gis.status)}
-                            color={statusFormatterColor(classifiedData.gis.status)}
+                            value={classifiedData.gis?.value ?? 0}
+                            detail={statusFormatterText(
+                                classifiedData.gis?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                classifiedData.gis?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Resistif R"
-                            value={resistiveVoltageDropR.value}
-                            detail={statusFormatterText(resistiveVoltageDropR.status)}
-                            color={statusFormatterColor(resistiveVoltageDropR.status)}
+                            value={resistiveVoltageDropR?.value ?? 0}
+                            detail={statusFormatterText(
+                                resistiveVoltageDropR?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                resistiveVoltageDropR?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Reaktif R"
-                            value={reactiveVoltageDropR.value}
-                            detail={statusFormatterText(reactiveVoltageDropR.status)}
-                            color={statusFormatterColor(reactiveVoltageDropR.status)}
+                            value={reactiveVoltageDropR?.value ?? 0}
+                            detail={statusFormatterText(
+                                reactiveVoltageDropR?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                reactiveVoltageDropR?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Total R"
-                            value={totalVoltageDropR.value}
-                            detail={statusFormatterText(totalVoltageDropR.status)}
-                            color={statusFormatterColor(totalVoltageDropR.status)}
+                            value={totalVoltageDropR?.value ?? 0}
+                            detail={statusFormatterText(
+                                totalVoltageDropR?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                totalVoltageDropR?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Resistif S"
-                            value={resistiveVoltageDropS.value}
-                            detail={statusFormatterText(resistiveVoltageDropS.status)}
-                            color={statusFormatterColor(resistiveVoltageDropS.status)}
+                            value={resistiveVoltageDropS?.value ?? 0}
+                            detail={statusFormatterText(
+                                resistiveVoltageDropS?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                resistiveVoltageDropS?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Reaktif S"
-                            value={reactiveVoltageDropS.value}
-                            detail={statusFormatterText(reactiveVoltageDropS.status)}
-                            color={statusFormatterColor(reactiveVoltageDropS.status)}
+                            value={reactiveVoltageDropS?.value ?? 0}
+                            detail={statusFormatterText(
+                                reactiveVoltageDropS?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                reactiveVoltageDropS?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Total S"
-                            value={totalVoltageDropS.value}
-                            detail={statusFormatterText(totalVoltageDropS.status)}
-                            color={statusFormatterColor(totalVoltageDropS.status)}
+                            value={totalVoltageDropS?.value ?? 0}
+                            detail={statusFormatterText(
+                                totalVoltageDropS?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                totalVoltageDropS?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Resistif T"
-                            value={resistiveVoltageDropT.value}
-                            detail={statusFormatterText(resistiveVoltageDropT.status)}
-                            color={statusFormatterColor(resistiveVoltageDropT.status)}
+                            value={resistiveVoltageDropT?.value ?? 0}
+                            detail={statusFormatterText(
+                                resistiveVoltageDropT?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                resistiveVoltageDropT?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Reaktif T"
-                            value={reactiveVoltageDropT.value}
-                            detail={statusFormatterText(reactiveVoltageDropT.status)}
-                            color={statusFormatterColor(reactiveVoltageDropT.status)}
+                            value={reactiveVoltageDropT?.value ?? 0}
+                            detail={statusFormatterText(
+                                reactiveVoltageDropT?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                reactiveVoltageDropT?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Total T"
-                            value={totalVoltageDropT.value}
-                            detail={statusFormatterText(totalVoltageDropT.status)}
-                            color={statusFormatterColor(totalVoltageDropT.status)}
+                            value={totalVoltageDropT?.value ?? 0}
+                            detail={statusFormatterText(
+                                totalVoltageDropT?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                totalVoltageDropT?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Power Factor R"
-                            value={powerFactorR.value}
-                            detail={powerFactorFormatter(powerFactorR.status).text}
-                            color={powerFactorFormatter(powerFactorR.status).color}
+                            value={powerFactorR?.value ?? 0}
+                            detail={
+                                powerFactorFormatter(powerFactorR?.status ?? 0)
+                                    .text
+                            }
+                            color={
+                                powerFactorFormatter(powerFactorR?.status ?? 0)
+                                    .color
+                            }
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Power Factor S"
-                            value={powerFactorS.value}
-                            detail={powerFactorFormatter(powerFactorS.status).text}
-                            color={powerFactorFormatter(powerFactorS.status).color}
+                            value={powerFactorS?.value ?? 0}
+                            detail={
+                                powerFactorFormatter(powerFactorS?.status ?? 0)
+                                    .text
+                            }
+                            color={
+                                powerFactorFormatter(powerFactorS?.status ?? 0)
+                                    .color
+                            }
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Power Factor T"
-                            value={powerFactorT.value}
-                            detail={powerFactorFormatter(powerFactorT.status).text}
-                            color={powerFactorFormatter(powerFactorT.status).color}
+                            value={powerFactorT?.value ?? 0}
+                            detail={
+                                powerFactorFormatter(powerFactorT?.status ?? 0)
+                                    .text
+                            }
+                            color={
+                                powerFactorFormatter(powerFactorT?.status ?? 0)
+                                    .color
+                            }
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="THD Tegangan R"
-                            value={thdVoltageR.value}
-                            detail={statusFormatterText(thdVoltageR.status)}
-                            color={statusFormatterColor(thdVoltageR.status)}
+                            value={thdVoltageR?.value ?? 0}
+                            detail={statusFormatterText(
+                                thdVoltageR?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                thdVoltageR?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="THD Tegangan S"
-                            value={thdVoltageS.value}
-                            detail={statusFormatterText(thdVoltageS.status)}
-                            color={statusFormatterColor(thdVoltageS.status)}
+                            value={thdVoltageS?.value ?? 0}
+                            detail={statusFormatterText(
+                                thdVoltageS?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                thdVoltageS?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="THD Tegangan T"
-                            value={thdVoltageT.value}
-                            detail={statusFormatterText(thdVoltageT.status)}
-                            color={statusFormatterColor(thdVoltageT.status)}
+                            value={thdVoltageT?.value ?? 0}
+                            detail={statusFormatterText(
+                                thdVoltageT?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                thdVoltageT?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -174,7 +246,7 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             parameter="IHD Tegangan R"
                             value={0}
                             detail="Data belum dianalisis"
-                            color={statusFormatterColor('unknown')}
+                            color={statusFormatterColor("unknown")}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -182,7 +254,7 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             parameter="IHD Tegangan S"
                             value={0}
                             detail="Data belum dianalisis"
-                            color={statusFormatterColor('unknown')}
+                            color={statusFormatterColor("unknown")}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -190,7 +262,7 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             parameter="IHD Tegangan T"
                             value={0}
                             detail="Data belum dianalisis"
-                            color={statusFormatterColor('unknown')}
+                            color={statusFormatterColor("unknown")}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -198,7 +270,7 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             parameter="IHD Arus R"
                             value={0}
                             detail="Data belum dianalisis"
-                            color={statusFormatterColor('unknown')}
+                            color={statusFormatterColor("unknown")}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -206,7 +278,7 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             parameter="IHD Arus S"
                             value={0}
                             detail="Data belum dianalisis"
-                            color={statusFormatterColor('unknown')}
+                            color={statusFormatterColor("unknown")}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -214,59 +286,83 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             parameter="IHD Arus T"
                             value={0}
                             detail="Data belum dianalisis"
-                            color={statusFormatterColor('unknown')}
+                            color={statusFormatterColor("unknown")}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <AnalyticCard
                             parameter="Tekanan Minyak"
-                            value={classifiedData.pressure.value}
-                            detail={statusFormatterText(classifiedData.pressure.status)}
-                            color={statusFormatterColor(classifiedData.pressure.status)}
+                            value={classifiedData.pressure?.value ?? 0}
+                            detail={statusFormatterText(
+                                classifiedData.pressure?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                classifiedData.pressure?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <AnalyticCard
                             parameter="Suhu Minyak"
-                            value={classifiedData.temperature.value}
-                            detail={statusFormatterText(classifiedData.temperature.status)}
-                            color={statusFormatterColor(classifiedData.temperature.status)}
+                            value={classifiedData.temperature?.value ?? 0}
+                            detail={statusFormatterText(
+                                classifiedData.temperature?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                classifiedData.temperature?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <AnalyticCard
                             parameter="Ambient Temperature"
-                            value={ambientTemperature.value}
-                            detail={statusFormatterText(ambientTemperature.status)}
-                            color={statusFormatterColor(ambientTemperature.status)}
+                            value={ambientTemperature?.value ?? 0}
+                            detail={statusFormatterText(
+                                ambientTemperature?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                ambientTemperature?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Power Loss R"
-                            value={powerLossR.value}
-                            detail={statusFormatterText(powerLossR.status)}
-                            color={statusFormatterColor(powerLossR.status)}
+                            value={powerLossR?.value ?? 0}
+                            detail={statusFormatterText(
+                                powerLossR?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                powerLossR?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Power Loss S"
-                            value={powerLossS.value}
-                            detail={statusFormatterText(powerLossS.status)}
-                            color={statusFormatterColor(powerLossS.status)}
+                            value={powerLossS?.value ?? 0}
+                            detail={statusFormatterText(
+                                powerLossS?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                powerLossS?.status ?? 0,
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Power Loss T"
-                            value={powerLossT.value}
-                            detail={statusFormatterText(powerLossT.status)}
-                            color={statusFormatterColor(powerLossT.status)}
+                            value={powerLossT?.value ?? 0}
+                            detail={statusFormatterText(
+                                powerLossT?.status ?? 0,
+                            )}
+                            color={statusFormatterColor(
+                                powerLossT?.status ?? 0,
+                            )}
                         />
                     </Grid>
                 </Grid>
             </Container>
         </>
-    )
+    );
 }

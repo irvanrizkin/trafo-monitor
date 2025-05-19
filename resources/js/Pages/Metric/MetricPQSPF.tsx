@@ -10,6 +10,7 @@ import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import GaugeGroup from "@/Components/Metric/GaugeGroup";
 import StaticGaugeGroup from "@/Components/Metric/StaticGaugeGroup";
+import { Head } from "@inertiajs/react";
 
 export default function ({
     trafo,
@@ -139,6 +140,7 @@ export default function ({
 
     return (
         <>
+            <Head title={trafo?.name ?? ""} />
             <AppBarTriple
                 startText={"Metric PQSPF"}
                 middleText={trafo.name + " - " + trafo.address}

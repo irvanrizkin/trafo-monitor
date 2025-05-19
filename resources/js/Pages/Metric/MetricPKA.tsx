@@ -1,11 +1,12 @@
-import {MetricPKAProps} from "@/types/metric";
-import {Container, Grid} from "@mui/material";
-import {DataGrid, GridColDef} from "@mui/x-data-grid";
+import { MetricPKAProps } from "@/types/metric";
+import { Container, Grid } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import GaugeGroup from "@/Components/Metric/GaugeGroup";
 import StaticGaugeGroup from "@/Components/Metric/StaticGaugeGroup";
+import { Head } from "@inertiajs/react";
 
 export default function MetricPKA({
     trafo,
@@ -15,12 +16,12 @@ export default function MetricPKA({
     maxValue,
 }: MetricPKAProps) {
     const columnsKFactor: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'k_factor_r', headerName: 'R'},
-        { field: 'k_factor_s', headerName: 'S'},
-        { field: 'k_factor_t', headerName: 'T'},
-    ]
+        { field: "id", headerName: "ID" },
+        { field: "createdAt", headerName: "Date", width: 200 },
+        { field: "k_factor_r", headerName: "R" },
+        { field: "k_factor_s", headerName: "S" },
+        { field: "k_factor_t", headerName: "T" },
+    ];
 
     const rowsKFactor = kFactors.map((kFactor) => {
         return {
@@ -29,20 +30,21 @@ export default function MetricPKA({
             k_factor_r: kFactor.k_factor_r,
             k_factor_s: kFactor.k_factor_s,
             k_factor_t: kFactor.k_factor_t,
-        }
+        };
     });
 
     return (
         <>
+            <Head title={trafo?.name ?? ""} />
             <AppBarTriple
-                startText={'Metric PKA'}
-                middleText={trafo.name + ' - ' + trafo.address}
+                startText={"Metric PKA"}
+                middleText={trafo.name + " - " + trafo.address}
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route('chart.pka', [trafo.id])}
-                    text={'Open Chart'}
+                    href={route("chart.pka", [trafo.id])}
+                    text={"Open Chart"}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}
                 />
@@ -51,11 +53,15 @@ export default function MetricPKA({
                         <StaticGaugeGroup
                             gauges={[
                                 {
-                                    value: classifiedData.k_factor.value,
-                                    label: 'K Factor',
-                                    status: classifiedData.k_factor.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'k_factor')?.max_value || 0,
-                                }
+                                    value: classifiedData.k_factor?.value ?? 0,
+                                    label: "K Factor",
+                                    status:
+                                        classifiedData.k_factor?.status ?? 0,
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "k_factor",
+                                        )?.max_value || 0,
+                                },
                             ]}
                         />
                     </Grid>
@@ -74,5 +80,5 @@ export default function MetricPKA({
                 </Grid>
             </Container>
         </>
-    )
+    );
 }

@@ -1,23 +1,24 @@
-import {ChartIHDProps} from "@/types/chart";
-import {ChartData} from "chart.js";
-import {Box, Container, Grid, Paper, Typography} from "@mui/material";
-import {Bar} from "react-chartjs-2";
+import { ChartIHDProps } from "@/types/chart";
+import { ChartData } from "chart.js";
+import { Box, Container, Grid, Paper, Typography } from "@mui/material";
+import { Bar } from "react-chartjs-2";
 import GoogleMapReact from "google-map-react";
-import 'chart.js/auto';
+import "chart.js/auto";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowAssignmentIcon from "@mui/icons-material/Assignment";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
-import {rstBarChartString} from "@/helpers/generator/chart-generator";
+import { rstBarChartString } from "@/helpers/generator/chart-generator";
 import calculateMetrics from "@/helpers/analysis/calculate-metric";
 import AggregationSingle from "@/Components/Chart/AggregationSingle";
 import AggregationRSTOnly from "@/Components/Chart/AggregationRSTOnly";
 import GoogleMap from "@/Components/Map/GoogleMap";
+import { Head } from "@inertiajs/react";
 
 export default function ChartIHD({
-                                     trafo,
-                                     ihdVoltages,
-                                     ihdCurrents,
-                                 }: ChartIHDProps) {
+    trafo,
+    ihdVoltages,
+    ihdCurrents,
+}: ChartIHDProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
     const ihdVoltageR = [
@@ -42,7 +43,7 @@ export default function ChartIHD({
         ihdVoltages[0]?.h19.r ?? 0,
         ihdVoltages[0]?.h20.r ?? 0,
         ihdVoltages[0]?.h21.r ?? 0,
-    ]
+    ];
 
     const ihdVoltageS = [
         ihdVoltages[0]?.h1.s ?? 0,
@@ -66,7 +67,7 @@ export default function ChartIHD({
         ihdVoltages[0]?.h19.s ?? 0,
         ihdVoltages[0]?.h20.s ?? 0,
         ihdVoltages[0]?.h21.s ?? 0,
-    ]
+    ];
 
     const ihdVoltageT = [
         ihdVoltages[0]?.h1.t ?? 0,
@@ -90,7 +91,7 @@ export default function ChartIHD({
         ihdVoltages[0]?.h19.t ?? 0,
         ihdVoltages[0]?.h20.t ?? 0,
         ihdVoltages[0]?.h21.t ?? 0,
-    ]
+    ];
 
     const ihdCurrentR = [
         ihdCurrents[0]?.h1.r ?? 0,
@@ -114,7 +115,7 @@ export default function ChartIHD({
         ihdCurrents[0]?.h19.r ?? 0,
         ihdCurrents[0]?.h20.r ?? 0,
         ihdCurrents[0]?.h21.r ?? 0,
-    ]
+    ];
 
     const ihdCurrentS = [
         ihdCurrents[0]?.h1.s ?? 0,
@@ -138,7 +139,7 @@ export default function ChartIHD({
         ihdCurrents[0]?.h19.s ?? 0,
         ihdCurrents[0]?.h20.s ?? 0,
         ihdCurrents[0]?.h21.s ?? 0,
-    ]
+    ];
 
     const ihdCurrentT = [
         ihdCurrents[0]?.h1.t ?? 0,
@@ -162,14 +163,14 @@ export default function ChartIHD({
         ihdCurrents[0]?.h19.t ?? 0,
         ihdCurrents[0]?.h20.t ?? 0,
         ihdCurrents[0]?.h21.t ?? 0,
-    ]
+    ];
 
     const metricAvgVoltage = rstBarChartString({
         labels: Array.from({ length: 21 }, (_, i) => `H${i + 1}`),
         rData: ihdVoltageR,
         sData: ihdVoltageS,
         tData: ihdVoltageT,
-    })
+    });
 
     const ihdVoltageRAggregation = calculateMetrics(ihdVoltageR);
     const ihdVoltageSAggregation = calculateMetrics(ihdVoltageS);
@@ -180,7 +181,7 @@ export default function ChartIHD({
         rData: ihdCurrentR,
         sData: ihdCurrentS,
         tData: ihdCurrentT,
-    })
+    });
 
     const ihdCurrentRAggregation = calculateMetrics(ihdCurrentR);
     const ihdCurrentSAggregation = calculateMetrics(ihdCurrentS);
@@ -188,29 +189,32 @@ export default function ChartIHD({
 
     return (
         <>
+            <Head title={trafo?.name ?? ""} />
             <AppBarTriple
-                startText={'Chart IHD'}
-                middleText={trafo.name + ' - ' + trafo.address}
+                startText={"Chart IHD"}
+                middleText={trafo.name + " - " + trafo.address}
                 endText={"Latest Data"}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref
-                    href={route('trafo.show', [trafo.id])}
-                    text={'Back to Detail'}
+                    href={route("trafo.show", [trafo.id])}
+                    text={"Back to Detail"}
                     icon={<ShowAssignmentIcon />}
                     sx={{ mt: 2 }}
                 />
-                <Grid container spacing={2} sx={{pb: 2}}>
+                <Grid container spacing={2} sx={{ pb: 2 }}>
                     <Grid item xs={12} md={4}>
                         <Box
-                            sx={{px: 2}}
+                            sx={{ px: 2 }}
                             display="flex"
                             justifyContent="center"
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Individual Harmonics Distortion Voltage (IHDv)</Typography>
-                            <Bar data={metricAvgVoltage}/>
+                            <Typography variant={"h6"}>
+                                Individual Harmonics Distortion Voltage (IHDv)
+                            </Typography>
+                            <Bar data={metricAvgVoltage} />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRSTOnly
                                     rMax={ihdVoltageRAggregation.max}
@@ -228,14 +232,16 @@ export default function ChartIHD({
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Box
-                            sx={{px: 2}}
+                            sx={{ px: 2 }}
                             display="flex"
                             justifyContent="center"
                             alignItems="end"
                             flexDirection="column"
                         >
-                            <Typography variant={"h6"}>Individual Harmonics Distortion Current (IHDi)</Typography>
-                            <Bar data={metricAvgCurrent}/>
+                            <Typography variant={"h6"}>
+                                Individual Harmonics Distortion Current (IHDi)
+                            </Typography>
+                            <Bar data={metricAvgCurrent} />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRSTOnly
                                     rMax={ihdCurrentRAggregation.max}
@@ -256,11 +262,11 @@ export default function ChartIHD({
                             lat={Number(trafo.latitude)}
                             lng={Number(trafo.longitude)}
                             title={trafo.name}
-                            height={'700px'}
+                            height={"700px"}
                         />
                     </Grid>
                 </Grid>
             </Container>
         </>
-    )
+    );
 }
