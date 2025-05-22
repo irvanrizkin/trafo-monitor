@@ -66,7 +66,7 @@ export default function ({
 
     const columnGroupReactivePower: GridColumnGroupingModel = [
         {
-            groupId: "Reactive Power (VA)",
+            groupId: "Reactive Power (VAR)",
             children: [
                 { field: "reactive_power_r" },
                 { field: "reactive_power_s" },
@@ -77,7 +77,7 @@ export default function ({
 
     const columnGroupApparentPower: GridColumnGroupingModel = [
         {
-            groupId: "Apparent Power (VA)",
+            groupId: "Apparent Power (KVA)",
             children: [
                 { field: "apparent_power_r" },
                 { field: "apparent_power_s" },
