@@ -30,18 +30,18 @@ class MetricMQTTController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $trafoId = $request->route('trafoid');
-        
         $validatedData = $request->validate([
-            '*.table' => 'required|string',
-            '*.data' => 'required|array',
+            "*.table" => "required|string",
+            "*.data" => "required|array",
         ]);
 
-        $this->insertTodayDate($trafoId);
+        $trafoIds = collect($validatedData)->pluck("data.trafo_id")->unique();
+
+        $this->insertTodayDate($trafoIds);
 
         foreach ($validatedData as $entry) {
-            $table = $entry['table'];
-            $data = $entry['data'];
+            $table = $entry["table"];
+            $data = $entry["data"];
 
             if (isset($this->modelMap[$table])) {
                 $model = $this->modelMap[$table];
@@ -49,33 +49,38 @@ class MetricMQTTController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Data stored successfully'], 201);
+        return response()->json(["message" => "Data stored successfully"], 201);
     }
 
-    public function insertTodayDate($trafoId) {
-        $date = Carbon::now()->format('Y-m-d');
-        DateGroup::firstOrCreate([
-            'trafo_id' => $trafoId,
-            'date_group' => $date,
-        ]);
+    public function insertTodayDate($trafoIds)
+    {
+        $trafoIds = collect($trafoIds)->unique();
+
+        foreach ($trafoIds as $trafoId) {
+            $date = Carbon::now()->format("Y-m-d");
+            DateGroup::firstOrCreate([
+                "trafo_id" => $trafoId,
+                "date_group" => $date,
+            ]);
+        }
     }
 
     protected $modelMap = [
-        'voltages' => Voltage::class,
-        'currents' => Current::class,
-        'power_factors' => PowerFactor::class,
-        'apparent_powers' => ApparentPower::class,
-        'powers' => Power::class,
-        'reactive_powers' => ReactivePower::class,
-        'frequencies' => Frequency::class,
-        'thd_voltages' => THDVoltage::class,
-        'ihd_voltages' => IHDVoltageV2::class,
-        'thd_currents' => THDCurrent::class,
-        'ihd_currents' => IHDCurrentV2::class,
-        'k_factors' => KFactor::class,
-        'pressures' => Pressure::class,
-        'temperatures' => Temperature::class,
-        'oil_levels' => OilLevel::class,
-        'ambient_temperatures' => AmbientTemperature::class,
+        "voltages" => Voltage::class,
+        "currents" => Current::class,
+        "power_factors" => PowerFactor::class,
+        "apparent_powers" => ApparentPower::class,
+        "powers" => Power::class,
+        "reactive_powers" => ReactivePower::class,
+        "frequencies" => Frequency::class,
+        "thd_voltages" => THDVoltage::class,
+        "ihd_voltages" => IHDVoltageV2::class,
+        "thd_currents" => THDCurrent::class,
+        "ihd_currents" => IHDCurrentV2::class,
+        "k_factors" => KFactor::class,
+        "pressures" => Pressure::class,
+        "temperatures" => Temperature::class,
+        "oil_levels" => OilLevel::class,
+        "ambient_temperatures" => AmbientTemperature::class,
     ];
 }
