@@ -31,6 +31,8 @@ export default function MetricPKA({
         };
     });
 
+    console.log(classifiedData);
+
     return (
         <>
             <AppBarTriple
@@ -50,10 +52,36 @@ export default function MetricPKA({
                         <StaticGaugeGroup
                             gauges={[
                                 {
-                                    value: classifiedData?.k_factor?.value ?? 0,
-                                    label: "K Factor",
+                                    value:
+                                        classifiedData?.k_factor_r?.value ?? 0,
+                                    label: "R",
                                     status:
-                                        classifiedData?.k_factor?.status ?? "",
+                                        classifiedData?.k_factor_r?.status ??
+                                        "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "k_factor",
+                                        )?.max_value || 0,
+                                },
+                                {
+                                    value:
+                                        classifiedData?.k_factor_s?.value ?? 0,
+                                    label: "S",
+                                    status:
+                                        classifiedData?.k_factor_s?.status ??
+                                        "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "k_factor",
+                                        )?.max_value || 0,
+                                },
+                                {
+                                    value:
+                                        classifiedData?.k_factor_t?.value ?? 0,
+                                    label: "T",
+                                    status:
+                                        classifiedData?.k_factor_t?.status ??
+                                        "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "k_factor",

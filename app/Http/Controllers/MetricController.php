@@ -340,12 +340,20 @@ class MetricController extends Controller
 
         $pkaMaxValues = MaxValue::where("category", "pka")->get();
 
-        $latestKFactor =
-            optional($kFactors->sortByDesc("created_at")->first())->k_factor ??
-            0;
+        $latestKFactorR =
+            optional($kFactors->sortByDesc("created_at")->first())
+                ->k_factor_r ?? 0;
+        $latestKFactorS =
+            optional($kFactors->sortByDesc("created_at")->first())
+                ->k_factor_s ?? 0;
+        $latestKFactorT =
+            optional($kFactors->sortByDesc("created_at")->first())
+                ->k_factor_t ?? 0;
 
         $iotData = [
-            "k_factor" => $latestKFactor,
+            "k_factor_r" => $latestKFactorR,
+            "k_factor_s" => $latestKFactorS,
+            "k_factor_t" => $latestKFactorT,
         ];
 
         $classifiedData = ThresholdService::classifyData($iotData);
