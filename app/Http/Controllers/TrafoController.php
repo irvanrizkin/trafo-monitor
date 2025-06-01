@@ -9,33 +9,38 @@ use Inertia\Inertia;
 
 class TrafoController extends Controller
 {
-    public function showWithDates($id) {
+    public function showWithDates($id)
+    {
         $trafo = Trafo::find($id);
         if (!$trafo) {
-            return redirect()->route('not-found');
+            return redirect()->route("not-found");
         }
-        $dates = DateGroup::where('trafo_id', $id)->get();
+        $dates = DateGroup::where("trafo_id", $id)
+            ->orderByRaw("CAST(date_group AS DATE) ASC")
+            ->get();
 
-        return Inertia::render('Trafo/DetailV1', [
-            'trafo' => $trafo,
-            'dates' => $dates,
+        return Inertia::render("Trafo/DetailV1", [
+            "trafo" => $trafo,
+            "dates" => $dates,
         ]);
     }
 
-    public function create() {
-        return Inertia::render('TrafoCreate/TrafoCreateV1');
+    public function create()
+    {
+        return Inertia::render("TrafoCreate/TrafoCreateV1");
     }
 
-    public function store() {
+    public function store()
+    {
         $data = request()->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            "name" => "required",
+            "address" => "required",
+            "latitude" => "required",
+            "longitude" => "required",
         ]);
 
         Trafo::create($data);
 
-        return redirect()->route('dashboard');
+        return redirect()->route("dashboard");
     }
 }
