@@ -1,6 +1,10 @@
-import {MetricVIFProps} from "@/types/metric";
-import {Container, Grid} from "@mui/material";
-import {DataGrid, GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
+import { MetricVIFProps } from "@/types/metric";
+import { Container, Grid } from "@mui/material";
+import {
+    DataGrid,
+    GridColDef,
+    GridColumnGroupingModel,
+} from "@mui/x-data-grid";
 import AppBarTriple from "@/Components/Shared/AppBarTriple";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
@@ -16,41 +20,50 @@ export default function Metric({
     maxValue,
 }: MetricVIFProps) {
     const columnsVoltage: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'voltage_r', headerName: 'R'},
-        { field: 'voltage_s', headerName: 'S'},
-        { field: 'voltage_t', headerName: 'T'},
-    ]
+        { field: "id", headerName: "ID" },
+        { field: "createdAt", headerName: "Date", width: 200 },
+        { field: "voltage_r", headerName: "R" },
+        { field: "voltage_s", headerName: "S" },
+        { field: "voltage_t", headerName: "T" },
+    ];
 
     const columnsCurrent: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'current_r', headerName: 'R'},
-        { field: 'current_s', headerName: 'S'},
-        { field: 'current_t', headerName: 'T'},
-        { field: 'current_in', headerName: 'IN' },
-    ]
+        { field: "id", headerName: "ID" },
+        { field: "createdAt", headerName: "Date", width: 200 },
+        { field: "current_r", headerName: "R" },
+        { field: "current_s", headerName: "S" },
+        { field: "current_t", headerName: "T" },
+        { field: "current_in", headerName: "IN" },
+    ];
 
     const columnsFrequency: GridColDef[] = [
-        { field: 'id', headerName: 'ID'},
-        { field: 'createdAt', headerName: 'Date', width: 200},
-        { field: 'frequency_r', headerName: 'Frequency (Hz)', width: 120},
-    ]
+        { field: "id", headerName: "ID" },
+        { field: "createdAt", headerName: "Date", width: 200 },
+        { field: "frequency_r", headerName: "Frequency (Hz)", width: 120 },
+    ];
 
     const columnGroupVoltage: GridColumnGroupingModel = [
         {
-            groupId: 'Voltage (V)',
-            children: [{ field: 'voltage_r' }, { field: 'voltage_s' }, { field: 'voltage_t' }]
-        }
-    ]
+            groupId: "Voltage (V)",
+            children: [
+                { field: "voltage_r" },
+                { field: "voltage_s" },
+                { field: "voltage_t" },
+            ],
+        },
+    ];
 
     const columnGroupCurrent: GridColumnGroupingModel = [
         {
-            groupId: 'Current (I)',
-            children: [{ field: 'current_r' }, { field: 'current_s' }, { field: 'current_t' }, { field: 'current_in' }]
-        }
-    ]
+            groupId: "Current (I)",
+            children: [
+                { field: "current_r" },
+                { field: "current_s" },
+                { field: "current_t" },
+                { field: "current_in" },
+            ],
+        },
+    ];
 
     const rowsVoltage = voltages.map((voltage) => {
         return {
@@ -59,7 +72,7 @@ export default function Metric({
             voltage_r: voltage.voltage_r,
             voltage_s: voltage.voltage_s,
             voltage_t: voltage.voltage_t,
-        }
+        };
     });
 
     const rowsCurrent = currents.map((current) => {
@@ -70,7 +83,7 @@ export default function Metric({
             current_s: current.current_s,
             current_t: current.current_t,
             current_in: current.current_in,
-        }
+        };
     });
 
     const rowsFrequency = frequencies.map((frequency) => {
@@ -80,20 +93,20 @@ export default function Metric({
             frequency_r: frequency.frequency_r,
             frequency_s: frequency.frequency_s,
             frequency_t: frequency.frequency_t,
-        }
+        };
     });
 
     return (
         <>
             <AppBarTriple
-                startText={'Metric VIF'}
-                middleText={trafo.name + ' - ' + trafo.address}
+                startText={"Metric VIF"}
+                middleText={trafo.name + " - " + trafo.address}
                 endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route('chart.vif', [trafo.id])}
-                    text={'Open Chart'}
+                    href={route("chart.vif", [trafo.id])}
+                    text={"Open Chart"}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}
                 />
@@ -102,22 +115,37 @@ export default function Metric({
                         <StaticGaugeGroup
                             gauges={[
                                 {
-                                    value: classifiedData.voltage_r.value,
-                                    label: 'R',
-                                    status: classifiedData.voltage_r.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'voltage')?.max_value || 0,
+                                    value:
+                                        classifiedData?.voltage_r?.value ?? 0,
+                                    label: "R",
+                                    status:
+                                        classifiedData?.voltage_r?.status ?? "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "voltage",
+                                        )?.max_value || 0,
                                 },
                                 {
-                                    value: classifiedData.voltage_s.value,
-                                    label: 'S',
-                                    status: classifiedData.voltage_s.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'voltage')?.max_value || 0,
+                                    value:
+                                        classifiedData?.voltage_s?.value ?? 0,
+                                    label: "S",
+                                    status:
+                                        classifiedData?.voltage_s?.status ?? "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "voltage",
+                                        )?.max_value || 0,
                                 },
                                 {
-                                    value: classifiedData.voltage_t.value,
-                                    label: 'T',
-                                    status: classifiedData.voltage_t.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'voltage')?.max_value || 0,
+                                    value:
+                                        classifiedData?.voltage_t?.value ?? 0,
+                                    label: "T",
+                                    status:
+                                        classifiedData?.voltage_t?.status ?? "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "voltage",
+                                        )?.max_value || 0,
                                 },
                             ]}
                         />
@@ -126,28 +154,49 @@ export default function Metric({
                         <StaticGaugeGroup
                             gauges={[
                                 {
-                                    value: classifiedData.current_r.value,
-                                    label: 'R',
-                                    status: classifiedData.current_r.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'current')?.max_value || 0,
+                                    value:
+                                        classifiedData?.current_r?.value ?? 0,
+                                    label: "R",
+                                    status:
+                                        classifiedData?.current_r?.status ?? "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "current",
+                                        )?.max_value || 0,
                                 },
                                 {
-                                    value: classifiedData.current_s.value,
-                                    label: 'S',
-                                    status: classifiedData.current_s.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'current')?.max_value || 0,
+                                    value:
+                                        classifiedData?.current_s?.value ?? 0,
+                                    label: "S",
+                                    status:
+                                        classifiedData?.current_s?.status ?? "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "current",
+                                        )?.max_value || 0,
                                 },
                                 {
-                                    value: classifiedData.current_t.value,
-                                    label: 'T',
-                                    status: classifiedData.current_t.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'current')?.max_value || 0,
+                                    value:
+                                        classifiedData?.current_t?.value ?? 0,
+                                    label: "T",
+                                    status:
+                                        classifiedData?.current_t?.status ?? "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "current",
+                                        )?.max_value || 0,
                                 },
                                 {
-                                    value: classifiedData.current_in.value,
-                                    label: 'IN',
-                                    status: classifiedData.current_in.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'current')?.max_value || 0,
+                                    value:
+                                        classifiedData?.current_in?.value ?? 0,
+                                    label: "IN",
+                                    status:
+                                        classifiedData?.current_in?.status ??
+                                        "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "current",
+                                        )?.max_value || 0,
                                 },
                             ]}
                         />
@@ -182,10 +231,15 @@ export default function Metric({
                         <StaticGaugeGroup
                             gauges={[
                                 {
-                                    value: classifiedData.frequency.value,
-                                    label: 'Frequency',
-                                    status: classifiedData.frequency.status,
-                                    maxValue: maxValue.find(v => v.rule_name === 'frequency')?.max_value || 0,
+                                    value:
+                                        classifiedData?.frequency?.value ?? 0,
+                                    label: "Frequency",
+                                    status:
+                                        classifiedData?.frequency?.status ?? "",
+                                    maxValue:
+                                        maxValue.find(
+                                            (v) => v.rule_name === "frequency",
+                                        )?.max_value || 0,
                                 },
                             ]}
                         />
@@ -205,5 +259,5 @@ export default function Metric({
                 </Grid>
             </Container>
         </>
-    )
+    );
 }

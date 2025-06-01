@@ -157,12 +157,12 @@ export default function ({
                             gauges={[
                                 {
                                     value:
-                                        classifiedData.active_power_r?.value ??
+                                        classifiedData?.active_power_r?.value ??
                                         0,
                                     label: "R",
                                     status:
-                                        classifiedData.active_power_r?.status ??
-                                        0,
+                                        classifiedData?.active_power_r
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -170,12 +170,12 @@ export default function ({
                                 },
                                 {
                                     value:
-                                        classifiedData.active_power_s?.value ??
+                                        classifiedData?.active_power_s?.value ??
                                         0,
                                     label: "S",
                                     status:
-                                        classifiedData.active_power_s?.status ??
-                                        0,
+                                        classifiedData?.active_power_s
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -183,12 +183,12 @@ export default function ({
                                 },
                                 {
                                     value:
-                                        classifiedData.active_power_t?.value ??
+                                        classifiedData?.active_power_t?.value ??
                                         0,
                                     label: "T",
                                     status:
-                                        classifiedData.active_power_t?.status ??
-                                        0,
+                                        classifiedData?.active_power_t
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -202,12 +202,12 @@ export default function ({
                             gauges={[
                                 {
                                     value:
-                                        classifiedData.reactive_power_r
+                                        classifiedData?.reactive_power_r
                                             ?.value ?? 0,
                                     label: "R",
                                     status:
-                                        classifiedData.reactive_power_r
-                                            ?.status ?? 0,
+                                        classifiedData?.reactive_power_r
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -215,12 +215,12 @@ export default function ({
                                 },
                                 {
                                     value:
-                                        classifiedData.reactive_power_s
+                                        classifiedData?.reactive_power_s
                                             ?.value ?? 0,
                                     label: "S",
                                     status:
-                                        classifiedData.reactive_power_s
-                                            ?.status ?? 0,
+                                        classifiedData?.reactive_power_s
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -228,12 +228,12 @@ export default function ({
                                 },
                                 {
                                     value:
-                                        classifiedData.reactive_power_t
+                                        classifiedData?.reactive_power_t
                                             ?.value ?? 0,
                                     label: "T",
                                     status:
-                                        classifiedData.reactive_power_t
-                                            ?.status ?? 0,
+                                        classifiedData?.reactive_power_t
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -273,12 +273,12 @@ export default function ({
                             gauges={[
                                 {
                                     value:
-                                        classifiedData.apparent_power_r
+                                        classifiedData?.apparent_power_r
                                             ?.value ?? 0,
                                     label: "R",
                                     status:
-                                        classifiedData.apparent_power_r
-                                            ?.status ?? 0,
+                                        classifiedData?.apparent_power_r
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -286,12 +286,12 @@ export default function ({
                                 },
                                 {
                                     value:
-                                        classifiedData.apparent_power_s
+                                        classifiedData?.apparent_power_s
                                             ?.value ?? 0,
                                     label: "S",
                                     status:
-                                        classifiedData.apparent_power_s
-                                            ?.status ?? 0,
+                                        classifiedData?.apparent_power_s
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -299,12 +299,12 @@ export default function ({
                                 },
                                 {
                                     value:
-                                        classifiedData.apparent_power_t
+                                        classifiedData?.apparent_power_t
                                             ?.value ?? 0,
                                     label: "T",
                                     status:
-                                        classifiedData.apparent_power_t
-                                            ?.status ?? 0,
+                                        classifiedData?.apparent_power_t
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) => v.rule_name === "power",
@@ -318,12 +318,12 @@ export default function ({
                             gauges={[
                                 {
                                     value:
-                                        classifiedData.power_factor_r?.value ??
+                                        classifiedData?.power_factor_r?.value ??
                                         0,
                                     label: "R",
                                     status:
-                                        classifiedData.power_factor_r?.status ??
-                                        0,
+                                        classifiedData?.power_factor_r
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) =>
@@ -332,12 +332,12 @@ export default function ({
                                 },
                                 {
                                     value:
-                                        classifiedData.power_factor_s?.value ??
+                                        classifiedData?.power_factor_s?.value ??
                                         0,
                                     label: "S",
                                     status:
-                                        classifiedData.power_factor_s?.status ??
-                                        0,
+                                        classifiedData?.power_factor_s
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) =>
@@ -346,12 +346,12 @@ export default function ({
                                 },
                                 {
                                     value:
-                                        classifiedData.power_factor_t?.value ??
+                                        classifiedData?.power_factor_t?.value ??
                                         0,
                                     label: "T",
                                     status:
-                                        classifiedData.power_factor_t?.status ??
-                                        0,
+                                        classifiedData?.power_factor_t
+                                            ?.status ?? "",
                                     maxValue:
                                         maxValue.find(
                                             (v) =>
