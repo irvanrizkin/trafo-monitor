@@ -31,8 +31,6 @@ export default function MetricPKA({
         };
     });
 
-    console.log(classifiedData);
-
     return (
         <>
             <AppBarTriple

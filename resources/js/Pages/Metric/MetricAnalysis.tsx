@@ -4,7 +4,7 @@ import { powerFactorFormatter } from "@/helpers/formatter/powerfactor-formatter"
 import statusFormatterColor from "@/helpers/formatter/status-formatter-color";
 import statusFormatterText from "@/helpers/formatter/status-formatter-text";
 import { MetricAnalysisProps } from "@/types/metric";
-import { Container, Grid } from "@mui/material";
+import { Container, Divider, Grid, Typography } from "@mui/material";
 
 export default function MetricAnalysis(props: MetricAnalysisProps) {
     const { trafo, date, classifiedData } = props;
@@ -30,8 +30,6 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
         total_voltage_drop_t: totalVoltageDropT,
     } = classifiedData;
 
-    console.log("classifiedData", classifiedData);
-
     return (
         <>
             <AppBarTriple
@@ -41,6 +39,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <Grid container spacing={2} sx={{ mt: 4, mb: 4 }}>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">GIS</Typography>
+                        <Divider />
+                    </Grid>
                     <Grid item xs={12}>
                         <AnalyticCard
                             parameter="GIS"
@@ -53,6 +55,12 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             )}
                         />
                     </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">
+                            Drop Tegangan Resistif
+                        </Typography>
+                        <Divider />
+                    </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="Drop Tegangan Resistif R"
@@ -62,30 +70,6 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             )}
                             color={statusFormatterColor(
                                 resistiveVoltageDropR?.status ?? "",
-                            )}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="Drop Tegangan Reaktif R"
-                            value={reactiveVoltageDropR?.value ?? 0}
-                            detail={statusFormatterText(
-                                reactiveVoltageDropR?.status ?? "",
-                            )}
-                            color={statusFormatterColor(
-                                reactiveVoltageDropR?.status ?? "",
-                            )}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="Drop Tegangan Total R"
-                            value={totalVoltageDropR?.value ?? 0}
-                            detail={statusFormatterText(
-                                totalVoltageDropR?.status ?? "",
-                            )}
-                            color={statusFormatterColor(
-                                totalVoltageDropR?.status ?? "",
                             )}
                         />
                     </Grid>
@@ -103,6 +87,36 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
+                            parameter="Drop Tegangan Resistif T"
+                            value={resistiveVoltageDropT?.value ?? 0}
+                            detail={statusFormatterText(
+                                resistiveVoltageDropT?.status ?? "",
+                            )}
+                            color={statusFormatterColor(
+                                resistiveVoltageDropT?.status ?? "",
+                            )}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">
+                            Drop Tegangan Reaktif
+                        </Typography>
+                        <Divider />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <AnalyticCard
+                            parameter="Drop Tegangan Reaktif R"
+                            value={reactiveVoltageDropR?.value ?? 0}
+                            detail={statusFormatterText(
+                                reactiveVoltageDropR?.status ?? "",
+                            )}
+                            color={statusFormatterColor(
+                                reactiveVoltageDropR?.status ?? "",
+                            )}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <AnalyticCard
                             parameter="Drop Tegangan Reaktif S"
                             value={reactiveVoltageDropS?.value ?? 0}
                             detail={statusFormatterText(
@@ -110,6 +124,36 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             )}
                             color={statusFormatterColor(
                                 reactiveVoltageDropS?.status ?? "",
+                            )}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <AnalyticCard
+                            parameter="Drop Tegangan Reaktif T"
+                            value={reactiveVoltageDropT?.value ?? 0}
+                            detail={statusFormatterText(
+                                reactiveVoltageDropT?.status ?? "",
+                            )}
+                            color={statusFormatterColor(
+                                reactiveVoltageDropT?.status ?? "",
+                            )}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">
+                            Drop Tegangan Total
+                        </Typography>
+                        <Divider />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <AnalyticCard
+                            parameter="Drop Tegangan Total R"
+                            value={totalVoltageDropR?.value ?? 0}
+                            detail={statusFormatterText(
+                                totalVoltageDropR?.status ?? "",
+                            )}
+                            color={statusFormatterColor(
+                                totalVoltageDropR?.status ?? "",
                             )}
                         />
                     </Grid>
@@ -127,30 +171,6 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
-                            parameter="Drop Tegangan Resistif T"
-                            value={resistiveVoltageDropT?.value ?? 0}
-                            detail={statusFormatterText(
-                                resistiveVoltageDropT?.status ?? "",
-                            )}
-                            color={statusFormatterColor(
-                                resistiveVoltageDropT?.status ?? "",
-                            )}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="Drop Tegangan Reaktif T"
-                            value={reactiveVoltageDropT?.value ?? 0}
-                            detail={statusFormatterText(
-                                reactiveVoltageDropT?.status ?? "",
-                            )}
-                            color={statusFormatterColor(
-                                reactiveVoltageDropT?.status ?? "",
-                            )}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
                             parameter="Drop Tegangan Total T"
                             value={totalVoltageDropT?.value ?? 0}
                             detail={statusFormatterText(
@@ -160,6 +180,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 totalVoltageDropT?.status ?? "",
                             )}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">Power Factor</Typography>
+                        <Divider />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -203,6 +227,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             }
                         />
                     </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">THD Tegangan</Typography>
+                        <Divider />
+                    </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="THD Tegangan R"
@@ -239,6 +267,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             )}
                         />
                     </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">IHD Tegangan</Typography>
+                        <Divider />
+                    </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
                             parameter="IHD Tegangan R"
@@ -262,6 +294,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                             detail="Data belum dianalisis"
                             color={statusFormatterColor("unknown")}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">IHD Arus</Typography>
+                        <Divider />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -288,6 +324,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                         />
                     </Grid>
                     <Grid item xs={12}>
+                        <Typography variant="h4">Tekanan Minyak</Typography>
+                        <Divider />
+                    </Grid>
+                    <Grid item xs={12}>
                         <AnalyticCard
                             parameter="Tekanan Minyak"
                             value={classifiedData?.pressure?.value ?? 0}
@@ -298,6 +338,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 classifiedData?.pressure?.status ?? "",
                             )}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">Suhu Minyak</Typography>
+                        <Divider />
                     </Grid>
                     <Grid item xs={12}>
                         <AnalyticCard
@@ -312,6 +356,12 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                         />
                     </Grid>
                     <Grid item xs={12}>
+                        <Typography variant="h4">
+                            Ambient Temperature
+                        </Typography>
+                        <Divider />
+                    </Grid>
+                    <Grid item xs={12}>
                         <AnalyticCard
                             parameter="Ambient Temperature"
                             value={ambientTemperature?.value ?? 0}
@@ -322,6 +372,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 ambientTemperature?.status ?? "",
                             )}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="h4">Power Loss</Typography>
+                        <Divider />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
