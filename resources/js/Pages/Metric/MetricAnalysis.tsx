@@ -4,10 +4,21 @@ import { powerFactorFormatter } from "@/helpers/formatter/powerfactor-formatter"
 import statusFormatterColor from "@/helpers/formatter/status-formatter-color";
 import statusFormatterText from "@/helpers/formatter/status-formatter-text";
 import { MetricAnalysisProps } from "@/types/metric";
-import { Container, Divider, Grid, Typography } from "@mui/material";
+import {
+    Container,
+    Divider,
+    Grid,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Typography,
+} from "@mui/material";
 
 export default function MetricAnalysis(props: MetricAnalysisProps) {
-    const { trafo, date, classifiedData } = props;
+    const { trafo, date, classifiedData, maxTimeGis } = props;
+    console.log(maxTimeGis);
     const {
         power_factor_r: powerFactorR,
         power_factor_s: powerFactorS,
@@ -54,6 +65,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 classifiedData?.gis?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {maxTimeGis?.maxGis ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {classifiedData?.gis?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h4">
@@ -72,6 +115,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 resistiveVoltageDropR?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {resistiveVoltageDropR?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {resistiveVoltageDropR?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -84,6 +159,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 resistiveVoltageDropS?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {resistiveVoltageDropS?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {resistiveVoltageDropS?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -96,6 +203,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 resistiveVoltageDropT?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {resistiveVoltageDropT?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {resistiveVoltageDropT?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h4">
@@ -114,6 +253,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 reactiveVoltageDropR?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {reactiveVoltageDropR?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {reactiveVoltageDropR?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -126,6 +297,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 reactiveVoltageDropS?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {reactiveVoltageDropS?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {reactiveVoltageDropS?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -138,6 +341,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 reactiveVoltageDropT?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {reactiveVoltageDropT?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {reactiveVoltageDropT?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h4">
@@ -156,6 +391,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 totalVoltageDropR?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {totalVoltageDropR?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {totalVoltageDropR?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -168,6 +435,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 totalVoltageDropS?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {totalVoltageDropS?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {totalVoltageDropS?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -180,6 +479,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 totalVoltageDropT?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {totalVoltageDropT?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {totalVoltageDropT?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h4">Power Factor</Typography>
@@ -268,62 +599,6 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h4">IHD Tegangan</Typography>
-                        <Divider />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="IHD Tegangan R"
-                            value={0}
-                            detail="Data belum dianalisis"
-                            color={statusFormatterColor("unknown")}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="IHD Tegangan S"
-                            value={0}
-                            detail="Data belum dianalisis"
-                            color={statusFormatterColor("unknown")}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="IHD Tegangan T"
-                            value={0}
-                            detail="Data belum dianalisis"
-                            color={statusFormatterColor("unknown")}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="h4">IHD Arus</Typography>
-                        <Divider />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="IHD Arus R"
-                            value={0}
-                            detail="Data belum dianalisis"
-                            color={statusFormatterColor("unknown")}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="IHD Arus S"
-                            value={0}
-                            detail="Data belum dianalisis"
-                            color={statusFormatterColor("unknown")}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <AnalyticCard
-                            parameter="IHD Arus T"
-                            value={0}
-                            detail="Data belum dianalisis"
-                            color={statusFormatterColor("unknown")}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
                         <Typography variant="h4">Tekanan Minyak</Typography>
                         <Divider />
                     </Grid>
@@ -388,6 +663,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 powerLossR?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {powerLossR?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {powerLossR?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -400,6 +707,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 powerLossS?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {powerLossS?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {powerLossS?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <AnalyticCard
@@ -412,6 +751,38 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                 powerLossT?.status ?? "",
                             )}
                         />
+                        <TableContainer sx={{ mt: 2 }}>
+                            <Table size="small">
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max</TableCell>
+                                        <TableCell>
+                                            {powerLossT?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Max Time</TableCell>
+                                        <TableCell>
+                                            {new Date(
+                                                maxTimeGis?.maxTime ?? 0,
+                                            ).toLocaleString("id-ID", {
+                                                timeZone: "Asia/Jakarta",
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Latest</TableCell>
+                                        <TableCell>
+                                            {powerLossT?.value ?? 0}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                 </Grid>
             </Container>

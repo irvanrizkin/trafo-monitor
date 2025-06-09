@@ -11,7 +11,7 @@ export interface ClassifiedData {
     [key: string]: {
         value: number;
         status: string;
-    }
+    };
 }
 
 export interface MaxValue {
@@ -229,7 +229,7 @@ export type MetricVIFProps = PageProps & {
     frequencies: MetricFrequency[];
     classifiedData: ClassifiedData;
     maxValue: MaxValue[];
-}
+};
 
 export type MetricPQSPFProps = PageProps & {
     trafo: TrafoV1;
@@ -240,28 +240,28 @@ export type MetricPQSPFProps = PageProps & {
     powerFactors: MetricPowerFactor[];
     classifiedData: ClassifiedData;
     maxValue: MaxValue[];
-}
+};
 
 export type MetricTHDIHDProps = PageProps & {
     trafo: TrafoV1;
     date: string;
     thdCurrents: MetricTHDCurrent[];
     thdVoltages: MetricTHDVoltage[];
-}
+};
 
 export type MetricIHDProps = PageProps & {
     trafo: TrafoV1;
     date: string;
     ihdCurrents: MetricHD[];
     ihdVoltages: MetricHD[];
-}
+};
 
 export type MetricIHDV2Props = PageProps & {
     trafo: TrafoV1;
     date: string;
     ihdCurrents: MetricIHDCurrentV2[];
     ihdVoltages: MetricIHDVoltageV2[];
-}
+};
 
 export type MetricTPOProps = PageProps & {
     trafo: TrafoV1;
@@ -272,7 +272,7 @@ export type MetricTPOProps = PageProps & {
     ambientTemperatures: AmbientTemperature[];
     classifiedData: ClassifiedData;
     maxValue: MaxValue[];
-}
+};
 
 export type MetricPKAProps = PageProps & {
     trafo: TrafoV1;
@@ -280,7 +280,7 @@ export type MetricPKAProps = PageProps & {
     kFactors: MetricKFactor[];
     classifiedData: ClassifiedData;
     maxValue: MaxValue[];
-}
+};
 
 export type MetricHDProps = PageProps & {
     trafo: TrafoV1;
@@ -288,10 +288,14 @@ export type MetricHDProps = PageProps & {
     title: string;
     chartRoute: string;
     harmonicDistortions: MetricHD;
-}
+};
 
 export type MetricAnalysisProps = PageProps & {
     trafo: TrafoV1;
     date: string;
     classifiedData: ClassifiedData;
-}
+    maxTimeGis: {
+        maxGis: string;
+        maxTime: string;
+    };
+};
