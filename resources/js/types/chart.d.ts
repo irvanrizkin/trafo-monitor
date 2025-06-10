@@ -1,13 +1,25 @@
-import {PageProps, TrafoV1} from "@/types/index";
+import { PageProps, TrafoV1 } from "@/types/index";
 import {
     AmbientTemperature,
-    Metric, MetricApparentPower,
+    Metric,
+    MetricApparentPower,
     MetricCurrent,
     MetricFrequency,
-    MetricHD, MetricIHDCurrentV2, MetricIHDVoltageV2, MetricKFactor, MetricPower, MetricPowerFactor, MetricPowerLoss, MetricReactivePower,
+    MetricHD,
+    MetricIHDCurrentV2,
+    MetricIHDVoltageV2,
+    MetricKFactor,
+    MetricPower,
+    MetricPowerFactor,
+    MetricPowerLoss,
+    MetricReactivePower,
     MetricTHDCurrent,
-    MetricTHDVoltage, MetricTriplenCurrent,
-    MetricVoltage, OilLevel, Pressure, Temperature
+    MetricTHDVoltage,
+    MetricTriplenCurrent,
+    MetricVoltage,
+    OilLevel,
+    Pressure,
+    Temperature,
 } from "@/types/metric";
 
 export interface Order {
@@ -75,7 +87,7 @@ export type ChartPQSPFProps = PageProps & {
     powerFactorRMetrics: AggregationResult;
     powerFactorSMetrics: AggregationResult;
     powerFactorTMetrics: AggregationResult;
-}
+};
 
 export type ChartTHDIHDProps = PageProps & {
     trafo: TrafoV1;
@@ -87,7 +99,7 @@ export type ChartTHDIHDProps = PageProps & {
     thdCurrentRMetrics: AggregationResult;
     thdCurrentSMetrics: AggregationResult;
     thdCurrentTMetrics: AggregationResult;
-}
+};
 
 export type ChartIHDProps = PageProps & {
     trafo: TrafoV1;
@@ -99,25 +111,25 @@ export type ChartIHDProps = PageProps & {
     avgCurrentR: number;
     avgCurrentS: number;
     avgCurrentT: number;
-}
+};
 
 export type ChartIHDPropsV2 = PageProps & {
     trafo: TrafoV1;
     ihdVoltages: MetricIHDVoltageV2[];
     ihdCurrents: MetricIHDCurrentV2[];
-}
+};
 
 export type ChartTPOProps = PageProps & {
     trafo: TrafoV1;
-    temperatures: Temperature[],
-    pressures: Pressure[],
-    oilLevels: OilLevel[],
-    ambientTemperatures: AmbientTemperature[],
+    temperatures: Temperature[];
+    pressures: Pressure[];
+    oilLevels: OilLevel[];
+    ambientTemperatures: AmbientTemperature[];
     temperatureMetrics: AggregationResult;
     pressureMetrics: AggregationResult;
     oilLevelMetrics: AggregationResult;
     ambientTemperatureMetrics: AggregationResult;
-}
+};
 
 export type ChartPKAProps = PageProps & {
     trafo: TrafoV1;
@@ -127,11 +139,55 @@ export type ChartPKAProps = PageProps & {
     powerLossMetrics: AggregationResult;
     kFactorMetrics: AggregationResult;
     triplenCurrentMetrics: AggregationResult;
-}
+};
 
 export type ChartHDProps = PageProps & {
     trafo: TrafoV1;
     date: string;
     title: string;
     harmonicDistortions: ChartMetricHD;
-}
+};
+
+// "gisValues" => $gisValues,
+// "latestGis" => $latestGis,
+// "maxGis" => $maxGis,
+// "maxGisTime" => $maxGisTime,
+// "minGis" => $minGis,
+// "minGisTime" => $minGisTime,
+
+export type ChartAnalyticsProps = PageProps & {
+    trafo: TrafoV1;
+    gisValues: {
+        gis: number;
+        created_at: string;
+    }[];
+    resistiveVoltageDropsR: {
+        resistive_voltage_drop_r: number;
+        created_at: string;
+    }[];
+    resistiveVoltageDropsS: {
+        resistive_voltage_drop_s: number;
+        created_at: string;
+    }[];
+    resistiveVoltageDropsT: {
+        resistive_voltage_drop_t: number;
+        created_at: string;
+    }[];
+    reactiveVoltageDropsR: {
+        reactive_voltage_drop_r: number;
+        created_at: string;
+    }[];
+    reactiveVoltageDropsS: {
+        reactive_voltage_drop_s: number;
+        created_at: string;
+    }[];
+    reactiveVoltageDropsT: {
+        reactive_voltage_drop_t: number;
+        created_at: string;
+    }[];
+    latestGis: number;
+    maxGis: number;
+    maxGisTime: string;
+    minGis: number;
+    minGisTime: string;
+};

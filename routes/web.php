@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Chart\ChartAnalysisController;
 use App\Http\Controllers\Chart\ChartPKAController;
 use App\Http\Controllers\Chart\ChartPQSPFController;
 use App\Http\Controllers\Chart\ChartTHDController;
@@ -153,10 +154,9 @@ Route::prefix("chart")
         Route::get("/{trafoid}/pka", ChartPKAController::class)->name(
             "chart.pka"
         );
-        Route::get("/{trafoid}/analisis", [
-            ChartController::class,
-            "getChartAnalysis",
-        ])->name("chart.analisis");
+        Route::get("/{trafoid}/analisis", ChartAnalysisController::class)->name(
+            "chart.analisis"
+        );
     });
 
 Route::middleware("auth")->group(function () {

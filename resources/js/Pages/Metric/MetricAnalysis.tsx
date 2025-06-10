@@ -71,7 +71,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {maxTimeGis?.maxGis ?? 0}
+                                            {(maxTimeGis?.maxGis ?? 0).toFixed(
+                                                5,
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -91,7 +93,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {classifiedData?.gis?.value ?? 0}
+                                            {(
+                                                classifiedData?.gis?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -121,7 +125,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {resistiveVoltageDropR?.value ?? 0}
+                                            {(
+                                                resistiveVoltageDropR?.value ??
+                                                0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -141,7 +148,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {resistiveVoltageDropR?.value ?? 0}
+                                            {(
+                                                resistiveVoltageDropR?.value ??
+                                                0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -165,7 +175,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {resistiveVoltageDropS?.value ?? 0}
+                                            {(
+                                                resistiveVoltageDropS?.value ??
+                                                0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -185,7 +198,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {resistiveVoltageDropS?.value ?? 0}
+                                            {(
+                                                resistiveVoltageDropS?.value ??
+                                                0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -209,7 +225,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {resistiveVoltageDropT?.value ?? 0}
+                                            {(
+                                                resistiveVoltageDropT?.value ??
+                                                0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -229,7 +248,10 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {resistiveVoltageDropT?.value ?? 0}
+                                            {(
+                                                resistiveVoltageDropT?.value ??
+                                                0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -259,7 +281,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {reactiveVoltageDropR?.value ?? 0}
+                                            {(
+                                                reactiveVoltageDropR?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -279,7 +303,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {reactiveVoltageDropR?.value ?? 0}
+                                            {(
+                                                reactiveVoltageDropR?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -303,7 +329,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {reactiveVoltageDropS?.value ?? 0}
+                                            {(
+                                                reactiveVoltageDropS?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -323,7 +351,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {reactiveVoltageDropS?.value ?? 0}
+                                            {(
+                                                reactiveVoltageDropS?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -347,7 +377,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {reactiveVoltageDropT?.value ?? 0}
+                                            {(
+                                                reactiveVoltageDropT?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -367,7 +399,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {reactiveVoltageDropT?.value ?? 0}
+                                            {(
+                                                reactiveVoltageDropT?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -397,7 +431,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {totalVoltageDropR?.value ?? 0}
+                                            {(
+                                                totalVoltageDropR?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -417,7 +453,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {totalVoltageDropR?.value ?? 0}
+                                            {(
+                                                totalVoltageDropR?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -441,7 +479,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {totalVoltageDropS?.value ?? 0}
+                                            {(
+                                                totalVoltageDropS?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -461,7 +501,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {totalVoltageDropS?.value ?? 0}
+                                            {(
+                                                totalVoltageDropS?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -485,7 +527,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {totalVoltageDropT?.value ?? 0}
+                                            {(
+                                                totalVoltageDropT?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -505,7 +549,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {totalVoltageDropT?.value ?? 0}
+                                            {(
+                                                totalVoltageDropT?.value ?? 0
+                                            ).toFixed(5)}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -669,7 +715,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {powerLossR?.value ?? 0}
+                                            {(powerLossR?.value ?? 0).toFixed(
+                                                5,
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -689,7 +737,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {powerLossR?.value ?? 0}
+                                            {(powerLossR?.value ?? 0).toFixed(
+                                                5,
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -713,7 +763,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {powerLossS?.value ?? 0}
+                                            {(powerLossS?.value ?? 0).toFixed(
+                                                5,
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -733,7 +785,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {powerLossS?.value ?? 0}
+                                            {(powerLossS?.value ?? 0).toFixed(
+                                                5,
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -757,7 +811,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Max</TableCell>
                                         <TableCell>
-                                            {powerLossT?.value ?? 0}
+                                            {(powerLossT?.value ?? 0).toFixed(
+                                                5,
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -777,7 +833,9 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
                                     <TableRow>
                                         <TableCell>Latest</TableCell>
                                         <TableCell>
-                                            {powerLossT?.value ?? 0}
+                                            {(powerLossT?.value ?? 0).toFixed(
+                                                5,
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
