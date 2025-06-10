@@ -295,7 +295,7 @@ export type MetricAnalysisProps = PageProps & {
     date: string;
     classifiedData: ClassifiedData;
     maxTimeGis: {
-        maxGis: string;
+        maxGis: number;
         maxTime: string;
     };
 };
