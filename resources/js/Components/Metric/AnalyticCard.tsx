@@ -39,7 +39,7 @@ export default function AnalyticCard(props: AnalyticCardProps) {
                     />
                 </div>
                 <Typography variant="h5" component="div">
-                    {(value ?? 0).toFixed(5)}
+                    {typeof value === "number" ? value.toFixed(5) : "0.00000"}
                 </Typography>
                 <Typography sx={{ color: "text.secondary", mb: 1.5 }}>
                     {detail}
