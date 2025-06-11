@@ -9,12 +9,22 @@ class Voltage extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        "id" => "integer",
+        "trafo_id" => "integer",
+        "voltage_r" => "float",
+        "voltage_s" => "float",
+        "voltage_t" => "float",
+        "created_at" => "datetime",
+        "updated_at" => "datetime",
+    ];
+
     protected $fillable = [
-        'trafo_id',
-        'topic_name',
-        'voltage_r',
-        'voltage_s',
-        'voltage_t',
-        'datetime',
+        "trafo_id",
+        "topic_name",
+        "voltage_r",
+        "voltage_s",
+        "voltage_t",
+        "datetime",
     ];
 }

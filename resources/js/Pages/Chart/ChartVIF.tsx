@@ -51,6 +51,8 @@ export default function ChartVIF({
     const theme = useTheme();
     const onlyMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+    console.log(voltages);
+
     const metricAvgVoltage = rstLineChartString({
         labels: voltages.map((voltage) =>
             timeMinuteString(new Date(voltage.created_at)),

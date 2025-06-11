@@ -37,6 +37,8 @@ class ChartVIFController extends Controller
             ->get();
 
         // Voltage Metrics
+        $last12Voltages = $voltages->sortBy("created_at")->slice(-12);
+
         $maxVoltageR = $voltages->sortByDesc("voltage_r")->first();
         $maxVoltageS = $voltages->sortByDesc("voltage_s")->first();
         $maxVoltageT = $voltages->sortByDesc("voltage_t")->first();
@@ -50,6 +52,8 @@ class ChartVIFController extends Controller
         $avgVoltageT = $voltages->avg("voltage_t");
 
         // Current Metrics
+        $last12Currents = $currents->sortBy("created_at")->slice(-12);
+
         $maxCurrentR = $currents->sortByDesc("current_r")->first();
         $maxCurrentS = $currents->sortByDesc("current_s")->first();
         $maxCurrentT = $currents->sortByDesc("current_t")->first();
@@ -66,6 +70,8 @@ class ChartVIFController extends Controller
         $avgCurrentIn = $currents->avg("current_in");
 
         // Frequency Metrics
+        $last12Frequencies = $frequencies->sortBy("created_at")->slice(-12);
+
         $maxFrequency = $frequencies->sortByDesc("frequency_r")->first();
 
         $minFrequency = $frequencies->sortBy("frequency_r")->first();
@@ -75,9 +81,9 @@ class ChartVIFController extends Controller
         return Inertia::render("Chart/ChartVIF", [
             "trafo" => $trafo,
             "date" => $date,
-            "voltages" => $voltages->sortBy("created_at")->slice(-12),
-            "currents" => $currents->sortBy("created_at")->slice(-12),
-            "frequencies" => $frequencies->sortBy("created_at")->slice(-12),
+            "voltages" => $last12Voltages,
+            "currents" => $last12Currents,
+            "frequencies" => $last12Frequencies,
             "voltageRMetrics" => [
                 "max" => $maxVoltageR ? $maxVoltageR->voltage_r : 0,
                 "min" => $minVoltageR ? $minVoltageR->voltage_r : 0,
