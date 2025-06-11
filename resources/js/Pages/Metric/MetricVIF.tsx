@@ -105,7 +105,7 @@ export default function Metric({
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route("chart.vif", [trafo.id])}
+                    href={route("chart.vif", [trafo.id, date])}
                     text={"Open Chart"}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}

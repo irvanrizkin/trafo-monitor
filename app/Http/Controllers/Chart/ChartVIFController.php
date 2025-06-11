@@ -74,6 +74,7 @@ class ChartVIFController extends Controller
 
         return Inertia::render("Chart/ChartVIF", [
             "trafo" => $trafo,
+            "date" => $date,
             "voltages" => $voltages->sortBy("created_at")->slice(-12),
             "currents" => $currents->sortBy("created_at")->slice(-12),
             "frequencies" => $frequencies->sortBy("created_at")->slice(-12),
