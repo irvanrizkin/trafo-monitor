@@ -37,7 +37,10 @@ class ChartVIFController extends Controller
             ->get();
 
         // Voltage Metrics
-        $last12Voltages = $voltages->sortBy("created_at")->slice(-12);
+        $last12Voltages = $voltages
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
         $maxVoltageR = $voltages->sortByDesc("voltage_r")->first();
         $maxVoltageS = $voltages->sortByDesc("voltage_s")->first();
@@ -52,7 +55,10 @@ class ChartVIFController extends Controller
         $avgVoltageT = $voltages->avg("voltage_t");
 
         // Current Metrics
-        $last12Currents = $currents->sortBy("created_at")->slice(-12);
+        $last12Currents = $currents
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
         $maxCurrentR = $currents->sortByDesc("current_r")->first();
         $maxCurrentS = $currents->sortByDesc("current_s")->first();
@@ -70,7 +76,10 @@ class ChartVIFController extends Controller
         $avgCurrentIn = $currents->avg("current_in");
 
         // Frequency Metrics
-        $last12Frequencies = $frequencies->sortBy("created_at")->slice(-12);
+        $last12Frequencies = $frequencies
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
         $maxFrequency = $frequencies->sortByDesc("frequency_r")->first();
 
