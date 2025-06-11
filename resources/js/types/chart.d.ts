@@ -56,6 +56,7 @@ export interface ChartMetricHD extends Metric {
 
 export type ChartVIFProps = PageProps & {
     trafo: TrafoV1;
+    date: string;
     voltages: MetricVoltage[];
     currents: MetricCurrent[];
     frequencies: MetricFrequency[];

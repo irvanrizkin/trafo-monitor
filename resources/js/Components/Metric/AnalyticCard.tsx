@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import { Props } from "@/types";
 import { Icon } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
+import { commaFormatter } from "@/helpers/formatter/comma-formatter";
 
 type AnalyticCardProps = Props & {
     parameter: string;
@@ -39,7 +40,7 @@ export default function AnalyticCard(props: AnalyticCardProps) {
                     />
                 </div>
                 <Typography variant="h5" component="div">
-                    {typeof value === "number" ? value.toFixed(5) : "0.00000"}
+                    {commaFormatter(value)}
                 </Typography>
                 <Typography sx={{ color: "text.secondary", mb: 1.5 }}>
                     {detail}

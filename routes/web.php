@@ -135,7 +135,7 @@ Route::prefix("metric")
 Route::prefix("chart")
     ->middleware(["auth"])
     ->group(function () {
-        Route::get("/{trafoid}/vif", ChartVIFController::class)->name(
+        Route::get("/{trafoid}/{date}/vif", ChartVIFController::class)->name(
             "chart.vif"
         );
         Route::get("/{trafoid}/pqspf", ChartPQSPFController::class)->name(
