@@ -72,6 +72,7 @@ export type ChartVIFProps = PageProps & {
 
 export type ChartPQSPFProps = PageProps & {
     trafo: TrafoV1;
+    date: string;
     powers: MetricPower[];
     reactivePowers: MetricReactivePower[];
     apparentPowers: MetricApparentPower[];

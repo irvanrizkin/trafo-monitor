@@ -138,20 +138,22 @@ Route::prefix("chart")
         Route::get("/{trafoid}/{date}/vif", ChartVIFController::class)->name(
             "chart.vif"
         );
-        Route::get("/{trafoid}/pqspf", ChartPQSPFController::class)->name(
-            "chart.pqspf"
-        );
-        Route::get("/{trafoid}/thd-ihd", ChartTHDController::class)->name(
-            "chart.thd-ihd"
-        );
+        Route::get(
+            "/{trafoid}/{date}/pqspf",
+            ChartPQSPFController::class
+        )->name("chart.pqspf");
+        Route::get(
+            "/{trafoid}/{date}/thd-ihd",
+            ChartTHDController::class
+        )->name("chart.thd-ihd");
         Route::get("/{trafoid}/ihd", [
             ChartController::class,
             "getChartIHDV2",
         ])->name("chart.ihd");
-        Route::get("/{trafoid}/tpo", ChartTPOController::class)->name(
+        Route::get("/{trafoid}/{date}/tpo", ChartTPOController::class)->name(
             "chart.tpo"
         );
-        Route::get("/{trafoid}/pka", ChartPKAController::class)->name(
+        Route::get("/{trafoid}/{date}/pka", ChartPKAController::class)->name(
             "chart.pka"
         );
         Route::get("/{trafoid}/analisis", ChartAnalysisController::class)->name(

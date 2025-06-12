@@ -146,7 +146,7 @@ export default function ({
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route("chart.pqspf", [trafo.id])}
+                    href={route("chart.pqspf", [trafo.id, date])}
                     text={"Open Chart"}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}

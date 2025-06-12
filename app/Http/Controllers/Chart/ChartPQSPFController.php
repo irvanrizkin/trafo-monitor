@@ -19,73 +19,115 @@ class ChartPQSPFController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $trafoId = $request->route('trafoid');
+        $trafoId = $request->route("trafoid");
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
-            return redirect()->route('not-found');
+            return redirect()->route("not-found");
         }
+
+        $date = $request->route("date");
 
         $aggregator = new Aggregator();
 
-        $powers = Power::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $powers = Power::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $powers = $powers->reverse()->values();
 
-        $reactivePowers = ReactivePower::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $reactivePowers = ReactivePower::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $reactivePowers = $reactivePowers->reverse()->values();
 
-        $apparentPowers = ApparentPower::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $apparentPowers = ApparentPower::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $apparentPowers = $apparentPowers->reverse()->values();
 
-        $powerFactors = PowerFactor::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $powerFactors = PowerFactor::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $powerFactors = $powerFactors->reverse()->values();
 
-        $powerRMetrics = $aggregator->aggregate($powers, 'power_r');
-        $powerSMetrics = $aggregator->aggregate($powers, 'power_s');
-        $powerTMetrics = $aggregator->aggregate($powers, 'power_t');
+        $last12Powers = $powers
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
-        $reactivePowerRMetrics = $aggregator->aggregate($reactivePowers, 'reactive_power_r');
-        $reactivePowerSMetrics = $aggregator->aggregate($reactivePowers, 'reactive_power_s');
-        $reactivePowerTMetrics = $aggregator->aggregate($reactivePowers, 'reactive_power_t');
+        $last12ReactivePowers = $reactivePowers
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
-        $apparentPowerRMetrics = $aggregator->aggregate($apparentPowers, 'apparent_power_r');
-        $apparentPowerSMetrics = $aggregator->aggregate($apparentPowers, 'apparent_power_s');
-        $apparentPowerTMetrics = $aggregator->aggregate($apparentPowers, 'apparent_power_t');
+        $last12ApparentPowers = $apparentPowers
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
-        $powerFactorRMetrics = $aggregator->aggregate($powerFactors, 'power_factor_r');
-        $powerFactorSMetrics = $aggregator->aggregate($powerFactors, 'power_factor_s');
-        $powerFactorTMetrics = $aggregator->aggregate($powerFactors, 'power_factor_t');
+        $last12PowerFactors = $powerFactors
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
-        return Inertia::render('Chart/ChartPQSPF', [
-            'trafo' => $trafo,
-            'powers' => $powers,
-            'reactivePowers' => $reactivePowers,
-            'apparentPowers' => $apparentPowers,
-            'powerFactors' => $powerFactors,
-            'powerRMetrics' => $powerRMetrics,
-            'powerSMetrics' => $powerSMetrics,
-            'powerTMetrics' => $powerTMetrics,
-            'reactivePowerRMetrics' => $reactivePowerRMetrics,
-            'reactivePowerSMetrics' => $reactivePowerSMetrics,
-            'reactivePowerTMetrics' => $reactivePowerTMetrics,
-            'apparentPowerRMetrics' => $apparentPowerRMetrics,
-            'apparentPowerSMetrics' => $apparentPowerSMetrics,
-            'apparentPowerTMetrics' => $apparentPowerTMetrics,
-            'powerFactorRMetrics' => $powerFactorRMetrics,
-            'powerFactorSMetrics' => $powerFactorSMetrics,
-            'powerFactorTMetrics' => $powerFactorTMetrics,
+        $powerRMetrics = $aggregator->aggregate($powers, "power_r");
+        $powerSMetrics = $aggregator->aggregate($powers, "power_s");
+        $powerTMetrics = $aggregator->aggregate($powers, "power_t");
+
+        $reactivePowerRMetrics = $aggregator->aggregate(
+            $reactivePowers,
+            "reactive_power_r"
+        );
+        $reactivePowerSMetrics = $aggregator->aggregate(
+            $reactivePowers,
+            "reactive_power_s"
+        );
+        $reactivePowerTMetrics = $aggregator->aggregate(
+            $reactivePowers,
+            "reactive_power_t"
+        );
+
+        $apparentPowerRMetrics = $aggregator->aggregate(
+            $apparentPowers,
+            "apparent_power_r"
+        );
+        $apparentPowerSMetrics = $aggregator->aggregate(
+            $apparentPowers,
+            "apparent_power_s"
+        );
+        $apparentPowerTMetrics = $aggregator->aggregate(
+            $apparentPowers,
+            "apparent_power_t"
+        );
+
+        $powerFactorRMetrics = $aggregator->aggregate(
+            $powerFactors,
+            "power_factor_r"
+        );
+        $powerFactorSMetrics = $aggregator->aggregate(
+            $powerFactors,
+            "power_factor_s"
+        );
+        $powerFactorTMetrics = $aggregator->aggregate(
+            $powerFactors,
+            "power_factor_t"
+        );
+
+        return Inertia::render("Chart/ChartPQSPF", [
+            "trafo" => $trafo,
+            "date" => $date,
+            "powers" => $last12Powers,
+            "reactivePowers" => $last12ReactivePowers,
+            "apparentPowers" => $last12ApparentPowers,
+            "powerFactors" => $last12PowerFactors,
+            "powerRMetrics" => $powerRMetrics,
+            "powerSMetrics" => $powerSMetrics,
+            "powerTMetrics" => $powerTMetrics,
+            "reactivePowerRMetrics" => $reactivePowerRMetrics,
+            "reactivePowerSMetrics" => $reactivePowerSMetrics,
+            "reactivePowerTMetrics" => $reactivePowerTMetrics,
+            "apparentPowerRMetrics" => $apparentPowerRMetrics,
+            "apparentPowerSMetrics" => $apparentPowerSMetrics,
+            "apparentPowerTMetrics" => $apparentPowerTMetrics,
+            "powerFactorRMetrics" => $powerFactorRMetrics,
+            "powerFactorSMetrics" => $powerFactorSMetrics,
+            "powerFactorTMetrics" => $powerFactorTMetrics,
         ]);
     }
 }
