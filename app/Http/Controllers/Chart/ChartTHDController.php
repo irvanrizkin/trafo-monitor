@@ -17,44 +17,53 @@ class ChartTHDController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $trafoId = $request->route('trafoid');
+        $trafoId = $request->route("trafoid");
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
-            return redirect()->route('not-found');
+            return redirect()->route("not-found");
         }
+
+        $date = $request->route("date");
 
         $aggregator = new Aggregator();
 
-        $thdCurrents = THDCurrent::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $thdCurrents = THDCurrent::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $thdCurrents = $thdCurrents->reverse()->values();
-        $thdVoltages = THDVoltage::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $thdVoltages = THDVoltage::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $thdVoltages = $thdVoltages->reverse()->values();
 
-        $thdCurrentRMetrics = $aggregator->aggregate($thdCurrents, 'current_r');
-        $thdCurrentSMetrics = $aggregator->aggregate($thdCurrents, 'current_s');
-        $thdCurrentTMetrics = $aggregator->aggregate($thdCurrents, 'current_t');
+        $last12THDCurrents = $thdCurrents
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
-        $thdVoltageRMetrics = $aggregator->aggregate($thdVoltages, 'voltage_r');
-        $thdVoltageSMetrics = $aggregator->aggregate($thdVoltages, 'voltage_s');
-        $thdVoltageTMetrics = $aggregator->aggregate($thdVoltages, 'voltage_t');
+        $last12THDVoltages = $thdVoltages
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
-        return Inertia::render('Chart/ChartTHDIHD', [
-            'trafo' => $trafo,
-            'thdCurrents' => $thdCurrents,
-            'thdVoltages' => $thdVoltages,
-            'thdCurrentRMetrics' => $thdCurrentRMetrics,
-            'thdCurrentSMetrics' => $thdCurrentSMetrics,
-            'thdCurrentTMetrics' => $thdCurrentTMetrics,
-            'thdVoltageRMetrics' => $thdVoltageRMetrics,
-            'thdVoltageSMetrics' => $thdVoltageSMetrics,
-            'thdVoltageTMetrics' => $thdVoltageTMetrics,
+        $thdCurrentRMetrics = $aggregator->aggregate($thdCurrents, "current_r");
+        $thdCurrentSMetrics = $aggregator->aggregate($thdCurrents, "current_s");
+        $thdCurrentTMetrics = $aggregator->aggregate($thdCurrents, "current_t");
+
+        $thdVoltageRMetrics = $aggregator->aggregate($thdVoltages, "voltage_r");
+        $thdVoltageSMetrics = $aggregator->aggregate($thdVoltages, "voltage_s");
+        $thdVoltageTMetrics = $aggregator->aggregate($thdVoltages, "voltage_t");
+
+        return Inertia::render("Chart/ChartTHDIHD", [
+            "trafo" => $trafo,
+            "date" => $date,
+            "thdCurrents" => $last12THDCurrents,
+            "thdVoltages" => $last12THDVoltages,
+            "thdCurrentRMetrics" => $thdCurrentRMetrics,
+            "thdCurrentSMetrics" => $thdCurrentSMetrics,
+            "thdCurrentTMetrics" => $thdCurrentTMetrics,
+            "thdVoltageRMetrics" => $thdVoltageRMetrics,
+            "thdVoltageSMetrics" => $thdVoltageSMetrics,
+            "thdVoltageTMetrics" => $thdVoltageTMetrics,
         ]);
     }
 }

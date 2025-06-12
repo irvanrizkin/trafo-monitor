@@ -93,6 +93,7 @@ export type ChartPQSPFProps = PageProps & {
 
 export type ChartTHDIHDProps = PageProps & {
     trafo: TrafoV1;
+    date: string;
     thdVoltages: MetricTHDVoltage[];
     thdCurrents: MetricTHDCurrent[];
     thdVoltageRMetrics: AggregationResult;
