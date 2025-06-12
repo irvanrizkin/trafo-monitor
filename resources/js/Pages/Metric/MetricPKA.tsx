@@ -40,7 +40,7 @@ export default function MetricPKA({
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route("chart.pka", [trafo.id])}
+                    href={route("chart.pka", [trafo.id, date])}
                     text={"Open Chart"}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}

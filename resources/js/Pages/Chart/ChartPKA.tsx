@@ -10,6 +10,8 @@ import ButtonEndHref from "@/Components/Shared/ButtonEndHref";
 import datasetGenerator from "@/helpers/generator/dataset-generator";
 import { blue } from "@mui/material/colors";
 import {
+    rstLineChart,
+    rstLineChartString,
     singleLineChart,
     singleLineChartString,
 } from "@/helpers/generator/chart-generator";
@@ -27,26 +29,34 @@ import {
 
 export default function ChartPKA({
     trafo,
+    date,
     kFactors,
-    kFactorMetrics,
+    kFactorRMetrics,
+    kFactorSMetrics,
+    kFactorTMetrics,
 }: ChartPKAProps) {
     const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
 
-    const metricAvgKFactor = singleLineChartString({
+    const metricAvgKFactor = rstLineChartString({
         labels: kFactors.map((kFactor) =>
             timeMinuteString(new Date(kFactor.created_at)),
         ),
-        data: kFactors.map((kFactor) => kFactor.k_factor),
-        label: "K Factor",
+        rData: kFactors.map((kFactor) => kFactor.k_factor_r),
+        sData: kFactors.map((kFactor) => kFactor.k_factor_s),
+        tData: kFactors.map((kFactor) => kFactor.k_factor_t),
     });
-    const { k_factor = 0 } = kFactors[kFactors.length - 1] || {};
+    const {
+        k_factor_r = 0,
+        k_factor_s = 0,
+        k_factor_t = 0,
+    } = kFactors[kFactors.length - 1] || {};
 
     return (
         <>
             <AppBarTriple
                 startText={"Chart PKA"}
                 middleText={trafo ? trafo.name + " - " + trafo.address : ""}
-                endText={"Last 12 Data"}
+                endText={date}
             />
             <Container maxWidth="xl" sx={{ pt: 8 }}>
                 <ButtonEndHref
@@ -67,17 +77,37 @@ export default function ChartPKA({
                             <Typography variant={"h6"}>K Factor</Typography>
                             <Line data={metricAvgKFactor} />
                             <Container sx={{ p: 2 }}>
-                                <AggregationSingle
+                                <AggregationRST
                                     property={"K Factor"}
-                                    max={kFactorMetrics.max}
-                                    avg={kFactorMetrics.avg}
-                                    min={kFactorMetrics.min}
-                                    latest={k_factor}
-                                    maxTime={timeMinuteString(
-                                        new Date(kFactorMetrics.timeOfMax),
+                                    rMax={kFactorRMetrics.max}
+                                    rMin={kFactorRMetrics.min}
+                                    rLatest={k_factor_r}
+                                    rAvg={kFactorRMetrics.avg}
+                                    sMax={kFactorSMetrics.max}
+                                    sMin={kFactorSMetrics.min}
+                                    sLatest={k_factor_s}
+                                    sAvg={kFactorSMetrics.avg}
+                                    tMax={kFactorTMetrics.max}
+                                    tMin={kFactorTMetrics.min}
+                                    tLatest={k_factor_t}
+                                    tAvg={kFactorTMetrics.avg}
+                                    maxRTime={timeMinuteString(
+                                        new Date(kFactorRMetrics.timeOfMax),
                                     )}
-                                    minTime={timeMinuteString(
-                                        new Date(kFactorMetrics.timeOfMin),
+                                    maxSTime={timeMinuteString(
+                                        new Date(kFactorSMetrics.timeOfMax),
+                                    )}
+                                    maxTTime={timeMinuteString(
+                                        new Date(kFactorTMetrics.timeOfMax),
+                                    )}
+                                    minRTime={timeMinuteString(
+                                        new Date(kFactorRMetrics.timeOfMin),
+                                    )}
+                                    minSTime={timeMinuteString(
+                                        new Date(kFactorSMetrics.timeOfMin),
+                                    )}
+                                    minTTime={timeMinuteString(
+                                        new Date(kFactorTMetrics.timeOfMin),
                                     )}
                                 />
                             </Container>

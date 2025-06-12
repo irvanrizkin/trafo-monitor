@@ -137,12 +137,11 @@ export type ChartTPOProps = PageProps & {
 
 export type ChartPKAProps = PageProps & {
     trafo: TrafoV1;
-    powerLosses: MetricPowerLoss[];
+    date: string;
     kFactors: MetricKFactor[];
-    triplenCurrents: MetricTriplenCurrent[];
-    powerLossMetrics: AggregationResult;
-    kFactorMetrics: AggregationResult;
-    triplenCurrentMetrics: AggregationResult;
+    kFactorRMetrics: AggregationResult;
+    kFactorSMetrics: AggregationResult;
+    kFactorTMetrics: AggregationResult;
 };
 
 export type ChartHDProps = PageProps & {

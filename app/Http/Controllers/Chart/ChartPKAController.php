@@ -23,20 +23,29 @@ class ChartPKAController extends Controller
             return redirect()->route("not-found");
         }
 
+        $date = $request->route("date");
+
         $aggregator = new Aggregator();
 
         $kFactors = KFactor::where("trafo_id", $trafoId)
-            ->orderBy("created_at", "desc")
-            ->limit(12)
+            ->whereDate("created_at", $date)
             ->get();
-        $kFactors = $kFactors->reverse()->values();
 
-        $kFactorMetrics = $aggregator->aggregate($kFactors, "k_factor");
+        $last12KFactors = $kFactors
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
+
+        $kFactorRMetrics = $aggregator->aggregate($kFactors, "k_factor_r");
+        $kFactorSMetrics = $aggregator->aggregate($kFactors, "k_factor_s");
+        $kFactorTMetrics = $aggregator->aggregate($kFactors, "k_factor_t");
 
         return Inertia::render("Chart/ChartPKA", [
             "trafo" => $trafo,
-            "kFactors" => $kFactors,
-            "kFactorMetrics" => $kFactorMetrics,
+            "kFactors" => $last12KFactors,
+            "kFactorRMetrics" => $kFactorRMetrics,
+            "kFactorSMetrics" => $kFactorSMetrics,
+            "kFactorTMetrics" => $kFactorTMetrics,
         ]);
     }
 }
