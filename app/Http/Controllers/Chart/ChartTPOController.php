@@ -19,51 +19,69 @@ class ChartTPOController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $trafoId = $request->route('trafoid');
+        $trafoId = $request->route("trafoid");
 
         $trafo = Trafo::find($trafoId);
         if (!$trafo) {
-            return redirect()->route('not-found');
+            return redirect()->route("not-found");
         }
+
+        $date = $request->route("date");
 
         $aggregator = new Aggregator();
 
-        $temperatures = Temperature::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $temperatures = Temperature::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $temperatures = $temperatures->reverse()->values();
-        $pressures = Pressure::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $pressures = Pressure::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $pressures = $pressures->reverse()->values();
-        $oilLevels = OilLevel::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $oilLevels = OilLevel::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $oilLevels = $oilLevels->reverse()->values();
-        $ambientTemperatures = AmbientTemperature::where('trafo_id', $trafoId)
-            ->orderBy('created_at', 'desc')
-            ->limit(12)
+        $ambientTemperatures = AmbientTemperature::where("trafo_id", $trafoId)
+            ->whereDate("created_at", $date)
             ->get();
-        $ambientTemperatures = $ambientTemperatures->reverse()->values();
 
-        $temperatureMetrics = $aggregator->aggregate($temperatures, 'temperature');
-        $pressureMetrics = $aggregator->aggregate($pressures, 'pressure');
-        $oilLevelMetrics = $aggregator->aggregate($oilLevels, 'oil_level');
-        $ambientTemperatureMetrics = $aggregator->aggregate($ambientTemperatures, 'ambient_temperature');
+        $last12Temperatures = $temperatures
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
+        $last12Pressures = $pressures
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
+        $last12OilLevels = $oilLevels
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
+        $last12AmbientTemperatures = $ambientTemperatures
+            ->sortBy("created_at")
+            ->slice(-12)
+            ->values();
 
-        return Inertia::render('Chart/ChartTPO', [
-            'trafo' => $trafo,
-            'temperatures' => $temperatures,
-            'pressures' => $pressures,
-            'oilLevels' => $oilLevels,
-            'ambientTemperatures' => $ambientTemperatures,
-            'temperatureMetrics' => $temperatureMetrics,
-            'pressureMetrics' => $pressureMetrics,
-            'oilLevelMetrics' => $oilLevelMetrics,
-            'ambientTemperatureMetrics' => $ambientTemperatureMetrics,
+        $temperatureMetrics = $aggregator->aggregate(
+            $temperatures,
+            "temperature"
+        );
+        $pressureMetrics = $aggregator->aggregate($pressures, "pressure");
+        $oilLevelMetrics = $aggregator->aggregate($oilLevels, "oil_level");
+        $ambientTemperatureMetrics = $aggregator->aggregate(
+            $ambientTemperatures,
+            "ambient_temperature"
+        );
+
+        return Inertia::render("Chart/ChartTPO", [
+            "trafo" => $trafo,
+            "date" => $date,
+            "temperatures" => $last12Temperatures,
+            "pressures" => $last12Pressures,
+            "oilLevels" => $last12OilLevels,
+            "ambientTemperatures" => $last12AmbientTemperatures,
+            "temperatureMetrics" => $temperatureMetrics,
+            "pressureMetrics" => $pressureMetrics,
+            "oilLevelMetrics" => $oilLevelMetrics,
+            "ambientTemperatureMetrics" => $ambientTemperatureMetrics,
         ]);
     }
 }

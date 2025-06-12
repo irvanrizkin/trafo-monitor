@@ -124,6 +124,7 @@ export type ChartIHDPropsV2 = PageProps & {
 
 export type ChartTPOProps = PageProps & {
     trafo: TrafoV1;
+    date: string;
     temperatures: Temperature[];
     pressures: Pressure[];
     oilLevels: OilLevel[];

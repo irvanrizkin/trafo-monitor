@@ -95,7 +95,7 @@ export default function MetricTPO({
             />
             <Container maxWidth="xl" sx={{ pt: 6 }}>
                 <ButtonEndHref
-                    href={route("chart.tpo", [trafo.id])}
+                    href={route("chart.tpo", [trafo.id, date])}
                     text={"Open Chart"}
                     icon={<ShowChartIcon />}
                     sx={{ mt: 4 }}
