@@ -80,11 +80,9 @@ class ChartController extends Controller
 
         $ihdVoltages = IHDVoltageV2::where("trafo_id", $trafoId)
             ->whereDate("created_at", $date)
-            ->latest()
             ->get();
         $ihdCurrents = IHDCurrentV2::where("trafo_id", $trafoId)
             ->whereDate("created_at", $date)
-            ->latest()
             ->get();
 
         return Inertia::render("Chart/ChartIHDV2", [
