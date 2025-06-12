@@ -41,6 +41,8 @@ export default function MetricAnalysis(props: MetricAnalysisProps) {
         total_voltage_drop_t: totalVoltageDropT,
     } = classifiedData;
 
+    console.log(classifiedData);
+
     return (
         <>
             <AppBarTriple

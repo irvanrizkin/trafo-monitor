@@ -64,6 +64,7 @@ export default function DetailV1({ trafo, dates }: TrafoDetailPropsV1) {
         if (chartCategoryState) {
             window.location.href = route(`chart.${chartCategoryState}`, [
                 trafo.id,
+                dateState,
             ]);
         }
     }, [chartCategoryState, route, trafo.id, dateState]);
