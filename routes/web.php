@@ -146,7 +146,7 @@ Route::prefix("chart")
             "/{trafoid}/{date}/thd-ihd",
             ChartTHDController::class
         )->name("chart.thd-ihd");
-        Route::get("/{trafoid}/ihd", [
+        Route::get("/{trafoid}/{date}/ihd", [
             ChartController::class,
             "getChartIHDV2",
         ])->name("chart.ihd");
