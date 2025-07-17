@@ -146,7 +146,25 @@ export default function ChartPQSPF({
                             <Typography variant={"h6"}>
                                 Active Power (W)
                             </Typography>
-                            <Line data={metricAvgPower} />
+                            <Line
+                                data={metricAvgPower}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Active Power (W)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
                                     rMax={powerRMetrics.max}
@@ -192,7 +210,25 @@ export default function ChartPQSPF({
                             <Typography variant={"h6"}>
                                 Reactive Power (VA)
                             </Typography>
-                            <Line data={metricAvgReactivePower} />
+                            <Line
+                                data={metricAvgReactivePower}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Reactive Power (VA)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
                                     rMax={reactivePowerRMetrics.max}
@@ -252,7 +288,25 @@ export default function ChartPQSPF({
                             <Typography variant={"h6"}>
                                 Apparent Power (VA)
                             </Typography>
-                            <Line data={metricAvgApparentPower} />
+                            <Line
+                                data={metricAvgApparentPower}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Apparent Power (VA)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
                                     rMax={apparentPowerRMetrics.max}
@@ -310,7 +364,25 @@ export default function ChartPQSPF({
                             <Typography variant={"h6"}>
                                 Power Factor (PF)
                             </Typography>
-                            <Line data={metricAvgPowerFactor} />
+                            <Line
+                                data={metricAvgPowerFactor}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Power Factor (PF)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
                                     rMax={powerFactorRMetrics.max}

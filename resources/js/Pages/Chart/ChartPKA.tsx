@@ -75,7 +75,25 @@ export default function ChartPKA({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>K Factor</Typography>
-                            <Line data={metricAvgKFactor} />
+                            <Line
+                                data={metricAvgKFactor}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "K Factor",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
                                     property={"K Factor"}

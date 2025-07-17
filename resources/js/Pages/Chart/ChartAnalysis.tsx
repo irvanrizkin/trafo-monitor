@@ -124,7 +124,25 @@ export default function ChartAnalysis({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>GIS</Typography>
-                            <Line data={gisChart} />
+                            <Line
+                                data={gisChart}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "GIS",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                         </Box>
                         <Box
                             sx={{
@@ -139,7 +157,25 @@ export default function ChartAnalysis({
                             <Typography variant={"h6"}>
                                 Resistive Voltage Drop S
                             </Typography>
-                            <Line data={resistiveVoltageDropSChart} />
+                            <Line
+                                data={resistiveVoltageDropSChart}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Resistive Voltage Drop S",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                         </Box>
                         <Box
                             sx={{
@@ -154,7 +190,25 @@ export default function ChartAnalysis({
                             <Typography variant={"h6"}>
                                 Reactive Voltage Drop R
                             </Typography>
-                            <Line data={reactiveVoltageDropRChart} />
+                            <Line
+                                data={reactiveVoltageDropRChart}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Reactive Voltage Drop R",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                         </Box>
                         <Box
                             sx={{
@@ -169,7 +223,25 @@ export default function ChartAnalysis({
                             <Typography variant={"h6"}>
                                 Reactive Voltage Drop T
                             </Typography>
-                            <Line data={reactiveVoltageDropTChart} />
+                            <Line
+                                data={reactiveVoltageDropTChart}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Reactive Voltage Drop T",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
@@ -194,7 +266,25 @@ export default function ChartAnalysis({
                             <Typography variant={"h6"}>
                                 Resistive Voltage Drop R
                             </Typography>
-                            <Line data={resistiveVoltageDropRChart} />
+                            <Line
+                                data={resistiveVoltageDropRChart}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Resistive Voltage Drop R",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                         </Box>
                         <Box
                             sx={{
@@ -209,7 +299,25 @@ export default function ChartAnalysis({
                             <Typography variant={"h6"}>
                                 Resistive Voltage Drop T
                             </Typography>
-                            <Line data={resistiveVoltageDropTChart} />
+                            <Line
+                                data={resistiveVoltageDropTChart}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Resistive Voltage Drop T",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                         </Box>
                         <Box
                             sx={{
@@ -224,7 +332,25 @@ export default function ChartAnalysis({
                             <Typography variant={"h6"}>
                                 Reactive Voltage Drop S
                             </Typography>
-                            <Line data={reactiveVoltageDropSChart} />
+                            <Line
+                                data={reactiveVoltageDropSChart}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Reactive Voltage Drop S",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                         </Box>
                     </Grid>
                 </Grid>

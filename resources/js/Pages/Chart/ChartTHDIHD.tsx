@@ -87,7 +87,25 @@ export default function ChartTHDIHD({
                             <Typography variant={"h6"}>
                                 Total Harmonics Distortion Voltage (THDv)
                             </Typography>
-                            <Bar data={metricVoltages} />
+                            <Bar
+                                data={metricVoltages}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "THD Voltage (THDv)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
                                     rMax={thdVoltageRMetrics.max}
@@ -135,7 +153,25 @@ export default function ChartTHDIHD({
                             <Typography variant={"h6"}>
                                 Total Harmonics Distortion Current (THDi)
                             </Typography>
-                            <Bar data={metricCurrents} />
+                            <Bar
+                                data={metricCurrents}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "THD Current (THDi)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
                                     rMax={thdCurrentRMetrics.max}

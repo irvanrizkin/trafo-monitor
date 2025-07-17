@@ -159,7 +159,25 @@ export default function ChartIHD({
                             <Typography variant={"h6"}>
                                 Individual Harmonics Distortion Voltage (IHDv)
                             </Typography>
-                            <Bar data={metricAvgVoltage} />
+                            <Bar
+                                data={metricAvgVoltage}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "IHD Voltage (IHDv)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRSTOnly
                                     rMax={ihdVoltageRAggregation.max}
@@ -195,7 +213,25 @@ export default function ChartIHD({
                             <Typography variant={"h6"}>
                                 Individual Harmonics Distortion Current (IHDi)
                             </Typography>
-                            <Bar data={metricAvgCurrent} />
+                            <Bar
+                                data={metricAvgCurrent}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "IHD Current (IHDi)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRSTOnly
                                     rMax={ihdCurrentRAggregation.max}

@@ -116,7 +116,25 @@ export default function ChartVIF({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>Voltage (V)</Typography>
-                            <Line data={metricAvgVoltage} />
+                            <Line
+                                data={metricAvgVoltage}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Voltage (V)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRST
                                     rMax={voltageRMetrics.max}
@@ -162,7 +180,25 @@ export default function ChartVIF({
                             <Typography variant={"h6"}>
                                 Frequency (Hz)
                             </Typography>
-                            <Line data={metricAvgFrequency} />
+                            <Line
+                                data={metricAvgFrequency}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Frequency (Hz)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
 
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
@@ -190,7 +226,25 @@ export default function ChartVIF({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>Current (I)</Typography>
-                            <Line data={metricAvgCurrent} />
+                            <Line
+                                data={metricAvgCurrent}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Current (I)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationRSTIN
                                     rMax={currentRMetrics.max}

@@ -114,7 +114,25 @@ export default function ChartTPO({
                             <Typography variant={"h6"}>
                                 Oil Temperature (°C)
                             </Typography>
-                            <Line data={metricTemperature} />
+                            <Line
+                                data={metricTemperature}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Oil Temperature (°C)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Temperature"}
@@ -141,7 +159,25 @@ export default function ChartTPO({
                             <Typography variant={"h6"}>
                                 Pressure (BAR)
                             </Typography>
-                            <Line data={metricPressure} />
+                            <Line
+                                data={metricPressure}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Pressure (BAR)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Pressure"}
@@ -171,7 +207,25 @@ export default function ChartTPO({
                             flexDirection="column"
                         >
                             <Typography variant={"h6"}>Oil Level</Typography>
-                            <Line data={metricOilLevel} />
+                            <Line
+                                data={metricOilLevel}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Oil Level",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Oil Level"}
@@ -198,7 +252,25 @@ export default function ChartTPO({
                             <Typography variant={"h6"}>
                                 Ambient Temperature (°C)
                             </Typography>
-                            <Line data={metricAmbientTemperature} />
+                            <Line
+                                data={metricAmbientTemperature}
+                                options={{
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                text: "Time",
+                                                display: true,
+                                            },
+                                        },
+                                        y: {
+                                            title: {
+                                                text: "Ambient Temperature (°C)",
+                                                display: true,
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
                             <Container sx={{ p: 2 }}>
                                 <AggregationSingle
                                     property={"Ambient Temp"}
